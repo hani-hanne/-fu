@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title class="lang-th">โลกของนาฬิกาและสีของฤดู</title>
+    <title class="lang-ko">시계의 세계와 계절의 색</title>
+    <title class="lang-en">The World of Time and Colors of the Seasons</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loading-content"></div>
+            <img src="img/ชื่อเรื่อง.png" alt="Loading" class="character">
+        </div>
+    </div>
+    
+    <div id="main-content" style="display: none;">
+        <section id="home" class="hero-section">
+            <div class="content-wrapper">
+                <img src="img/kid.png" alt="Kid Photo" class="kid-photo">
+
+                <h1 id="greeting">สวัสดี</h1>
+                <h2>My name is MONA✿◕ ‿ ◕✿</h2>
+                
+                <article class="bio-box">
+                    <h2>(@jung__mn___)</h2>
+                    <p><strong>Jung Mona</strong> is a popular Thai digital creator and university student based in Bangkok. 
+                        <br>She is widely recognized for her engaging studygram and lifestyle content, focusing on language learning, 
+                        <br>book reviews, and productivity inspiration.</p>
+                </article>
+
+                <div class="social-buttons">
+                    <a href="https://www.tiktok.com/@monajung23" target="_blank" class="btn"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/jung__mn___/" target="_blank" class="btn"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+             <div class="top-controls">
+            <button id="themeToggle" class="theme-toggle-btn">
+                <i id="themeIcon" class="fa-solid fa-sun"></i>
+            </button>
+            <div class="lang-selector">
+                    <button class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="lang-th">TH</span>
+                        <span class="lang-ko" style="display:none;">KO</span>
+                        <span class="lang-en" style="display:none;">EN</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                        <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                        <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+                    </div>
+            </div>
+        </div>
+        </section>
+       
+    </div>
+    <!--<div class="main-container">
+    <div class="header-section">
+        <img src="img/Gemini_Generated_Image_tbmwkytbmwkytbmw.png" class="theme-img-light">
+        <img src="img/Gemini_Generated_Image_.png" class="theme-img-dark">
+    </div>
+    </div>-->
+
+   
+        <div class="web-container">
+            <header class="navbar">
+                
+                <div class="promo-banner">
+                    <div class="book-preview"></div>
+                    <div class="promo-box">
+                        <img src="img/ที่คั้นหนังสือ.pdf" width="50%">
+                        <i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ Limited Edition เฉพาะช่วงนี้เท่านั้น</span>
+                    </div>
+                    </div>
+                <nav class="nav-links">
+                    <a href="index.html" class="active">
+                        <span class="lang-th">หน้าแรก</span>
+                        <span class="lang-ko">홈</span>
+                        <span class="lang-en">HOME</span>
+                    </a>
+
+                    <a href="order.html">
+                        <span class="lang-th">สั่งซื้อ</span>
+                        <span class="lang-ko">주문하기</span>
+                        <span class="lang-en">ORDER</span>
+                    </a>
+                    
+                    <a href="track.html">
+                        <span class="lang-th">สถานะ</span>
+                        <span class="lang-ko">조회</span>
+                        <span class="lang-en">TRACK</span>
+                    </a>
+                    <a href="contact.html">
+                        <span class="lang-th">ติดต่อ</span>
+                        <span class="lang-ko">문의하기</span>
+                        <span class="lang-en">CONTACT</span>
+                    </a>
+                </nav>
+            </header>
+
+            <main class="main-card">
+                <div class="content-grid">
+                    <div class="book-cover"></div>
+
+                    <div class="book-details">
+                        <div class="book-cover-mini">
+                            <img src="img/minibook-removebg-preview.png" alt="The World of Time Cover" onerror="this.src='https://via.placeholder.com/150x200?text=Book+Cover'">
+                        </div>
+
+                        <h1 class="book-title-th">
+                            <span class="lang-th">โลกของนาฬิกา<br>และ<br>สีของฤดู</span>
+                            <span class="lang-ko">시계의 세계<br>와<br>계절의 색</span>
+                            <span class="lang-en">The World of Time<br>and<br>Colors of the Seasons</span>
+                        </h1>
+                    
+                        <div class="author-credits">
+                            <p>
+                                <span class="label">
+                                    <span class="lang-th">ภาษาไทย</span>
+                                    <span class="lang-ko">지은이</span>
+                                    <span class="lang-en">Thai Version</span>
+                                </span> 
+                                <span class="lang-th">พิชามญชุ์</span>
+                                <span class="lang-ko">정모나</span>
+                                <span class="lang-en">Mona Jeong(Pichamon)</span>
+                            </p>
+                            <p>
+                                <span class="label">
+                                    <span class="lang-th">ภาษาเกาหลี</span>
+                                    <span class="lang-ko">한국어</span>
+                                    <span class="lang-en">Korean Version</span>
+                                </span> 
+                                <span class="lang-th">พิชามญชุ์, ยงอันลี</span>
+                                <span class="lang-ko">정모나, 이용안</span>
+                                <span class="lang-en">Mona Jeong(Pichamon), Yong-an Lee</span>
+                            </p>
+                            <p>
+                                <span class="label">
+                                    <span class="lang-th">ภาพประกอบ</span>
+                                    <span class="lang-ko">그림</span>
+                                    <span class="lang-en">Illustration</span>
+                                </span> 
+                                <span>bluckyaday</span>
+                            </p>
+                        </div>
+
+                        <div class="action-buttons">
+                            <a href="preview.html" class="btn btn-action" style="text-decoration:none;">
+                                <span class="lang-th">ทดลองอ่านเนื้อหา</span>
+                                <span class="lang-ko">책 미리보기</span>
+                                <span class="lang-en">READ A PREVIEW</span>
+                            </a>
+                            <a href="order.html" class="btn btn-action" style="text-decoration:none;">
+                                <span class="lang-th">สั่งซื้อสินค้า</span>
+                                <span class="lang-ko">주문하기</span>
+                                <span class="lang-en">PLACE AN ORDER</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- ใน index.html วางไว้ท้ายสุดก่อนปิด </body> -->
+    <div class="footer-wrapper">
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    <span class="lang-th">© 2026 โลกของนาฬิกาและสีของฤดู - สงวนลิขสิทธิ์</span>
+                    <span class="lang-ko">© 2026 시계의 세계와 계절의 색 - All Rights Reserved</span>
+                    <span class="lang-en">© 2026 The World of Time and Colors of the Seasons - All Rights Reserved</span>
+                </p>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/jung__mn___/"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@monajung23"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@mymonajung"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+        </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            let particleInterval = null;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                    startFallingEffect('snow');
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    startFallingEffect('flower');
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+                const items = type === 'snow' ? ['❄', '✧', '•'] : ['🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 300);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            applyTheme(localStorage.getItem('selectedTheme') || 'light');
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+            }
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    changeLanguage(this.getAttribute('data-lang'));
+                });
+            });
+            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
+        });
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 3000); // 3000 คือ 3 วินาที
+        });
+        // เปลี่ยนคำสวัสดี
+        const greetings = ["สวัสดี...", "你好...", "안녕하세요...", "こんにちは...", "Hello..."];
+        let i = 0;
+        setInterval(() => {
+            document.getElementById('greeting').innerText = greetings[i];
+            i = (i + 1) % greetings.length;
+        }, 2500);
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-th">시계의 세계와계절의 색โลกของนาฬิกาและสีของฤดู</title>
+    <title class="lang-ko">시계의 세계와 계절의 색</title>
+    <title class="lang-en">The World of Time and Colors of the Seasons</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="main-content" style="display: none;">
+    </div>
+    
+    <div class="web-container">
+        <header class="navbar">
+            <div class="top-controls">
+                <button id="themeToggle" class="theme-toggle-btn">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+
+                <div class="lang-selector">
+                    <button class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="lang-th">TH</span>
+                        <span class="lang-ko" style="display:none;">KO</span>
+                        <span class="lang-en" style="display:none;">EN</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                        <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                        <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+                    </div>
+                </div>
+            </div>
+            <nav class="nav-links">
+               <a href="index.html" >
+                    <span class="lang-th">หน้าแรก</span>
+                    <span class="lang-ko">홈</span>
+                    <span class="lang-en">HOME</span>
+                </a>
+
+                <a href="order.html" class="active">
+                    <span class="lang-th">สั่งซื้อ</span>
+                    <span class="lang-ko">주문하기</span>
+                    <span class="lang-en">ORDER</span>
+                </a>
+                
+                <a href="track.html">
+                    <span class="lang-th">สถานะ</span>
+                    <span class="lang-ko">조회</span>
+                    <span class="lang-en">TRACK</span>
+                </a>
+                <a href="contact.html">
+                    <span class="lang-th">ติดต่อ</span>
+                    <span class="lang-ko">문의하기</span>
+                    <span class="lang-en">CONTACT</span>
+                </a>
+            </nav>
+        </header>
+
+        <main class="main-card">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">
+                <span class="lang-th">สั่งซื้อสินค้า</span>
+                <span class="lang-ko">주문하기</span>
+                <span class="lang-en">PLACE AN ORDER</span>
+            </h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 30px;">
+                <span class="lang-th">กรอกข้อมูลรายละเอียดเพื่อสั่งซื้อหนังสือ</span>
+                <span class="lang-ko">책을 주문하려면 상세 정보를 입력ร세요.</span>
+                <span class="lang-en">Fill out the details below to order your book.</span>
+            </p>
+            
+            <div class="order-grid">
+                <!-- เพิ่ม id ให้กับ form เพื่อให้ตรวจสอบข้อมูลได้ง่ายขึ้น -->
+                <form id="orderForm">
+                    <!-- ข้อมูลลูกค้า -->
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" id="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <!-- ระบบจำนวนและราคา -->
+                    <div class="form-group">
+                        <label>จำนวนเล่ม (สูงสุด 3 เล่ม)</label>
+                        <div class="quantity-control">
+                            <button type="button" onclick="changeQty(-1)">-</button>
+                            <input type="number" id="qty" value="1" readonly>
+                            <button type="button" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- แยกที่อยู่ตามแบบมาตรฐานไทย -->
+                    <div class="address-grid">
+                        <div class="form-group"><label>จังหวัด</label><input type="text" id="province" required></div>
+                        <div class="form-group"><label>อำเภอ/เขต</label><input type="text" id="district" required></div>
+                        <div class="form-group"><label>รหัสไปรษณีย์</label><input type="text" id="zipcode" required></div>
+                    </div>
+                    <div class="form-group"><label>บ้านเลขที่/ถนน/ตำบล</label><textarea id="address" rows="2" required></textarea></div>
+
+                    <!-- เปลี่ยนเป็น type="button" และเรียกฟังก์ชันเช็คเงื่อนไข -->
+                    <button type="button" class="buy-btn" onclick="goToPayment()">ยืนยันการสั่งซื้อ</button>
+                </form>
+
+                <div class="order-summary">
+                    <h3>
+                        <span class="lang-th">สรุปรายการสั่งซื้อ</span>
+                        <span class="lang-ko">주문 요약</span>
+                        <span class="lang-en">Order Summary</span>
+                    </h3>
+                    <div class="summary-item">
+                        <span class="lang-th">โลกของนาฬิกาและสีของฤดู</span>
+                        <span class="lang-ko">시계의 세계와 계절의 색</span>
+                        <span class="lang-en">The World of Time Book</span>
+                        <p> <span id="total-price">790</span> บาท</p>
+                    </div>
+                    <div class="summary-item">
+                        <span class="lang-th">ค่าจัดส่ง </span>
+                        <span class="lang-ko">배송비 </span>
+                        <span class="lang-en">Shipping Fee </span>
+                        <span class="lang-th">ฟรี</span>
+                        <span class="lang-ko">무료 배송</span>
+                        <span class="lang-en">Free</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 1. ฟังก์ชันปรับจำนวนสินค้า
+        function changeQty(val) {
+            let qtyInput = document.getElementById('qty');
+            let priceSpan = document.getElementById('total-price');
+            let newQty = parseInt(qtyInput.value) + val;
+            
+            if (newQty < 1) newQty = 1;
+            if (newQty > 3) newQty = 3;
+            
+            qtyInput.value = newQty;
+            priceSpan.innerText = newQty * 790;
+        }
+
+        // 2. ฟังก์ชันตรวจสอบข้อมูลและไปหน้าชำระเงิน
+        function goToPayment() {
+            let form = document.getElementById('orderForm');
+            
+            // เช็คว่าฟอร์มกรอกครบถ้วนตามเงื่อนไข required หรือยัง
+            if (!form.checkValidity()) {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วนก่อนดำเนินการต่อ');
+                form.reportValidity(); // แสดงจุดที่ยังกรอกไม่ครบให้ผู้ใช้เห็น
+                return;
+            }
+
+            // ถ้ากรอกครบแล้ว บันทึกราคารวมและข้อมูลอื่นๆ ลง sessionStorage (ถ้าต้องการ)
+            let total = document.getElementById('total-price').innerText;
+            sessionStorage.setItem('orderTotal', total);
+            
+            // เปลี่ยนไปหน้าชำระเงิน
+            window.location.href = 'payment.html';
+        }
+
+        // 3. ส่วนที่ทำงานหลังจากโหลดหน้าเว็บเสร็จ
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            let particleInterval = null;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) {
+                        themeIcon.className = 'fa-solid fa-sun';
+                        themeIcon.style.color = '#f59e0b';
+                    }
+                    startFallingEffect('snow');
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) {
+                        themeIcon.className = 'fa-solid fa-moon';
+                        themeIcon.style.color = '#94a3b8';
+                    }
+                    startFallingEffect('flower');
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            const savedTheme = localStorage.getItem('selectedTheme') || 'light';
+            applyTheme(savedTheme);
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+
+                const items = type === 'snow' ? ['❄', '✧', '•'] : [ '🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 350);
+            }
+
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => {
+                    el.classList.add('lang-hidden');
+                });
+                document.querySelectorAll('.lang-' + lang).forEach(el => {
+                    el.classList.remove('lang-hidden');
+                });
+            }
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    changeLanguage(selectedLang);
+                });
+            });
+            const savedLang = localStorage.getItem('selectedLanguage') || 'th';
+            changeLanguage(savedLang);
+        });
+
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById("loading-screen");
+                if (loadingScreen) loadingScreen.style.display = "none";
+                const mainContent = document.getElementById("main-content");
+                if (mainContent) mainContent.style.display = "block";
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

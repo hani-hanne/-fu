@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-th">โลกของนาฬิกาและสีของฤดู</title>
+    <title class="lang-ko">시계의 세계와 계절의 색</title>
+    <title class="lang-en">The World of Time and Colors of the Seasons</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="main-content" style="display: none;">
+    </div>
+    <div class="web-container">
+        <header class="navbar">
+            <nav class="nav-links">
+                <a href="index.html" >
+                    <span class="lang-th">หน้าแรก</span>
+                    <span class="lang-ko">홈</span>
+                    <span class="lang-en">HOME</span>
+                </a>
+
+                <a href="order.html">
+                    <span class="lang-th">สั่งซื้อ</span>
+                    <span class="lang-ko">주문하기</span>
+                    <span class="lang-en">ORDER</span>
+                </a>
+                
+                <a href="track.html">
+                    <span class="lang-th">สถานะ</span>
+                    <span class="lang-ko">조회</span>
+                    <span class="lang-en">TRACK</span>
+                </a>
+                <a href="contact.html" class="active">
+                    <span class="lang-th">ติดต่อ</span>
+                    <span class="lang-ko">문의하기</span>
+                    <span class="lang-en">CONTACT</span>
+                </a>
+            <div class="top-controls">
+                <button id="themeToggle" class="theme-toggle-btn">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+                <div class="lang-selector">
+                    <button class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <div class="lang-item lang-option" data-lang="th"><span class="flag">🇹🇭</span> THAI</div>
+                        <div class="lang-item lang-option" data-lang="ko"><span class="flag">🇰🇷</span> KOREAN</div>
+                        <div class="lang-item lang-option" data-lang="en"><span class="flag">🇬🇧</span> ENGLISH</div>
+                    </div>
+                </div>
+            </nav>
+            
+        </header>
+
+        <main class="main-card">
+            <div class="contact-container">
+                <h2 class="section-title">
+                    <span class="lang-th">ติดต่อเรา</span>
+                    <span class="lang-ko">문의하기</span>
+                    <span class="lang-en">CONTACT US</span>
+                </h2>
+                <p class="section-subtitle">
+                    <span class="lang-th">หากมีข้อสงสัยเกี่ยวกับหนังสือหรือสนใจร่วมงาน สามารถติดต่อพวกเราได้ผ่านช่องทางด้านล่างนี้</span>
+                    <span class="lang-ko">책에 대한 문의나 협업 제안은 아래 채널을 통해 연락주세요.</span>
+                    <span class="lang-en">If you have questions about the book or are interested in collaboration, please contact us below.</span>
+                </p>
+
+                <div class="contact-grid-layout">
+                    <div class="contact-methods">
+                        <a href="https://www.instagram.com/jung__mn___/" target="_blank" class="contact-item-link">
+                            <i class="fa-brands fa-instagram ig-icon"></i>
+                            <div>
+                                <h4>Instagram</h4>
+                                <p>jung__mn___</p>
+                            </div>
+                        </a>
+                        <a href="https://www.tiktok.com/@monajung23" target="_blank" class="contact-item-link">
+                            <i class="fa-brands fa-tiktok" ></i>
+                            <div>
+                                <h4>TikTok</h4>
+                                <p>(โ)มน(า)(monajung23)</p>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/@mymonajung" target="_blank" class="contact-item-link">
+                            <i class="fa-brands fa-youtube" ></i>
+                            <div>
+                                <h4>YouTube</h4>
+                                <p>MonaJung</p>
+                            </div>
+                        </a>
+                        <a href="mailto:thewoeldoftime@gmail.com" class="contact-item-link">
+                            <i class="fa-solid fa-envelope mail-icon"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>thewoeldoftime@gmail.com</p>
+                            </div>
+                        </a>
+                    </div>
+                    <form class="contact-quick-form">
+                        <h3>
+                            <span class="lang-th">ส่งข้อความหาเรา</span>
+                            <span class="lang-ko">메시지 보내기</span>
+                            <span class="lang-en">Send us a Message</span>
+                        </h3>
+                        <input type="email" placeholder="อีเมลของคุณ" id="contactEmail" required>
+                        <textarea rows="4" placeholder="พิมพ์ข้อความที่นี่..." id="contactMessage" required></textarea>
+                        <button type="submit" class="btn btn-action">
+                            <span class="lang-th">ส่งข้อความ</span>
+                            <span class="lang-ko">메시지 전송</span>
+                            <span class="lang-en">SEND MESSAGE</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            let particleInterval = null;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                    startFallingEffect('snow');
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    startFallingEffect('flower');
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+                const items = type === 'snow' ? ['❄', '✧', '•'] : [ '🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 300);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            applyTheme(localStorage.getItem('selectedTheme') || 'light');
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+
+                const contactEmail = document.getElementById('contactEmail');
+                const contactMessage = document.getElementById('contactMessage');
+                if (lang === 'th') {
+                    if (contactEmail) contactEmail.placeholder = "อีเมลของคุณ";
+                    if (contactMessage) contactMessage.placeholder = "พิมพ์ข้อความที่นี่...";
+                } else if (lang === 'ko') {
+                    if (contactEmail) contactEmail.placeholder = "이메일 주소";
+                    if (contactMessage) contactMessage.placeholder = "여기에 메시지를 입력하세요...";
+                } else if (lang === 'en') {
+                    if (contactEmail) contactEmail.placeholder = "Your Email";
+                    if (contactMessage) contactMessage.placeholder = "Type your message here...";
+                }
+            }
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() { changeLanguage(this.getAttribute('data-lang')); });
+            });
+            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
+        });
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 2000); // 3000 คือ 3 วินาที
+        });
+    </script>
+</body>
+</html>

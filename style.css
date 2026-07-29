@@ -1,0 +1,1066 @@
+/* ==========================================================================
+   1. ตัวแปรระบบสีสำหรับสลับธีม (Theme Colors)
+   ========================================================================== */
+:root {
+    /* ☀️ ธีมฤดูร้อน - เน้นโทนอุ่น ทราย แดด และฟ้าใส */
+   /* background-image: url(img/Gemini_Generated_Image_.png);
+    */--bg-main: #fffdf9;               
+    --bg-container: rgba(254, 243, 199, 0.6); /* ปรับให้โปร่งแสงเห็นดาวจางๆ นุ่มขึ้น */
+    --bg-card: #ffffff;
+    --text-main: #2d2214;             
+    --text-muted: #785a3c;            
+    --text-active: #b5540a;           
+    --border-color: #fde68a;          
+    --toggle-color: #f59e0b;          
+    --bg-preview: #fefaf0;
+}
+
+body.dark-theme {
+    /* ❄️ ธีมฤดูหนาว - เน้นโทนเย็น หิมะ ค่ำคืน ไอซ์บลู */
+    /*background-image: url(img/Gemini_Generated_Image_tbmwkytbmwkytbmw.png);
+    */--bg-main: #1e2530;               
+    --bg-container: rgba(203, 221, 241, 0.7); 
+    --bg-card: #283548;               
+    --text-main: #f1f5f9;             
+    --text-muted: #fff;            
+    --text-active: #38bdf8;           
+    --border-color: #3f516a;          
+    --toggle-color: #38bdf8;          
+    --bg-preview: #151f32;
+}
+
+/* คลาสสำหรับซ่อนข้อความภาษาที่ไม่ได้เลือก */
+.lang-hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   ระบบเอฟเฟกต์ประจำฤดูกาล (Snow & Flower Falling Effect)
+   ========================================================================== */
+.falling-particle {
+    position: fixed;
+    top: -20px;
+    pointer-events: none; 
+    z-index: 9999;
+    animation: fall linear forwards;
+    user-select: none;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) translateX(50px);
+        opacity: 0.3;
+    }
+}
+
+/* ==========================================================================
+   2. สไตล์หลักของเว็บไซต์ (ปรับใช้ตัวแปรสี)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* เพิ่มฟอนต์สไตล์มินิมอล/ลายมือน่ารัก เช่น Mali, Itim, Kanit ลงไป */
+    font-family: 'Mali', 'Itim', 'Kanit', 'Segoe UI', sans-serif;
+}
+
+/* ธีมเริ่มต้น: กลางวัน / พระอาทิตย์ (ดึงดาวสีฟ้ากลับมาแล้วครับ!) */
+.main-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.header-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+/*
+    คุมขนาดรูปภาพผู้หญิงด้านบนสุด 
+    .header-section .theme-img-light,
+    .header-section .theme-img-dark {
+        width: 100%;   
+        height: 100%;  
+        object-fit: cover;
+        box-shadow: 0 8px 20px rgba(45, 34, 20, 0.1);
+        transition: all 0.3s ease;
+        border-radius: 10px;
+    }
+*/
+/* 2. สถานะธีมปกติ (Light Theme): แสดงรูปฤดูร้อน ซ่อนรูปฤดูหนาว */
+.header-section .theme-img-light {
+    display: block !important;
+}
+
+.header-section .theme-img-dark {
+    display: none !important;
+}
+
+/* 3. สถานะธีมมืด (Dark Theme): สลับมาแสดงรูปฤดูหนาว ซ่อนรูปฤดูร้อน */
+body.dark-theme .header-section .theme-img-light {
+    display: none !important;
+}
+body.dark-theme .header-section .theme-img-dark {
+    display: block !important;
+}
+.profile-img img {
+    width: 100%;
+    max-width: 120px; /* 🔥 ปรับตัวเลขตรงนี้ให้เล็กลงตามต้องการ (เช่น 100px - 150px) */
+    height: 120px;    /* 🔥 ล็อกความสูงให้เท่ากับความกว้างเพื่อเป็นสี่เหลี่ยมจัตุรัส */
+    object-fit: cover; /* ช่วยให้รูปไม่เบี้ยวและตัดสัดส่วนพอดี */
+    border-radius: 50%; /* แถม: ปรับให้เป็นวงกลมน่ารักๆ เข้ากับธีม (ถ้าชอบแบบเดิมให้ลบบรรทัดนี้ได้ครับ) */
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   จัดการหน้า Loading (ปรับขนาดรูปภาพให้เล็กลง)
+   ========================================================================== */
+/* กำหนดสไตล์ให้รูปภาพ */
+.kid-photo {
+    position: absolute;      
+    bottom: 0px;               /* ปรับให้ขยับขึ้นมาด้านบนของกล่อง .content-wrapper */
+    right: -100px;           /* ขยับเข้ามาจากขอบขวาเล็กน้อย */
+    width: 650px;            /* ลดขนาดลงเล็กน้อยเพื่อให้พอดีกับช่องว่าง */
+    height: auto;
+    border-radius: 15px;     
+    z-index: 10;             
+    object-fit: cover;
+}
+
+/* อย่าลืมเช็คให้แน่ใจว่า .content-wrapper มีการตั้งค่า position เป็น relative */
+.content-wrapper {
+    position: relative;      /* สำคัญมาก: เพื่อให้ absolute ทำงานโดยอ้างอิงจากกล่องนี้ */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 350px;
+}
+
+.hero-section { 
+    position: relative; 
+    width: 100%; height: 45vh; 
+    overflow: hidden; 
+    background: transparent !important; }
+.web-container {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;    /* จัดให้อยู่ตรงกลางหน้าจอ */
+    display: block;    /* บังคับให้เป็นบล็อกปกติ */
+    margin-top: 20px;  /* เว้นระยะห่างจากส่วน hero ด้านบน */
+}
+#greeting {
+    font-size: 50px;
+    color: var(--text-active);
+    margin-bottom: 10px;
+    /* เพิ่มส่วนนี้เพื่อล็อกขนาดไม่ให้ขยับ */
+    width: 300px;           /* กำหนดความกว้างคงที่ */
+    height: 60px;           /* กำหนดความสูงคงที่ให้พอดีกับตัวอักษร */
+    display: flex;          /* ใช้ flex เพื่อช่วยจัดวาง */
+    align-items: center;    /* จัดตัวหนังสือให้อยู่ตรงกลางแนวตั้ง */
+}
+.bio-box {
+    margin-top: 20px;
+    line-height: 1.6;
+    color: #333;
+    max-width: 100%; /* ให้ยืดเต็มแค่ 40% ของหน้าจอที่เราตั้งไว้ข้างบน */
+    background: rgba(255, 255, 255, 0.7); /* เพิ่มสีพื้นหลังแบบโปร่งแสงให้ข้อความอ่านง่ายขึ้น */
+    padding: 15px;
+    border-radius: 10px;
+}
+p{font-size: small;}
+.social-buttons { display: flex; gap: 20px; margin-top: 20px;}
+.btn { 
+    padding: 15px; font-size: 24px; background: #fff; 
+    color: #333; border-radius: 50%; text-decoration: none; 
+    transition: transform 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+.btn:hover { transform: scale(1.2); color: #5f9ea0; }
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; /* สีพื้นหลังหน้า Loading */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* ให้ทับทุกอย่าง */
+    transition: opacity 0.5s ease; /* เพิ่มเอฟเฟกต์ค่อยๆ หายไป */
+}
+
+/* ควบคุมขนาดของรูปตัวการ์ตูน */
+.character {
+    width: 100%; /* ให้ยืดตาม container */
+    max-width: 150px; /* 🔥 ปรับตัวเลขตรงนี้ให้เล็กลงตามต้องการ (เช่น 100px - 200px) */
+    height: auto;    /* ให้ความสูงปรับตามอัตราส่วนภาพ */
+    object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
+    animation: bounce 1.5s infinite ease-in-out;
+}
+/* จัดกลุ่มรูปภาพและข้อความให้เรียงกันแนวตั้ง */
+.loading-content {
+    display: flex;
+    flex-direction: column; /* เรียงจากบนลงล่าง */
+    align-items: center;    /* จัดให้อยู่กึ่งกลางในแนวนอน */
+    gap: 15px;              /* ระยะห่างระหว่างรูปกับข้อความ */
+}
+
+/* ปรับแต่งสไตล์ข้อความ */
+.loading-text {
+    font-family: 'Mali', 'Itim', cursive; /* ใช้ฟอนต์เดียวกับธีมเว็บ */
+    font-size: 18px;
+    color: #785a3c;        /* ใช้สีโทนเดียวกับเว็บ */
+    animation: fadePulse 2s infinite ease-in-out; /* เพิ่มเอฟเฟกต์กระพริบจางๆ */
+}
+
+/* เอฟเฟกต์ข้อความกระพริบจางๆ */
+@keyframes fadePulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* เอฟเฟกต์ขยับขึ้นลง */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+body {
+    background-color: var(--bg-main);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="rgba(181, 84, 10, 0.08)"/></svg>');
+    background-attachment: fixed; /* 🔥 เพิ่มบรรทัดนี้เพื่อล็อกพื้นหลังดาวไม่ให้หลุดเวลาเลื่อนหน้าจอ */
+    color: var(--text-main);
+    display: block;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 25px;
+    transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
+}
+
+/* ธีมมืด / เปลี่ยนลายดาวให้เข้ากับความมืดโทนพาสเทลจางๆ */
+body.dark-theme {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="rgba(255, 255, 255, 0.05)"/></svg>');
+}
+
+.web-container {
+    width: 100%;
+    max-width: 950px;
+    background-color: var(--bg-container);
+    border-radius: 30px; /* เพิ่มความโค้งมนให้ดูตะมุตะมิขึ้น */
+    padding: 35px 40px;
+    box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+.navbar {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+    position: relative;
+    align-content: center
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text-active);
+    border-bottom: 2px solid var(--text-active);
+}
+
+.promo-banner {
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+    background: var(--border-color)
+}
+
+.book-preview {
+    width: auto;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.promo-box{
+    background: var(--bg-card);            /* สีพื้นหลังกล่องโปรโมชั่น */
+    color: var(--text-main);                /* สีตัวอักษรให้ดูเป็นจุดสนใจ */
+    padding: 5px;                 /* เว้นระยะห่างภายในกล่อง */
+    border-radius: 10px;           /* ปรับมุมให้มน */
+    border: 2px dashed var(--text-muted);    /* ขอบเส้นประเพื่อให้ดูเป็น Limited Edition */
+    font-weight: bold;             /* ตัวหนา */
+    text-align: center;            /* จัดข้อความให้อยู่ตรงกลาง */
+    margin: 15px 0;                /* เว้นระยะห่างจากส่วนประกอบอื่น */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.limited-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #f43f5e;
+     color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+        }
+/* ปุ่มสลับธีม */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--toggle-color);
+    transition: transform 0.3s ease, color 0.3s ease;
+    padding: 5px;
+}
+.theme-toggle-btn:hover {
+    transform: scale(1.15) rotate(15deg);
+}
+
+/* ส่วนตัวเลือกภาษาเดิม */
+.lang-selector {
+    position: relative;
+}
+.lang-btn {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.lang-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    z-index: 100;
+    min-width: 160px;
+    overflow: hidden;
+}
+.lang-selector:hover .lang-dropdown {
+    display: block;
+}
+.lang-item {
+    padding: 11px 15px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--text-main);
+}
+.lang-item:hover {
+    background-color: var(--bg-main);
+}
+
+/* ระบบสลับภาษา */
+.lang-hidden {
+    display: none !important;
+}
+
+/* การ์ดหลักเนื้อหา */
+.main-card {
+    background-color: var(--bg-card);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+    border: 1px solid rgba(253, 230, 138, 0.4);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.main-illustration img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.main-illustration img, .book-cover-mini img {
+    transition: transform 0.5s ease;
+}
+
+.main-illustration img:hover {
+    transform: scale(1.02) rotate(1deg); /* ขยายและเอียงเล็กน้อย */
+}
+
+.book-details-main {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* จัดข้อความให้อยู่กึ่งกลางแนวตั้งกับรูป */
+}
+.book-cover {
+    width: 100%;              /* ให้รูปกินพื้นที่ 40% */
+    height: 600px;       /* กำหนดความสูงให้ชัดเจน */
+    background-size: cover;
+    border-radius: 10px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;          /* ไม่ให้รูปโดนบีบเมื่อเนื้อหาเยอะ */
+    background-image: url('img/IMG_3281.JPG');/* ใส่ชื่อไฟล์ให้ถูกต้อง */
+} 
+.book-cover:hover {
+    /* รูปที่สอง (รูปที่จะเปลี่ยนไปโชว์) */
+    background-image: url('img/rmbook.jpg'); 
+}
+
+.mainbook {
+    width: 100%;           /* ปรับให้กว้างเต็มกล่องแม่ */
+    max-width: 350px;      /* 🔹 ปรับตัวเลขนี้ให้น้อยลง เช่น 200px หรือ 250px เพื่อลดขนาด */
+    height: auto;          /* ล็อกความสูงให้สัมพันธ์กับความกว้าง */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    object-fit: contain;   /* ใช้ contain เพื่อไม่ให้ภาพโดนตัด */
+    flex-shrink: 0;        /* ป้องกันไม่ให้ภาพโดนบีบ */
+    margin: 0 auto;        /* จัดให้อยู่ตรงกลาง */
+   
+}
+
+.book-cover-mini img {
+    width: 90px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.book-title-th {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.author-credits {
+    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.author-credits p {
+    margin-bottom: 6px;
+}
+.author-credits .label {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-right: 8px;
+    background: rgba(254, 243, 199, 0.5); /* ไฮไลต์จางๆ หลังข้อความหัวข้อ */
+    padding: 1px 6px;
+    border-radius: 6px;
+}
+body.dark-theme .author-credits .label {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-action {
+    background-color: var(--border-color); /* ปรับปุ่มโทนอุ่นเหลืองครีมเข้ากับธีม */
+    color:var(--text-muted);;
+    box-shadow: 0 4px 10px rgba(181, 84, 10, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+.btn-action:hover {
+    background-color: var(--border-color);
+    color: var(--text-muted);;
+    transform: translateY(-5px); /* ปุ่มเด้งขึ้น */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+/* หน้าพรีวิวสไลเดอร์ */
+.book-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+}
+
+.book-page-wrapper {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--bg-preview);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease;
+}
+
+.book-page-wrapper .page-img {
+    width: 100%;
+    height: auto;
+    display: none;
+    object-fit: contain;
+}
+
+.book-page-wrapper .page-img.active {
+    display: block;
+}
+
+.slider-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.slider-btn:hover {
+    background-color: var(--bg-main);
+}
+
+.page-indicator {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 15px;
+}
+
+/* หน้าฟอร์มและข้อมูลสั่งซื้อ */
+.order-grid, .contact-grid-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.order-form, .contact-quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+button {
+    padding: 10px 20px;
+    background: #5f9ea0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* ปุ่มบวก/ลบ จำนวน */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.quantity-control button {
+    padding: 5px 15px;
+    background: #5f9ea0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--text-active);
+}
+
+.btn-action-submit {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    padding: 14px;
+    font-size: 14px;
+}
+
+.btn-action-submit:hover {
+    background-color: #172554;
+}
+
+.order-summary, .contact-methods {
+    background-color: var(--bg-main);
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-main);
+}
+
+.payment-info {
+    margin-top: 15px;
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.payment-info h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.payment-page { 
+    padding: 20px 20px; 
+    text-align: center; 
+    background: transparent; 
+    min-height: auto; 
+}
+.qr-box { 
+    background: var(--bg-card); /* เปลี่ยนจาก var(--text-main) เป็นสีการ์ดตามธีม */
+    color: var(--text-main);    /* กำหนดสีตัวหนังสือให้ชัดเจน */
+    padding: 40px; 
+    border-radius: 20px; 
+    display: inline-block; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    border: 1px solid var(--border-color);
+}
+.qr-img { 
+    width: 250px; 
+    height: 250px; 
+    background: var(--bg-container); 
+    margin: 20px 0; 
+    object-fit: cover;
+}
+
+.account-number {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 5px 0;
+    color: #1e3a8a;
+}
+
+body.dark-theme .account-number {
+    color: #abc4ff;
+}
+
+.contact-item-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: transform 0.2s;
+}
+
+.contact-item-link:hover {
+    transform: translateY(-2px);
+}
+
+.tracking-container .btn-action {
+    background-color: var(--toggle-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.tracking-container .btn-action:hover {
+    opacity: 0.9;
+}
+.lang-hidden { display: none !important; }
+/* ==========================================================================
+   3. ระบบ Responsive จัดดีไซน์สำหรับหน้าจอมือถือ
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    .kid-photo {
+        position: fixed;
+        top: 200px; right: 0; width: 70%; height: 50%;
+        object-fit: contain; z-index: -1;
+        object-position: center right; 
+        transform: scale(1);
+        background-size: 80%;
+    }
+    /* 1. ให้ข้อความไม่กว้างเกินไปและไม่บังวิดีโอ */
+    .hero-section {
+        height: auto !important;
+        min-height: 180px !important; /* ปรับตัวเลขนี้ให้สูงขึ้นตามต้องการเพื่อเพิ่มพื้นที่ */
+        padding-bottom: 30px;
+    }
+
+    /* 2. ขยายความสูงและเพิ่มระยะห่างของกล่องข้อความ */
+    .content-wrapper {
+        min-height: 350px !important; /* เพิ่มความสูงขั้นต่ำให้กล่อง */
+        margin-bottom: 30px !important;
+    }
+
+    /* 2. จัดการการ์ดหนังสือให้เรียงเป็นแนวตั้ง */
+    .product-card {
+        flex-direction: column; /* วางรูปไว้บน ข้อความไว้ล่าง */
+        padding: 15px;
+    }
+    .book-cover{
+        width: 100%;
+        background-size: cover;
+    }
+    
+    /* 3. ปรับขนาดรูปหนังสือบนมือถือ */
+    .minibook {
+        display: none;
+        width: 30%; /* ให้รูปกว้างเต็มหน้าจอมือถือ */
+        height: auto;
+    }
+
+    /* 4. ปรับขนาดตัวอักษรให้น้อยลงเพื่อให้พอดีจอ */
+    #greeting { font-size: 30px; }
+    
+    /* 5. ปรับ Navbar ให้เล็กลง */
+    .navbar {
+        justify-content: center;
+        gap: 10px;
+    }
+}
+   @media (max-width: 768px) {
+    .web-container { padding: 20px 15px; border-radius: 20px; }
+    .main-card { padding: 25px 20px; border-radius: 18px; }
+    .navbar { flex-direction: column; gap: 15px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .nav-links a { font-size: 14px; padding: 6px 10px; }
+    .order-grid, .content-grid, .contact-grid-layout { grid-template-columns: 1fr; gap: 30px; }
+    .btn-action { width: 100%; }
+    
+
+    .main-card {
+        padding: 25px 15px !important;
+        border-radius: 14px !important;
+    }
+
+    .navbar {
+        flex-direction: column !important; /* เปลี่ยนเมนูจากแนวนอนเป็นแนวตั้งบนมือถือ */
+        gap: 15px !important;
+        padding: 15px !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-wrap: wrap !important; /* ให้เมนูเรียงต่อกันและขึ้นบรรทัดใหม่ได้ถ้าจอแคบ */
+        justify-content: center !important;
+        gap: 12px !important;
+    }
+
+    .nav-links a {
+        font-size: 14px !important; /* ปรับขนาดตัวอักษรเมนูเล็กลงเล็กน้อยให้เหมาะกับนิ้วกด */
+        padding: 6px 10px !important;
+    }
+
+    /* ตัวเลือกภาษาบนมือถือ */
+    .lang-dropdown {
+        position: absolute !important;
+        right: 0 !important;
+        top: 40px !important;
+        min-width: 120px !important;
+    }
+    
+    /* ฟอร์มสั่งซื้อและปุ่มกดบนมือถือ */
+    .order-grid, .content-grid, .contact-grid-layout {
+        grid-template-columns: 1fr !important; /* บนมือถือเปลี่ยนจาก 2 คอลัมน์เป็นแถวเดี่ยวเรียงลงมา */
+        gap: 20px !important;
+    }
+    
+    .form-group-row {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .btn-action, .btn-action-submit {
+        width: 100% !important; /* ให้ปุ่มกดยาวเต็มจอโทรศัพท์ เพื่อให้กดง่ายด้วยนิ้วโป้ง */
+        box-sizing: border-box !important;
+    }
+
+    /* ป้องกันรูปพรีวิวบีบลีบแบนบนมือถือ */
+    .book-slider {
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    .book-page-wrapper {
+        max-width: 100% !important;
+        aspect-ratio: auto !important;
+        height: auto !important;
+        min-height: 250px !important;
+        display: flex !important;
+    }
+
+    .book-page-wrapper .page-img {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 380px !important;
+    }
+    .book-cover-mini{
+        display: none;
+        width: 30%; /* ให้รูปกว้างเต็มหน้าจอมือถือ */
+        height: auto;
+
+    }
+}
+/* ==========================================================================
+   Responsive Design: ปรับการแสดงผลสำหรับมือถือ (จอเล็กกว่า 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    
+    /* 1. ปรับปุ่มเปลี่ยนธีมให้ใหญ่ขึ้นเล็กน้อยเพื่อให้กดง่าย */
+    .theme-toggle-btn {
+        font-size: 24px; /* ขยายจาก 22px เป็น 24px */
+        padding: 10px;   /* เพิ่มพื้นที่คลิก */
+    }
+
+    /* 2. ปรับตัวเลือกภาษาให้เหมาะสมกับหน้าจอมือถือ */
+    .lang-btn {
+        padding: 6px 10px; /* ลด padding เพื่อประหยัดพื้นที่ */
+        font-size: 12px;
+    }
+
+    .lang-dropdown {
+        min-width: 130px; /* ย่อ dropdown ให้แคบลงนิดหน่อย */
+        right: -10px;      /* ขยับตำแหน่งไม่ให้ล้นจอ */
+    }
+
+    .lang-item {
+        padding: 14px 12px; /* เพิ่มพื้นที่สัมผัสให้กดง่ายขึ้น */
+        font-size: 14px;    /* ตัวหนังสือใหญ่ขึ้นนิดหน่อยให้อ่านง่าย */
+    }
+}
+
+/* กรณีจอเล็กมากจริงๆ (เช่น iPhone SE) */
+@media (max-width: 375px) {
+    .navbar {
+        gap: 5px; /* ลดระยะห่างระหว่างเมนู */
+    }
+}
+/* ==========================================================================
+   จัดกลุ่มปุ่มเปลี่ยนธีมและเปลี่ยนภาษาไปไว้มุมบนขวา
+   ========================================================================== */
+
+/* จัดให้หัวเว็บเป็นตัวยึดตำแหน่งรองรับปุ่ม */
+.header-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+   
+}
+
+/* กล่องรวมปุ่ม จัดให้อยู่ขวาสุดและเรียงแนวนอน */
+.top-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
+    position: absolute;
+    top: 0;
+    right: 0; 
+    background-color: var(--bg-container);
+    border-radius: 30px;
+    padding: 10px 10px;
+    box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+/* ล้างตำแหน่ง absolute เดิมของปุ่มเปลี่ยนธีมไม่ให้ซ้อนทับ */
+.theme-toggle-btn {
+    position: static !important;
+    transform: none;
+}
+.theme-toggle-btn:hover {
+    transform: scale(1.15) rotate(15deg);
+}
+
+/* จัดตำแหน่งเมนูภาษาเวลากดดรอปดาวน์ให้ไม่ล้นขอบขวา */
+.lang-dropdown {
+    right: 0 !important;
+    left: auto !important;
+    top: 110% !important;
+}
+
+/* Footer Styles */
+.footer {
+    margin-top: auto; /* ส่วนนี้คือตัวสั่งให้มันไปอยู่ล่างสุด */
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.footer-socials a {
+    color: var(--text-muted);
+    transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+    color: var(--text-active);
+}
+
+/* ครอบ Footer ให้บังคับอยู่กลางหน้าจอ 100% โดยไม่ไปกวนส่วนอื่น */
+.footer-wrapper {
+    width: 100%;
+    display: flex;       /* ใช้ flex แค่ใน wrapper นี้ */
+    justify-content: center; /* ดันให้เนื้อหา footer อยู่กลาง */
+    padding: 20px 0;
+}
+
+.preview-actions {
+    display: flex;             /* เปิดใช้งาน Flexbox */
+    justify-content: center;    /* จัดให้อยู่กลางในแนวนอน */
+    align-items: center;        /* จัดให้อยู่กลางในแนวตั้ง */
+    width: 100%;               /* ให้กว้างเต็มพื้นที่กล่องแม่ */
+    padding: 20px 0;           /* เว้นระยะห่างเล็กน้อย */
+}
+
+.book-title-th {
+    overflow: hidden; /* ซ่อนข้อความส่วนเกิน */
+    border-right: .15em solid var(--toggle-color); /* ขีดกระพริบ */
+    white-space: nowrap; /* ให้ข้อความอยู่บรรทัดเดียว */
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--text-main) }
+}
+

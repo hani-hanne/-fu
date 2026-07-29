@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-th">ตรวจสอบสถานะ</title>
+    <title class="lang-ko">배송 조회</title>
+    <title class="lang-en">Order Tracking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="main-content" style="display: none;">
+    </div>
+    <div class="web-container">
+        <header class="navbar">
+            <nav class="nav-links">
+                <a href="index.html">
+                    <span class="lang-th">หน้าแรก</span>
+                    <span class="lang-ko">홈</span>
+                    <span class="lang-en">HOME</span>
+                </a>
+
+                <a href="order.html">
+                    <span class="lang-th">สั่งซื้อ</span>
+                    <span class="lang-ko">주문하기</span>
+                    <span class="lang-en">ORDER</span>
+                </a>
+                
+                <a href="track.html" class="active">
+                    <span class="lang-th">สถานะ</span>
+                    <span class="lang-ko">조회</span>
+                    <span class="lang-en">TRACK</span>
+                </a>
+                <a href="contact.html">
+                    <span class="lang-th">ติดต่อ</span>
+                    <span class="lang-ko">문의하기</span>
+                    <span class="lang-en">CONTACT</span>
+                </a>
+                <div class="top-controls">
+        <button id="themeToggle" class="theme-toggle-btn">
+            <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
+
+        <!---<div class="lang-selector">
+            <button class="lang-btn">
+                <i class="fa-solid fa-globe"></i>
+                <span class="lang-th">TH</span>
+                <span class="lang-ko" style="display:none;">KO</span>
+                <span class="lang-en" style="display:none;">EN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="lang-dropdown">
+                <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+            </div>
+        </div>--->
+            </nav>
+        </header>
+
+        <main class="main-card">
+            <h2 class="section-title">
+                <span class="lang-th">ตรวจสอบสถานะการสั่งซื้อ</span>
+                <span class="lang-ko">주문 상태 조회</span>
+                <span class="lang-en">Order Tracking</span>
+            </h2>
+            
+            <div class="tracking-container" style="max-width: 500px; margin: 0 auto; text-align: center;">
+                <input type="text" id="orderId" placeholder="กรอกหมายเลขคำสั่งซื้อ / Order ID" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 15px;">
+                <button onclick="trackOrder()" class="btn btn-action" style="width: 100%;">
+                    <span class="lang-th">ตรวจสอบ</span><span class="lang-ko">조회하기</span><span class="lang-en">TRACK</span>
+                </button>
+                
+                <div id="result" style="margin-top: 20px; padding: 20px; border-radius: 10px; display: none;"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        //te//
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            let particleInterval = null;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                    startFallingEffect('snow');
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    startFallingEffect('flower');
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+                const items = type === 'snow' ? ['❄', '✧', '•'] : ['🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 300);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            applyTheme(localStorage.getItem('selectedTheme') || 'light');
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+            }
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    changeLanguage(this.getAttribute('data-lang'));
+                });
+            });
+            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
+        });
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 3000); // 3000 คือ 3 วินาที
+        });
+        function trackOrder() {
+            const id = document.getElementById('orderId').value;
+            const resultDiv = document.getElementById('result');
+            
+            // 1. ใส่ URL ของ Google Script ของคุณตรงนี้ (URL ที่ลงท้ายด้วย /exec)
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbyG0y0spF9bpVbTpqr4FbGcMFNu9LBgP7IwmbjIL3ZnFPv5PJuv59JOlkBSeCD3avM9sg/exec";
+
+            // 2. ส่งค่า ID ไปเช็กที่ Google Sheet
+            fetch(scriptUrl + "?id=" + id)
+            .then(res => res.json())
+            .then(data => {
+                resultDiv.style.display = "block";
+                if(data.result === "found") {
+                    resultDiv.style.backgroundColor = "#dcfce7";
+                    resultDiv.innerHTML = `<h3>✅ พบข้อมูล!</h3>
+                                          <p>สถานะ: พบคำสั่งซื้อ</p>
+                                          <p>เลขพัสดุ: <b>${data.tracking || 'กำลังรอการจัดส่ง'}</b></p>`;
+                } else {
+                    resultDiv.style.backgroundColor = "#fee2e2";
+                    resultDiv.innerHTML = "<h3>❌ ไม่พบข้อมูล</h3><p>กรุณาตรวจสอบหมายเลขคำสั่งซื้ออีกครั้ง</p>";
+                }
+            })
+            .catch(err => {
+                resultDiv.style.display = "block";
+                resultDiv.innerHTML = "<h3>⚠️ เกิดข้อผิดพลาด</h3><p>ระบบเชื่อมต่อไม่ได้ โปรดตรวจสอบ URL หรือการ Deploy</p>";
+            });
+        }
+
+        // ระบบสลับภาษา (คัดลอกมาจาก index.html เดิมของคุณ)
+        const savedLang = localStorage.getItem('selectedLanguage') || 'th';
+        document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+        document.querySelectorAll('.lang-' + savedLang).forEach(el => el.classList.remove('lang-hidden'));
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 2000); // 3000 คือ 3 วินาที
+        });
+    </script>
+</body>
+</html>
