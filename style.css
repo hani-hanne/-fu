@@ -125,14 +125,16 @@ body.dark-theme .header-section .theme-img-dark {
    ========================================================================== */
 /* กำหนดสไตล์ให้รูปภาพ */
 .kid-photo {
-    position: absolute;      
-    bottom: 0px;               /* ปรับให้ขยับขึ้นมาด้านบนของกล่อง .content-wrapper */
-    right: -100px;           /* ขยับเข้ามาจากขอบขวาเล็กน้อย */
+    position: fixed;      
+    top: 70px;             /* ปรับให้ขยับขึ้นมาด้านบนของกล่อง .content-wrapper */
+    right: 0px;           /* ขยับเข้ามาจากขอบขวาเล็กน้อย */
     width: 650px;            /* ลดขนาดลงเล็กน้อยเพื่อให้พอดีกับช่องว่าง */
     height: auto;
     border-radius: 15px;     
-    z-index: 10;             
-    object-fit: cover;
+    z-index: -1;             
+    object-fit: contain;
+    object-position: center right; 
+    background-size: 120%;
 }
 
 /* อย่าลืมเช็คให้แน่ใจว่า .content-wrapper มีการตั้งค่า position เป็น relative */
@@ -170,6 +172,7 @@ body.dark-theme .header-section .theme-img-dark {
 .bio-box {
     margin-top: 20px;
     line-height: 1.6;
+    z-index: -2;
     color: #333;
     max-width: 100%; /* ให้ยืดเต็มแค่ 40% ของหน้าจอที่เราตั้งไว้ข้างบน */
     background: rgba(255, 255, 255, 0.7); /* เพิ่มสีพื้นหลังแบบโปร่งแสงให้ข้อความอ่านง่ายขึ้น */
@@ -790,7 +793,7 @@ body.dark-theme .account-number {
 @media screen and (max-width: 768px) {
     .kid-photo {
         position: fixed;
-        top: 200px; right: 0; width: 70%; height: 50%;
+        top: 180px; right: 0; width: 80%; height: 50%;
         object-fit: contain; z-index: -1;
         object-position: center right; 
         transform: scale(1);
@@ -834,9 +837,39 @@ body.dark-theme .account-number {
         justify-content: center;
         gap: 10px;
     }
+    .top-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+    right: 0; 
+    background-color: var(--bg-container);
+    border-radius: 20px;
+    padding: 1px 2px;
+    box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
+    transition: background-color 0.3s ease;
+    }   
 }
    @media (max-width: 768px) {
     .web-container { padding: 20px 15px; border-radius: 20px; }
+    .web-container .top-controls{display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+    right: -15px; 
+    background-color: var(--bg-container);
+    border-radius: 15px;
+    padding: 1px 1px;
+    box-shadow: 0 10px 25px rgba(45, 34, 20, 0.05);
+    transition: background-color 0.3s ease;}
     .main-card { padding: 25px 20px; border-radius: 18px; }
     .navbar { flex-direction: column; gap: 15px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
@@ -971,15 +1004,16 @@ body.dark-theme .account-number {
 /* กล่องรวมปุ่ม จัดให้อยู่ขวาสุดและเรียงแนวนอน */
 .top-controls {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 10px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
+    gap: 5px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
     position: absolute;
     top: 0;
+    z-index: 9999;
     right: 0; 
     background-color: var(--bg-container);
     border-radius: 30px;
-    padding: 10px 10px;
+    padding: 1px 3px;
     box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
     transition: background-color 0.3s ease;
 }
