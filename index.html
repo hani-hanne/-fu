@@ -244,6 +244,8 @@
                 });
             }
             applyTheme(localStorage.getItem('selectedTheme') || 'dark');
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            applyTheme(savedTheme);
 
             const langOptions = document.querySelectorAll('.lang-option');
             function changeLanguage(lang) {

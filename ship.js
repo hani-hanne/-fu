@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    const savedTheme = localStorage.getItem('selectedTheme') || 'light';
+    const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
     applyTheme(savedTheme);
 
     // เรียกใช้งาน API หากต้องการดึงข้อมูลตั้งแต่โหลดหน้าเว็บ

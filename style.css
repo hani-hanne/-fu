@@ -135,6 +135,7 @@ body.dark-theme .header-section .theme-img-dark {
     object-fit: contain;
     object-position: center right; 
     background-size: 120%;
+    transform: none !important;
 }
 
 /* อย่าลืมเช็คให้แน่ใจว่า .content-wrapper มีการตั้งค่า position เป็น relative */
