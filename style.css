@@ -205,7 +205,7 @@ p{font-size: small;}
 /* ควบคุมขนาดของรูปตัวการ์ตูน */
 .character {
     width: 100%; /* ให้ยืดตาม container */
-    max-width: 150px; /* 🔥 ปรับตัวเลขตรงนี้ให้เล็กลงตามต้องการ (เช่น 100px - 200px) */
+    max-width: 400px; /* 🔥 ปรับตัวเลขตรงนี้ให้เล็กลงตามต้องการ (เช่น 100px - 200px) */
     height: auto;    /* ให้ความสูงปรับตามอัตราส่วนภาพ */
     object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
     animation: bounce 1.5s infinite ease-in-out;
@@ -314,6 +314,32 @@ body.dark-theme {
     align-items: center;
     justify-content: center;
     color: #64748b;
+}
+.card-box {
+    position: relative !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+}
+
+.card-box img {
+    display: block;
+    width: 90px; /* หรือขนาดตามที่คุณต้องการ */
+    border-radius: 8px;
+}
+
+.limited-tag {
+    position: absolute !important;
+    top: 15px !important;     /* ขยับลงมาจากขอบบนเล็กน้อยไม่ให้ชิดติดมุมเกินไป */
+    right: 15px !important;    /* ขยับเข้ามาจากขอบขวาเล็กน้อย */
+    background-color: #ff4757 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    padding: 6px 14px !important;
+    text-transform: uppercase !important;
+    border-radius: 20px !important; /* ปรับเป็นทรงแคปซูลมนๆ จะดูสวยขึ้นบนรูปใหญ่ */
+    z-index: 10 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .promo-box{
@@ -443,16 +469,17 @@ body.dark-theme {
     justify-content: center; /* จัดข้อความให้อยู่กึ่งกลางแนวตั้งกับรูป */
 }
 .book-cover {
-    width: 100%;              /* ให้รูปกินพื้นที่ 40% */
-    height: 600px;       /* กำหนดความสูงให้ชัดเจน */
+    position: relative !important; /* สำคัญมาก เพื่อให้ป้าย Limited อ้างอิงตำแหน่งจากรูปนี้ */
+    width: 100%;              
+    height: 600px;       
     background-size: cover;
     border-radius: 10px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-shrink: 0;          /* ไม่ให้รูปโดนบีบเมื่อเนื้อหาเยอะ */
-    background-image: url('img/IMG_3281.JPG');/* ใส่ชื่อไฟล์ให้ถูกต้อง */
+    flex-shrink: 0;          
+    background-image: url('img/IMG_3281.JPG');
+    overflow: hidden !important; /* ป้องกันไม่ให้ป้ายล้นออกนอกขอบโค้งของรูป */
 } 
 .book-cover:hover {
     /* รูปที่สอง (รูปที่จะเปลี่ยนไปโชว์) */
@@ -469,6 +496,10 @@ body.dark-theme {
     flex-shrink: 0;        /* ป้องกันไม่ให้ภาพโดนบีบ */
     margin: 0 auto;        /* จัดให้อยู่ตรงกลาง */
    
+}
+.book-cover-mini {
+    position: relative;
+    display: inline-block; /* บังคับให้กล่องห่อหุ้มแค่พอดีรูปหนังสือ */
 }
 
 .book-cover-mini img {
@@ -595,6 +626,36 @@ body.dark-theme .author-credits .label {
     font-weight: 600;
     color: var(--text-muted);
     margin-top: 15px;
+}
+/* ซ่อนปุ่มน้องหมูก่อนตอนเริ่มต้น (ช่วง Loading) */
+.pig {
+    display: none !important; 
+    width: 70px;
+    height: auto;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    z-index: 9999;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+/* แสดงรูปหมูเฉพาะตอนที่หน้าหลักเปิดขึ้นมาแล้ว (ซ่อนอยู่ใน div #main-content) */
+#main-content:not([style*="display: none"]) ~ * .pig,
+body:has(#main-content[style*="display: block"]) .pig {
+    display: block !important;
+}
+
+.pig:hover {
+    transform: scale(1.15) translateY(-5px); /* ลูกเล่นเวลาเอาเมาส์ชี้ */
+}
+/* ทำให้หน้าเว็บเลื่อนขึ้นแบบสมูทเวลาคลิกปุ่ม */
+html {
+    scroll-behavior: smooth;
 }
 
 /* หน้าฟอร์มและข้อมูลสั่งซื้อ */
@@ -791,6 +852,14 @@ body.dark-theme .account-number {
    3. ระบบ Responsive จัดดีไซน์สำหรับหน้าจอมือถือ
    ========================================================================== */
 @media screen and (max-width: 768px) {
+    .character {
+    width: 100%; /* ให้ยืดตาม container */
+    max-width: 250px; /* 🔥 ปรับตัวเลขตรงนี้ให้เล็กลงตามต้องการ (เช่น 100px - 200px) */
+    height: auto;    /* ให้ความสูงปรับตามอัตราส่วนภาพ */
+    object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
+    animation: bounce 1.5s infinite ease-in-out;
+    }
+
     .kid-photo {
         position: fixed;
         top: 180px; right: 0; width: 80%; height: 50%;

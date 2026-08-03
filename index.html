@@ -14,7 +14,7 @@
 <body>
     <div id="loading-screen">
         <div class="loading-content"></div>
-            <img src="img/ชื่อเรื่อง.png" alt="Loading" class="character">
+            <img src="img/Little_Mlue_page-0001.png" alt="Loading" class="character">
         </div>
     </div>
     
@@ -24,13 +24,14 @@
                 <img src="img/23C58E1B-DD30-4058-9885-B6F803C785AA.png" alt="Kid Photo" class="kid-photo">
 
                 <h1 id="greeting">สวัสดี</h1>
-                <h2>My name is MONA✿◕ ‿ ◕✿</h2>
+                <h2>Welcome to LITTLE MLUE’s world</h2>
                 
                 <article class="bio-box">
-                    <h2>(@jung__mn___)</h2>
-                    <p><strong>Jung Mona</strong> is a popular Thai digital creator and university student based in Bangkok. 
-                        <br>She is widely recognized for her engaging studygram and lifestyle content, focusing on language learning, 
-                        <br>book reviews, and productivity inspiration.</p>
+                    <h2>🕰️시계의 세계와 계절의 색<br>โลกของนาฬิกาและสีของฤดู🍂</h2>
+                    <p>
+                        <span class="lang-en">Our book tells someone’s story through four seasons, each represented by colors that may not be visible to anyone other than yourself.
+                            <br>For our first edition, the story is available in Korean🇰🇷 and Thai🇹🇭.<br>Follow along for more ✿◕ ‿ ◕✿</span>
+                        <span class="lang-th">หนังสือที่นำเสนอเรื่องราวผ่านการเติบโตในแต่ละฤดูกาล ในรูปแบบของสีที่ทุกคนอาจมองไม่เห็น ผ่านภาษาเกาหลี🇰🇷และภาษาไทย🇹🇭</span> </p>
                 </article>
 
                 <div class="social-buttons">
@@ -75,7 +76,7 @@
                     <div class="book-preview"></div>
                     <div class="promo-box">
                         <img src="img/ที่คั้นหนังสือ.pdf" width="50%">
-                        <i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ <br> Limited Edition <br>แบบจุ่ม!</span>
+                        <i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ <br> ted Edition <br>แบบจุ่ม!</span>
                     </div>
                     </div>
                 <nav class="nav-links">
@@ -105,12 +106,19 @@
             </header>
 
             <main class="main-card">
+                
                 <div class="content-grid">
-                    <div class="book-cover"></div>
+                    <div class="book-cover">
+                        <!-- เพิ่มป้าย Limited ไว้ตรงนี้เพื่อให้เกาะติดรูปเล่มใหญ่ -->
+                        <span class="limited-tag">Limited</span>
+                    </div>
 
                     <div class="book-details">
                         <div class="book-cover-mini">
-                            <img src="img/minibook-removebg-preview.png" alt="The World of Time Cover" onerror="this.src='https://via.placeholder.com/150x200?text=Book+Cover'">
+                            <div class="card-box">
+                                <!-- ย้ายรูปภาพเข้ามาไว้ข้างใน .card-box ตรงนี้ -->
+                                <img src="img/minibook-removebg-preview.png" alt="The World of Time Cover" onerror="this.src='https://via.placeholder.com/150x200?text=Book+Cover'">
+                            </div>
                         </div>
 
                         <h1 class="book-title-th">
@@ -118,7 +126,10 @@
                             <span class="lang-ko">시계의 세계<br>와<br>계절의 색</span>
                             <span class="lang-en">The World of Time<br>and<br>Colors of the Seasons</span>
                         </h1>
-                    
+                        <h4>LITTLE MLUE </h4>
+                        <h5>เป็นตัวละครที่ถูกเล่าเรื่องราวผ่านการเติบโตในแต่ละฤดูกาล ในรูปแบบของสีที่ทุกคนอาจมองไม่เห็น ผ่านภาษาเกาหลี🇰🇷และภาษาไทย🇹🇭
+                            <br>ทางเราทำหนังสือ collaboration กับนักวาด Bluckyaday ออกมาในรูปแบบ "limited edition" ด้านหลังหนังสือจะมีปั๊ม No. ของหนังสือ ซึ่งจะไม่ซ้ำกันค่ะ🫶🏻📚 </h5>
+                        <h3> --- </h3>
                         <div class="author-credits">
                             <p>
                                 <span class="label">
@@ -168,6 +179,10 @@
             <!-- ใน index.html วางไว้ท้ายสุดก่อนปิด </body> -->
     <div class="footer-wrapper">
         <footer class="footer">
+            <!-- ห่อรูปหมูด้วยลิงก์ #home เพื่อให้กดแล้วเด้งขึ้นบน -->
+            <a href="#home" id="backToTopBtn" style="text-decoration: none;">
+                <img src="img/Gemini_Generated_Image_5rd57s5rd57s5rd5.png" class="pig" style="cursor: pointer;" alt="Back to Top">
+            </a>
             <div class="footer-content">
                 <p>
                     <span>© 2026 Little mlue - All Rights Reserved</span>
@@ -228,7 +243,7 @@
                     applyTheme(currentTheme);
                 });
             }
-            applyTheme(localStorage.getItem('selectedTheme') || 'light');
+            applyTheme(localStorage.getItem('selectedTheme') || 'dark');
 
             const langOptions = document.querySelectorAll('.lang-option');
             function changeLanguage(lang) {

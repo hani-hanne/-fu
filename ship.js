@@ -27,8 +27,7 @@ async function fetchShippopData() {
 // --- 2. ฟังก์ชันสั่งซื้อ (อยู่นอก DOMContentLoaded เพื่อให้ HTML เรียก onclick ได้) ---
 function finishOrder() {
     alert('สั่งซื้อสำเร็จ! ขอบคุณที่อุดหนุนนะคะ');
-    // หากต้องการส่งข้อมูลไปที่ Shippop API ก่อนเปลี่ยนหน้า สามารถเรียกใช้ตรงนี้ได้
-    window.location.href = 'index.html';
+    window.location.href = 'final.html'; // ✔️ เปลี่ยนมาที่หน้าขอบคุณ
 }
 
 // --- 3. การทำงานเมื่อโหลดหน้าเว็บเสร็จ ---
