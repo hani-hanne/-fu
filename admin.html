@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - รายการสั่งซื้อ</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { color: #333; text-align: center; }
+        
+        /* หน้าต่างกรอกรหัส */
+        #login-box { text-align: center; padding: 50px 0; }
+        #login-box input { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 200px; text-align: center; }
+        #login-box button { padding: 10px 20px; font-size: 16px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; margin-left: 10px; }
+        #login-box button:hover { background: #4338ca; }
+        #error-msg { color: red; margin-top: 10px; display: none; }
+        
+        /* ส่วนสถิติ (Stats Cards) */
+        #dashboard-box { display: none; }
+        .stats-container { display: flex; gap: 15px; margin-bottom: 25px; justify-content: space-between; }
+        .stat-card { flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; text-align: center; }
+        .stat-card h3 { margin: 0 0 10px 0; font-size: 14px; color: #6b7280; }
+        .stat-card p { margin: 0; font-size: 24px; font-weight: bold; color: #4f46e5; }
+
+        /* ตารางข้อมูล */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; font-size: 14px; }
+        th { background-color: #f9fafb; color: #374151; }
+        tr:nth-child(even) { background-color: #fcfcfc; }
+        .loading { text-align: center; color: #6b7280; padding: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ส่วนเช็ครหัสผ่าน -->
+    <div id="login-box">
+        <h2>🔒 Admin Access</h2>
+        <p>กรุณากรอกรหัสผ่านเพื่อเข้าดูข้อมูลคำสั่งซื้อ</p>
+        <input type="password" id="pin-input" placeholder="ใส่รหัสผ่าน" maxlength="6">
+        <button onclick="checkPin()">เข้าสู่ระบบ</button>
+        <div id="error-msg">รหัสผ่านไม่ถูกต้อง!</div>
+    </div>
+
+    <!-- ส่วนตารางข้อมูลและสถิติหลังบ้าน -->
+    <div id="dashboard-box">
+        <h2>📦 รายการสั่งซื้อและสถิติภาพรวม</h2>
+        
+        <!-- กล่องแสดงสถิติ -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>จำนวนออเดอร์ทั้งหมด</h3>
+                <p id="stat-orders">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>ยอดขายรวม (บาท)</h3>
+                <p id="stat-revenue">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>จำนวนหนังสือที่ขายได้ (เล่ม)</h3>
+                <p id="stat-books">0</p>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+        <table id="order-table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>เวลา</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <th>เบอร์โทร</th>
+                    <th>ที่อยู่</th>
+                    <th>ยอดเงิน</th>
+                    <th>สลิป</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- ข้อมูลจะถูกดึงมาใส่ตรงนี้อัตโนมัติ -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // ตั้งรหัสผ่านสำหรับเข้าหน้าแอดมิน (เปลี่ยนได้ตามต้องการ)
+    const CORRECT_PIN = "1234"; 
+    
+    // URL ของ Google Apps Script
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyfV4juvkTyU6x8hqa3Va54MOLJRQitmiOdPbLLTYByAoYfJvGkI1Ua-Ko6sWckcnDH/exec";
+
+    function checkPin() {
+        const enteredPin = document.getElementById("pin-input").value;
+        if (enteredPin === CORRECT_PIN) {
+            document.getElementById("login-box").style.display = "none";
+            document.getElementById("dashboard-box").style.display = "block";
+            fetchData();
+        } else {
+            document.getElementById("error-msg").style.display = "block";
+        }
+    }
+
+    function fetchData() {
+        fetch(WEB_APP_URL)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById("table-body");
+            tbody.innerHTML = "";
+            
+            let totalOrders = data.length;
+            let totalRevenue = 0;
+            let totalBooks = 0;
+
+            if(totalOrders === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">ยังไม่มีข้อมูลคำสั่งซื้อ</td></tr>`;
+            } else {
+                data.forEach(row => {
+                    let price = parseFloat(row.Total) || 0;
+                    totalRevenue += price;
+                    // คำนวณจำนวนเล่มจากราคารวม (เล่มละ 790 บาท)
+                    totalBooks += Math.round(price / 790);
+                });
+
+                data.reverse().forEach(row => {
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row.Timestamp ? new Date(row.Timestamp).toLocaleString() : '-'}</td>
+                        <td>${row.Name || '-'}</td>
+                        <td>${row.Phone || '-'}</td>
+                        <td>${row.Address || '-'}</td>
+                        <td>${row.Total || '-'}</td>
+                        <td>${row.Slip && row.Slip !== '-' ? `<a href="${row.Slip}" target="_blank">ดูสลิป</a>` : 'ไม่มีสลิป'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // แสดงผลตัวเลขสถิติ
+            document.getElementById("stat-orders").innerText = totalOrders;
+            document.getElementById("stat-revenue").innerText = totalRevenue.toLocaleString() + " ฿";
+            document.getElementById("stat-books").innerText = totalBooks;
+            
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("order-table").style.display = "table";
+        })
+        .catch(error => {
+            console.error("Error loading data:", error);
+            document.getElementById("loading").innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+        });
+    }
+</script>
+
+</body>
+</html>

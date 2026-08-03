@@ -3,19 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="lang-th">โลกของนาฬิกาและสีของฤดู</title>
-    <title class="lang-ko">시계의 세계와 계절의 색</title>
-    <title class="lang-en">The World of Time and Colors of the Seasons</title>
+    <title class="lang-th">ติดต่อ - โลกของนาฬิกาและสีของฤดู</title>
+    <title class="lang-ko">문의하기 - 시계의 세계와 계절의 색</title>
+    <title class="lang-en">Contact - The World of Time and Colors of the Seasons</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div id="main-content" style="display: none;">
     </div>
+    
     <div class="web-container">
         <header class="navbar">
+            <div class="top-controls">
+                <button id="themeToggle" class="theme-toggle-btn">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+
+                <div class="lang-selector">
+                    <button class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="lang-th">TH</span>
+                        <span class="lang-ko" style="display:none;">KO</span>
+                        <span class="lang-en" style="display:none;">EN</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                        <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                        <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ส่วนหัวโลโก้ (ใส่ระบบคลิก 3 ครั้งเพื่อไปหน้า admin.html ตรงนี้) -->
+            <div class="logo-container" id="secretLogo" style="cursor: pointer; text-align: center; padding: 10px 0;">
+                <img id="secretLogoImg" src="img/Little_Mlue_page-0001.png" alt="Logo" style="height: 60px; cursor: pointer; margin-right: 15px;" title="Logo">
+                <h1 style="margin: 0; font-size: 20px;">
+                    <span class="lang-th">โลกของนาฬิกาและสีของฤดู</span>
+                    <span class="lang-ko">시계의 세계와 계절의 색</span>
+                    <span class="lang-en">The World of Time</span>
+                </h1>
+            </div>
+
             <nav class="nav-links">
-                <a href="index.html" >
+               <a href="index.html">
                     <span class="lang-th">หน้าแรก</span>
                     <span class="lang-ko">홈</span>
                     <span class="lang-en">HOME</span>
@@ -37,23 +69,7 @@
                     <span class="lang-ko">문의하기</span>
                     <span class="lang-en">CONTACT</span>
                 </a>
-            <div class="top-controls">
-                <button id="themeToggle" class="theme-toggle-btn">
-                    <i id="themeIcon" class="fa-solid fa-sun"></i>
-                </button>
-                <div class="lang-selector">
-                    <button class="lang-btn">
-                        <i class="fa-solid fa-globe"></i>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="lang-dropdown">
-                        <div class="lang-item lang-option" data-lang="th"><span class="flag">🇹🇭</span> THAI</div>
-                        <div class="lang-item lang-option" data-lang="ko"><span class="flag">🇰🇷</span> KOREAN</div>
-                        <div class="lang-item lang-option" data-lang="en"><span class="flag">🇬🇧</span> ENGLISH</div>
-                    </div>
-                </div>
             </nav>
-            
         </header>
 
         <main class="main-card">
@@ -92,11 +108,11 @@
                                 <p>MonaJung</p>
                             </div>
                         </a>
-                        <a href="mailto:thewoeldoftime@gmail.com" class="contact-item-link">
+                        <a href="mailto:littlemlue@gmail.com" class="contact-item-link">
                             <i class="fa-solid fa-envelope mail-icon"></i>
                             <div>
                                 <h4>Email</h4>
-                                <p>thewoeldoftime@gmail.com</p>
+                                <p>littlemlue@gmail.com</p>
                             </div>
                         </a>
                     </div>
@@ -118,7 +134,29 @@
             </div>
         </main>
     </div>
+
     <script>
+        // ระบบคลิกโลโก้ 3 ครั้งเพื่อเข้าหน้าแอดมินลับๆ
+        let clickCount = 0;
+        let clickTimer = null;
+
+        document.getElementById('secretLogo').addEventListener('click', function() {
+            clickCount++;
+            
+            if (clickTimer) clearTimeout(clickTimer);
+            
+            // ถ้าคลิกครบ 3 ครั้งติดกันภายใน 1 วินาที จะเด้งไปหน้าแอดมินทันที
+            if (clickCount === 3) {
+                window.location.href = 'admin.html';
+                clickCount = 0;
+            } else {
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 1000); // รีכולค่าถ้าคลิกช้าเกิน 1 วิ
+            }
+        });
+
+        // ส่วนควบคุมธีมและภาษาของหน้าเว็บ
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
@@ -128,35 +166,20 @@
             function applyTheme(theme) {
                 if (theme === 'dark') {
                     body.classList.add('dark-theme');
-                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                    if(themeIcon) {
+                        themeIcon.className = 'fa-solid fa-sun';
+                        themeIcon.style.color = '#f59e0b';
+                    }
                     startFallingEffect('snow');
                 } else {
                     body.classList.remove('dark-theme');
-                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    if(themeIcon) {
+                        themeIcon.className = 'fa-solid fa-moon';
+                        themeIcon.style.color = '#94a3b8';
+                    }
                     startFallingEffect('flower');
                 }
                 localStorage.setItem('selectedTheme', theme);
-            }
-
-            function startFallingEffect(type) {
-                if (particleInterval) clearInterval(particleInterval);
-                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
-                const items = type === 'snow' ? ['❄', '✧', '•'] : [ '🍂'];
-                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
-                particleInterval = setInterval(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'falling-particle';
-                    const startLeft = Math.random() * window.innerWidth;
-                    const duration = Math.random() * 4 + 4;
-                    const fontSize = Math.random() * 12 + 10;
-                    particle.innerText = items[Math.floor(Math.random() * items.length)];
-                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.left = startLeft + 'px';
-                    particle.style.fontSize = fontSize + 'px';
-                    particle.style.animationDuration = duration + 's';
-                    document.body.appendChild(particle);
-                    setTimeout(() => { particle.remove(); }, duration * 1000);
-                }, 300);
             }
 
             if(themeToggleBtn) {
@@ -165,38 +188,64 @@
                     applyTheme(currentTheme);
                 });
             }
-            applyTheme(localStorage.getItem('selectedTheme') || 'light');
+            
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            applyTheme(savedTheme);
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+
+                const items = type === 'snow' ? ['❄', '✧', '•'] : [ '🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 350);
+            }
 
             const langOptions = document.querySelectorAll('.lang-option');
+
             function changeLanguage(lang) {
                 localStorage.setItem('selectedLanguage', lang);
-                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
-                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
-
-                const contactEmail = document.getElementById('contactEmail');
-                const contactMessage = document.getElementById('contactMessage');
-                if (lang === 'th') {
-                    if (contactEmail) contactEmail.placeholder = "อีเมลของคุณ";
-                    if (contactMessage) contactMessage.placeholder = "พิมพ์ข้อความที่นี่...";
-                } else if (lang === 'ko') {
-                    if (contactEmail) contactEmail.placeholder = "이메일 주소";
-                    if (contactMessage) contactMessage.placeholder = "여기에 메시지를 입력하세요...";
-                } else if (lang === 'en') {
-                    if (contactEmail) contactEmail.placeholder = "Your Email";
-                    if (contactMessage) contactMessage.placeholder = "Type your message here...";
-                }
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => {
+                    el.classList.add('lang-hidden');
+                });
+                document.querySelectorAll('.lang-' + lang).forEach(el => {
+                    el.classList.remove('lang-hidden');
+                });
             }
 
             langOptions.forEach(option => {
-                option.addEventListener('click', function() { changeLanguage(this.getAttribute('data-lang')); });
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    changeLanguage(selectedLang);
+                });
             });
-            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
+            const savedLang = localStorage.getItem('selectedLanguage') || 'th';
+            changeLanguage(savedLang);
         });
+
         window.addEventListener("load", function() {
             setTimeout(function() {
-                document.getElementById("loading-screen").style.display = "none";
-                document.getElementById("main-content").style.display = "block";
-            }, 2000); // 3000 คือ 3 วินาที
+                const loadingScreen = document.getElementById("loading-screen");
+                if (loadingScreen) loadingScreen.style.display = "none";
+                const mainContent = document.getElementById("main-content");
+                if (mainContent) mainContent.style.display = "block";
+            }, 3000);
         });
     </script>
 </body>

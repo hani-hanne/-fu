@@ -1,73 +1,80 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta rset="UTF-8">
+    <meta charset="UTF-8">
     <title>ชำระเงิน - Mona Portfolio</title>
-    <link rel="stylesheet" href="style.css"> <!-- เช็คชื่อไฟล์ CSS ให้ตรงกัน -->
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="web-container">
         <header class="navbar">
             <div class="trols">
-                <button id="themeToggle" class="theme-toggle-btn">
+                <button id="themeToggle" class="theme-toggle-btn" type="button">
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
             </div>
         </header>
         
         <main class="payment-page" style="padding: 20px 0; text-align: center;">
-            <div class="qr-box">
-                <h2>สแกนเพื่อชำระเงิน</h2>
-                <p>ยอดที่ต้องชำระ: <span id="final-amount"></span> บาท</p>
-                <img id="qrImage" src="img/my-qr-code-1.jpg" alt="QR Code" class="qr-img">
-                <p style="color: red;">*แนบสลิปในหน้าสั่งซื้อแล้ว กดปุ่มด้านล่างเพื่อยืนยัน*</p>
-                <div class="form-group">
-                    <label>แนบสลิปการโอนเงิน</label>
-                    <input type="file" accept="image/*" required>
+            <!-- ฟอร์มสำหรับตรวจสอบการแนบสลิป -->
+            <form id="paymentForm" onsubmit="finishOrder(event)">
+                <div class="qr-box">
+                    <h2>สแกนเพื่อชำระเงิน</h2>
+                    <p>ยอดที่ต้องชำระ: <span id="final-amount">0</span> บาท</p>
+                    <!-- เปลี่ยนมาใช้โฟลเดอร์ img เพื่อป้องกันปัญหาหาภาพไม่เจอ -->
+                    <img id="qrImage" src="img/790.jpg" alt="QR Code" class="qr-img" style="max-width: 250px; display: block; margin: 0 auto;">
+                    <p style="color: red; margin-top: 10px;">*แนบสลิปการโอนเงิน แล้วกดปุ่มด้านล่างเพื่อยืนยัน*</p>
+                    <div class="form-group" style="margin: 15px 0;">
+                        <label>แนบสลิปการโอนเงิน: </label>
+                        <input type="file" id="slipInput" accept="image/*" required>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-action-submit">สั่งซื้อสำเร็จ</button>
                 </div>
-                <br>
-                <button type="button" class="btn btn-action-submit" onclick="finishOrder()">สั่งซื้อสำเร็จ</button>
-            </div>
+            </form>
         </main>
     </div>
 
-    <!-- เรียกไฟล์เอฟเฟกต์ภายนอก -->
-    <script src="js/sparkles.js"></script>
-
     <!-- โค้ด JavaScript ควบคุมหน้าชำระเงิน -->
-   <script>
+    <script>
+
         // โค้ดดึงยอดเงินจากหน้าสั่งซื้อ
         const savedTotal = sessionStorage.getItem('orderTotal');
         
-        if(savedTotal && document.getElementById('final-amount')) {
+        if (savedTotal && document.getElementById('final-amount')) {
             document.getElementById('final-amount').innerText = savedTotal;
             
-            // แปลงค่าเงินเป็นตัวเลขเพื่อนำมาเช็คเงื่อนไข
             const totalAmount = parseInt(savedTotal);
             const qrImage = document.getElementById('qrImage');
 
-            // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน
+            // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน (ใช้โฟลเดอร์ img ทั้งหมดเพื่อความชัวร์)
             if (totalAmount === 790) {
-                // 1 เล่ม (790 บาท) -> ใช้ QR Code อันที่ 1
-                qrImage.src = 'img/my-qr-code-1.jpg'; 
+                qrImage.src = 'img/790.jpg'; 
             } else if (totalAmount === 1580) {
-                // 2 เล่ม (790 * 2 = 1580 บาท) -> ใช้ QR Code อันที่ 2
-                qrImage.src = 'img/my-qr-code-2.jpg';
+                qrImage.src = 'img/1580.jpg';
             } else if (totalAmount === 2370) {
-                // 3 เล่ม (790 * 3 = 2370 บาท) -> ใช้ QR Code อันที่ 3
-                qrImage.src = 'img/my-qr-code-3.jpg';
+                qrImage.src = 'img/2370.jpg';
             } else {
-                // เผื่อกรณีอื่นๆ ให้แสดงรูปแรกเป็นค่าเริ่มต้น
-                qrImage.src = 'img/my-qr-code-1.jpg';
+                qrImage.src = 'img/790.jpg';
             }
         }
         
-        function finishOrder() {
-            alert('สั่งซื้อสำเร็จ! ขอบคุณที่อุดหนุนนะคะ');
-            window.location.href = 'index.html';
+        // ฟังก์ชันเมื่อกดปุ่มสั่งซื้อสำเร็จ
+        function finishOrder(event) {
+            event.preventDefault(); // ป้องกันการรีเฟรชหน้า
+            
+            const slipInput = document.getElementById('slipInput');
+            if (slipInput.files.length === 0) {
+                alert('กรุณาแนบสลิปการโอนเงินก่อนกดยืนยันค่ะ');
+                return;
+            }
+
+            sessionStorage.removeItem('orderTotal');
+            window.location.href = 'final.html';
         }
         
+        // ควบคุม Dark/Light Mode
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
@@ -90,7 +97,7 @@
                     applyTheme(currentTheme);
                 });
             }
-            const savedTheme = localStorage.getItem('selectedTheme') || 'light';
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
             applyTheme(savedTheme);
         });
     </script>

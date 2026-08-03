@@ -69,12 +69,12 @@
             </h2>
             <p class="section-subtitle" style="text-align: center; margin-bottom: 30px;">
                 <span class="lang-th">กรอกข้อมูลรายละเอียดเพื่อสั่งซื้อหนังสือ</span>
-                <span class="lang-ko">책을 주문하려면 상세 정보를 입력ร세요.</span>
+                <span class="lang-ko">책을 주문하려면 상세 정보를 입력하세요.</span>
                 <span class="lang-en">Fill out the details below to order your book.</span>
             </p>
             
             <div class="order-grid">
-                <!-- เพิ่ม id ให้กับ form เพื่อให้ตรวจสอบข้อมูลได้ง่ายขึ้น -->
+                <!-- ฟอร์มสั่งซื้อ -->
                 <form id="orderForm">
                     <!-- ข้อมูลลูกค้า -->
                     <div class="form-group">
@@ -85,6 +85,12 @@
                         <label>E-mail</label>
                         <input type="email" id="email" name="email" required>
                     </div>
+                    <!-- ช่องกรอกเบอร์โทรศัพท์ -->
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+
                     <!-- ระบบจำนวนและราคา -->
                     <div class="form-group">
                         <label>จำนวนเล่ม (สูงสุด 3 เล่ม)</label>
@@ -103,7 +109,6 @@
                     </div>
                     <div class="form-group"><label>บ้านเลขที่/ถนน/ตำบล</label><textarea id="address" rows="2" required></textarea></div>
 
-                    <!-- เปลี่ยนเป็น type="button" และเรียกฟังก์ชันเช็คเงื่อนไข -->
                     <button type="button" class="buy-btn" onclick="goToPayment()">ยืนยันการสั่งซื้อ</button>
                 </form>
 
@@ -133,8 +138,11 @@
     </div>
 
     <script>
-        // 1. ฟังก์ชันปรับจำนวนสินค้า
-        function ngeQty(val) {
+        // URL ของ Google Apps Script ที่ใส่ให้เรียบร้อยแล้ว
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyfV4juvkTyU6x8hqa3Va54MOLJRQitmiOdPbLLTYByAoYfJvGkI1Ua-Ko6sWckcnDH/exec";
+
+        // ฟังก์ชันปรับจำนวนสินค้า
+        function changeQty(val) {
             let qtyInput = document.getElementById('qty');
             let priceSpan = document.getElementById('total-price');
             let newQty = parseInt(qtyInput.value) + val;
@@ -146,26 +154,54 @@
             priceSpan.innerText = newQty * 790;
         }
 
-        // 2. ฟังก์ชันตรวจสอบข้อมูลและไปหน้าชำระเงิน
+        // ฟังก์ชันตรวจสอบข้อมูล บันทึกลง Sheet และไปหน้าชำระเงิน
         function goToPayment() {
             let form = document.getElementById('orderForm');
             
-            // เช็คว่าฟอร์มกรอกครบถ้วนตามเงื่อนไข required หรือยัง
             if (!form.checkValidity()) {
                 alert('กรุณากรอกข้อมูลให้ครบถ้วนก่อนดำเนินการต่อ');
-                form.reportValidity(); // แสดงจุดที่ยังกรอกไม่ครบให้ผู้ใช้เห็น
+                form.reportValidity();
                 return;
             }
 
-            // ถ้ากรอกครบแล้ว บันทึกราคารวมและข้อมูลอื่นๆ ลง sessionStorage (ถ้าต้องการ)
             let total = document.getElementById('total-price').innerText;
+            let name = document.getElementById('fullname').value;
+            let phone = document.getElementById('phone').value;
+            let address = document.getElementById('address').value;
+            let email = document.getElementById('email').value;
+
+            // บันทึกข้อมูลลง sessionStorage เพื่อใช้ในหน้าชำระเงินต่อ
             sessionStorage.setItem('orderTotal', total);
+            sessionStorage.setItem('orderName', name);
+            sessionStorage.setItem('orderEmail', email);
+            sessionStorage.setItem('orderPhone', phone);
+            sessionStorage.setItem('orderAddress', address);
+
+            // แพ็กข้อมูลส่งเข้า Google Sheet
+            let orderData = {
+                name: name,
+                phone: phone,
+                address: address + " (จังหวัด: " + document.getElementById('province').value + " อม./เขต: " + document.getElementById('district').value + " ปณ.: " + document.getElementById('zipcode').value + ")",
+                total: total,
+                slip: "-" // รออัปเดตในหน้าชำระเงิน
+            };
+
+            // ยิงข้อมูลไปที่ Google Sheet แบบเบื้องหลัง
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderData)
+            }).then(() => {
+                console.log("ส่งข้อมูลเข้า Google Sheet เรียบร้อย");
+            }).catch(err => {
+                console.error("Error:", err);
+            });
             
-            // เปลี่ยนไปหน้าชำระเงิน
             window.location.href = 'payment.html';
         }
 
-        // 3. ส่วนที่ทำงานหลังจากโหลดหน้าเว็บเสร็จ
+        // ส่วนที่ทำงานหลังจากโหลดหน้าเว็บเสร็จ
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
@@ -197,7 +233,8 @@
                     applyTheme(currentTheme);
                 });
             }
-            const savedTheme = localStorage.getItem('selectedTheme') || 'light';
+            
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
             applyTheme(savedTheme);
 
             function startFallingEffect(type) {
