@@ -31,7 +31,7 @@ exports.sendOrderToShippop = functions.firestore
                 },
                 body: JSON.stringify({
                     origin: {
-                        name: "ชื่อร้านของคุณ",
+                        name: "Littel mlue",
                         phone: "เบอร์ร้านของคุณ",
                         address: "ที่อยู่ต้นทางร้านของคุณ",
                         postcode: "10400"
