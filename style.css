@@ -942,7 +942,7 @@ body.dark-theme .account-number {
     box-shadow: 0 10px 25px rgba(45, 34, 20, 0.05);
     transition: background-color 0.3s ease;}
     .main-card { padding: 25px 20px; border-radius: 18px; }
-    .navbar { flex-direction: column; gap: 15px; }
+    .navbar { flex-direction: column; gap: 10px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
     .nav-links a { font-size: 14px; padding: 6px 10px; }
     .order-grid, .content-grid, .contact-grid-layout { grid-template-columns: 1fr; gap: 30px; }
@@ -956,7 +956,7 @@ body.dark-theme .account-number {
 
     .navbar {
         flex-direction: column !important; /* เปลี่ยนเมนูจากแนวนอนเป็นแนวตั้งบนมือถือ */
-        gap: 15px !important;
+        gap: 10px !important;
         padding: 15px !important;
     }
 
