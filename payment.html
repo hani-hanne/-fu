@@ -17,6 +17,9 @@
         </header>
         
         <main class="payment-page" style="padding: 20px 0; text-align: center;">
+            <div class="timer-box" style="background: rgba(255, 71, 87, 0.1); padding: 10px; border-radius: 10px; margin-bottom: 15px; color: #ff4757; font-weight: bold;">
+                <i class="fa-solid fa-clock"></i> กรุณาโอนเงินภายใน: <span id="countdown-timer" style="font-size: 18px;">05:00</span> นาที
+            </div>
             <!-- ฟอร์มสำหรับตรวจสอบการแนบสลิป -->
             <form id="paymentForm" onsubmit="finishOrder(event)">
                 <div class="qr-box">
@@ -38,7 +41,6 @@
 
     <!-- โค้ด JavaScript ควบคุมหน้าชำระเงิน -->
     <script>
-
         // โค้ดดึงยอดเงินจากหน้าสั่งซื้อ
         const savedTotal = sessionStorage.getItem('orderTotal');
         
@@ -48,7 +50,7 @@
             const totalAmount = parseInt(savedTotal);
             const qrImage = document.getElementById('qrImage');
 
-            // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน (ใช้โฟลเดอร์ img ทั้งหมดเพื่อความชัวร์)
+            // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน
             if (totalAmount === 790) {
                 qrImage.src = 'img/790.jpg'; 
             } else if (totalAmount === 1580) {
@@ -61,7 +63,7 @@
         }
         
         // ฟังก์ชันเมื่อกดปุ่มสั่งซื้อสำเร็จ
-        function finishOrder(event) {
+        async function finishOrder(event) {
             event.preventDefault(); // ป้องกันการรีเฟรชหน้า
             
             const slipInput = document.getElementById('slipInput');
@@ -70,9 +72,72 @@
                 return;
             }
 
-            sessionStorage.removeItem('orderTotal');
-            window.location.href = 'final.html';
+            const file = slipInput.files[0];
+            const totalAmount = document.getElementById('final-amount').innerText;
+
+            // ดึงจำนวนเล่มที่บันทึกไว้ หรือคำนวณสำรองจากยอดเงิน
+            let qty = parseInt(sessionStorage.getItem('orderQty')) || 1;
+            const parsedTotal = parseInt(totalAmount);
+            if (parsedTotal === 1580) qty = 2;
+            else if (parsedTotal === 2370) qty = 3;
+
+            // แสดงสถานะกำลังโหลด
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'กำลังบันทึกข้อมูล...';
+            submitBtn.disabled = true;
+
+            try {
+                // แปลงไฟล์รูปภาพเป็น Base64
+                const base64Data = await toBase64(file);
+
+                // **ดึงข้อมูลทั้งหมดจาก sessionStorage ให้ครบถ้วนตรงกับที่ Google Apps Script รอรับ**
+                const payload = {
+                    name: sessionStorage.getItem('orderName') || '-',
+                    email: sessionStorage.getItem('orderEmail') || '-',
+                    phone: sessionStorage.getItem('orderPhone') || '-',
+                    qty: qty,
+                    province: sessionStorage.getItem('orderProvince') || '-',
+                    district: sessionStorage.getItem('orderDistrict') || '-',
+                    zipcode: sessionStorage.getItem('orderZipcode') || '-',
+                    address: sessionStorage.getItem('orderAddress') || '-',
+                    total: totalAmount,
+                    fileName: file.name,
+                    mimeType: file.type,
+                    fileData: base64Data
+                };
+
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbx4yeJnn-YkQK7WHONhIDeg1vkM57YovZFopQzDaC_2Ji50I7rCRwvscMVLZ0r8PZs/exec';
+    
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // ล้างข้อมูลเวลาและ Session จากนั้นพาไปหน้าสำเร็จ
+                localStorage.removeItem('paymentTimer');
+                sessionStorage.clear();
+                window.location.href = 'final.html';
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
         }
+          
+        // ฟังก์ชันช่วยเหลือสำหรับแปลงไฟล์เป็น Base64
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]); 
+            reader.onerror = error => reject(error);
+        });
         
         // ควบคุม Dark/Light Mode
         document.addEventListener("DOMContentLoaded", function() {
@@ -100,6 +165,33 @@
             const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
             applyTheme(savedTheme);
         });
+
+        // ตั้งเวลา 5 นาที (300 วินาที)
+        let timeLeft = parseInt(localStorage.getItem('paymentTimer')) || 300;
+        const timerElement = document.getElementById('countdown-timer');
+
+        const countdownInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            if (timerElement) {
+                timerElement.innerText = `${minutes}:${seconds}`;
+            }
+
+            localStorage.setItem('paymentTimer', timeLeft);
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                localStorage.removeItem('paymentTimer');
+                alert('หมดเวลาโอนเงินภายใน 5 นาที ออเดอร์ของคุณถูกยกเลิกอัตโนมัติ กรุณาสั่งใหม่อีกครั้งค่ะ');
+                window.location.href = 'order.html'; 
+            }
+
+            timeLeft--;
+        }, 1000);
     </script>
 </body>
 </html>

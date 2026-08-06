@@ -864,7 +864,7 @@ body.dark-theme .account-number {
 
     .kid-photo {
         position: fixed;
-        top: 180px; right: 0; width: 80%; height: 50%;
+        top: 200px; right: 0; width: 80%; height: 50%;
         object-fit: contain; z-index: -1;
         object-position: center right; 
         transform: scale(1);

@@ -139,8 +139,9 @@
 
     <script>
         // URL ของ Google Apps Script ที่ใส่ให้เรียบร้อยแล้ว
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwErxd075PePuuCORproKHoo-epCvJdZ01MWJ7ihptnwPzk4DrBkDmXCEs5pRrAY7nM/exec";
-    // ฟังก์ชันปรับจำนวนสินค้า
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx7aImFkmpF2RLoJqZ4ihAhlVMNa0L8F5FskNvlFDwddiSbZjNqc9jX1ety3863JM6T/exec";
+   
+        // ฟังก์ชันปรับจำนวนสินค้า
         function changeQty(val) {
             let qtyInput = document.getElementById('qty');
             let priceSpan = document.getElementById('total-price');
@@ -154,10 +155,22 @@
         }
 
         // ฟังก์ชันตรวจสอบข้อมูล บันทึกลง Sheet และไปหน้าชำระเงิน
-        // ฟังก์ชันตรวจสอบข้อมูล บันทึกลง Sheet และไปหน้าชำระเงิน
         function goToPayment() {
+            let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 1250;
+            let orderedQty = parseInt(document.getElementById('qty').value) || 1;
+            currentOrders += orderedQty;
+
+            // บันทึกกลับลงไปใน localStorage
+            localStorage.setItem('totalOrders', currentOrders);
+
+            // ตรวจสอบสต็อกก่อนให้กดสั่งซื้อ (จำกัดที่ 2000 เล่ม)
+            if (currentOrders >= 2000) {
+                alert('สินค้าหมดแล้ว (SOLD OUT) ไม่สามารถสั่งซื้อเพิ่มได้ค่ะ');
+                window.location.href = 'index.html';
+                return;
+            }
+
             let form = document.getElementById('orderForm');
-            
             if (!form.checkValidity()) {
                 alert('กรุณากรอกข้อมูลให้ครบถ้วนก่อนดำเนินการต่อ');
                 form.reportValidity();
