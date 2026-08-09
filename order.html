@@ -137,10 +137,9 @@
         </main>
     </div>
 
-    <script>
-        // URL ของ Google Apps Script ที่ใส่ให้เรียบร้อยแล้ว
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx7aImFkmpF2RLoJqZ4ihAhlVMNa0L8F5FskNvlFDwddiSbZjNqc9jX1ety3863JM6T/exec";
-   
+ <script>
+        // URL ของ Google Apps Script
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec";
         // ฟังก์ชันปรับจำนวนสินค้า
         function changeQty(val) {
             let qtyInput = document.getElementById('qty');
@@ -154,16 +153,14 @@
             priceSpan.innerText = newQty * 790;
         }
 
-        // ฟังก์ชันตรวจสอบข้อมูล บันทึกลง Sheet และไปหน้าชำระเงิน
+        // ฟังก์ชันตรวจสอบข้อมูลและบันทึกลง sessionStorage เพื่อส่งต่อไปหน้าชำระเงิน
         function goToPayment() {
             let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 1250;
             let orderedQty = parseInt(document.getElementById('qty').value) || 1;
             currentOrders += orderedQty;
 
-            // บันทึกกลับลงไปใน localStorage
             localStorage.setItem('totalOrders', currentOrders);
 
-            // ตรวจสอบสต็อกก่อนให้กดสั่งซื้อ (จำกัดที่ 2000 เล่ม)
             if (currentOrders >= 2000) {
                 alert('สินค้าหมดแล้ว (SOLD OUT) ไม่สามารถสั่งซื้อเพิ่มได้ค่ะ');
                 window.location.href = 'index.html';
@@ -177,7 +174,7 @@
                 return;
             }
 
-            // 1. ดึงค่าทั้งหมดจากฟอร์มครั้งเดียวให้ครบถ้วน
+            // 1. ดึงค่าทั้งหมดจากฟอร์ม
             let name = document.getElementById('fullname').value;
             let email = document.getElementById('email').value;
             let phone = document.getElementById('phone').value;
@@ -188,42 +185,19 @@
             let address = document.getElementById('address').value;
             let total = document.getElementById('total-price').innerText;
 
-            // 2. บันทึกข้อมูลลง sessionStorage เพื่อใช้ในหน้าชำระเงินต่อ
+            // 2. บันทึกข้อมูลลง sessionStorage ทั้งหมด (รวมถึงจังหวัด อำเภอ รหัสไปรษณีย์)
             sessionStorage.setItem('orderTotal', total);
             sessionStorage.setItem('orderName', name);
             sessionStorage.setItem('orderEmail', email);
             sessionStorage.setItem('orderPhone', phone);
             sessionStorage.setItem('orderAddress', address);
+            sessionStorage.setItem('orderProvince', province);
+            sessionStorage.setItem('orderDistrict', district);
+            sessionStorage.setItem('orderZipcode', zipcode);
+            sessionStorage.setItem('orderQty', qty);
 
-            // 3. แพ็กข้อมูลส่งเข้า Google Sheet ให้ตรงกับตัวแปรที่ Apps Script รอรับ
-            let orderData = {
-                name: name,
-                email: email,
-                phone: phone,
-                qty: qty,
-                province: province,
-                district: district,
-                zipcode: zipcode,
-                address: address,
-                total: total,
-                slip: "-" // รออัปเดตในหน้าชำระเงิน
-            };
-
-            // 4. ยิงข้อมูลไปที่ Google Sheet แบบเบื้องหลัง
-            fetch(WEB_APP_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(orderData)
-            })
-            .then(response => response.json())
-            .then(result => {
-                console.log("ส่งข้อมูลเข้า Google Sheet เรียบร้อย", result);
-                window.location.href = 'payment.html';
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                window.location.href = 'payment.html';
-            });
+            // 3. เปลี่ยนไปหน้าชำระเงิน (payment_2.html) ทันที
+            window.location.href = 'payment.html';
         }
 
         // ส่วนที่ทำงานหลังจากโหลดหน้าเว็บเสร็จ

@@ -26,7 +26,7 @@
                     <h2>สแกนเพื่อชำระเงิน</h2>
                     <p>ยอดที่ต้องชำระ: <span id="final-amount">0</span> บาท</p>
                     <!-- เปลี่ยนมาใช้โฟลเดอร์ img เพื่อป้องกันปัญหาหาภาพไม่เจอ -->
-                    <img id="qrImage" src="img/790.jpg" alt="QR Code" class="qr-img" style="max-width: 250px; display: block; margin: 0 auto;">
+                    <img id="qrImage" src="payment/1.jpg" alt="QR Code" class="qr-img" style="max-width: 250px; display: block; margin: 0 auto;">
                     <p style="color: red; margin-top: 10px;">*แนบสลิปการโอนเงิน แล้วกดปุ่มด้านล่างเพื่อยืนยัน*</p>
                     <div class="form-group" style="margin: 15px 0;">
                         <label>แนบสลิปการโอนเงิน: </label>
@@ -52,13 +52,13 @@
 
             // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน
             if (totalAmount === 790) {
-                qrImage.src = 'img/790.jpg'; 
+                qrImage.src = 'payment/1.jpg'; 
             } else if (totalAmount === 1580) {
-                qrImage.src = 'img/1580.jpg';
+                qrImage.src = 'payment/p2.jpg';
             } else if (totalAmount === 2370) {
-                qrImage.src = 'img/2370.jpg';
+                qrImage.src = 'payment/S__41599020.jpg';
             } else {
-                qrImage.src = 'img/790.jpg';
+                qrImage.src = 'payment/1.jpg';
             }
         }
         
@@ -107,11 +107,10 @@
                     fileData: base64Data
                 };
 
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbx4yeJnn-YkQK7WHONhIDeg1vkM57YovZFopQzDaC_2Ji50I7rCRwvscMVLZ0r8PZs/exec';
-    
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec';
                 await fetch(scriptURL, {
                     method: 'POST',
-                    mode: 'no-cors', 
+                     
                     headers: {
                         'Content-Type': 'text/plain;charset=utf-8',
                     },

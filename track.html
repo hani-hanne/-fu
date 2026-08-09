@@ -148,30 +148,43 @@
             }, 3000); // 3000 คือ 3 วินาที
         });
         function trackOrder() {
-            const id = document.getElementById('orderId').value;
+            const id = document.getElementById('orderId').value.trim();
             const resultDiv = document.getElementById('result');
             
-            // 1. ใส่ URL ของ Google Script ของคุณตรงนี้ (URL ที่ลงท้ายด้วย /exec)
-            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwNB8iVLIJRr3cyjmmA6IpXR12p-9EohPtNFsRfdu53eOAY26FeQJ8YdTUosWBKL9lR/exec";
-    
-            // 2. ส่งค่า ID ไปเช็กที่ Google Sheet
-            fetch(scriptUrl + "?id=" + id)
+            if (!id) {
+                alert('กรุณากรอกหมายเลขคำสั่งซื้อก่อนค้นหาค่ะ');
+                return;
+            }
+            
+            resultDiv.style.display = "block";
+            resultDiv.style.backgroundColor = "#fef08a";
+            resultDiv.innerHTML = "<h3>กำลังค้นหาข้อมูล...</h3>";
+
+            // 1. ใช้ URL ของ Google Apps Script ตัวจริงที่คุณ Deploy ล่าสุด
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec";
+            // 2. เรียกใช้งาน doGet พร้อมส่งค่า id ไปค้นหา
+            fetch(WEB_APP_URL + "?id=" + encodeURIComponent(id))
             .then(res => res.json())
             .then(data => {
                 resultDiv.style.display = "block";
-                if(data.result === "found") {
+                if(data && data.result === "found") {
                     resultDiv.style.backgroundColor = "#dcfce7";
-                    resultDiv.innerHTML = `<h3>✅ พบข้อมูล!</h3>
-                                          <p>สถานะ: พบคำสั่งซื้อ</p>
-                                          <p>เลขพัสดุ: <b>${data.tracking || 'กำลังรอการจัดส่ง'}</b></p>`;
+                    resultDiv.innerHTML = `
+                        <h3>✅ พบข้อมูลคำสั่งซื้อ!</h3>
+                        <p>ชื่อผู้รับ: <b>${data.name || '-'}</b></p>
+                        <p>สถานะ: <b>พบรายการในระบบ</b></p>
+                        <p>เลขพัสดุ: <b>${data.tracking || 'กำลังรอการจัดส่ง / ออกเลขพัสดุ'}</b></p>
+                    `;
                 } else {
                     resultDiv.style.backgroundColor = "#fee2e2";
-                    resultDiv.innerHTML = "<h3>❌ ไม่พบข้อมูล</h3><p>กรุณาตรวจสอบหมายเลขคำสั่งซื้ออีกครั้ง</p>";
+                    resultDiv.innerHTML = "<h3>❌ ไม่พบข้อมูล</h3><p>กรุณาตรวจสอบชื่อหรือหมายเลขคำสั่งซื้อใหม่อีกครั้ง</p>";
                 }
             })
             .catch(err => {
+                console.error(err);
                 resultDiv.style.display = "block";
-                resultDiv.innerHTML = "<h3>⚠️ เกิดข้อผิดพลาด</h3><p>ระบบเชื่อมต่อไม่ได้ โปรดตรวจสอบ URL หรือการ Deploy</p>";
+                resultDiv.style.backgroundColor = "#fee2e2";
+                resultDiv.innerHTML = "<h3>⚠️ เกิดข้อผิดพลาด</h3><p>ไม่สามารถเชื่อมต่อกับฐานข้อมูลได้ โปรดลองใหม่อีกครั้ง</p>";
             });
         }
 
