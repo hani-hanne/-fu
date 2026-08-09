@@ -155,7 +155,7 @@
 
         // ฟังก์ชันตรวจสอบข้อมูลและบันทึกลง sessionStorage เพื่อส่งต่อไปหน้าชำระเงิน
         function goToPayment() {
-            /*let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 1250;
+            let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 1250;
             let orderedQty = parseInt(document.getElementById('qty').value) || 1;
             currentOrders += orderedQty;
 
@@ -165,7 +165,7 @@
                 alert('สินค้าหมดแล้ว (SOLD OUT) ไม่สามารถสั่งซื้อเพิ่มได้ค่ะ');
                 window.location.href = 'index.html';
                 return;
-            }*/
+            }
 
             let form = document.getElementById('orderForm');
             if (!form.checkValidity()) {
