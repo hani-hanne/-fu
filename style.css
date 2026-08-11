@@ -479,12 +479,12 @@ body.dark-theme {
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;          
-    background-image: url('img/IMG_3281.JPG');
+    background-image: url('img/IMG_3281.jpeg');
     overflow: hidden !important; /* ป้องกันไม่ให้ป้ายล้นออกนอกขอบโค้งของรูป */
 } 
 .book-cover:hover {
     /* รูปที่สอง (รูปที่จะเปลี่ยนไปโชว์) */
-    background-image: url('img/rmbook.jpg'); 
+    background-image: url('img/ปกรอง.jpeg'); 
 }
 
 .mainbook {
@@ -537,9 +537,32 @@ body.dark-theme .author-credits .label {
     background: rgba(255, 255, 255, 0.08);
 }
 
-.action-buttons {
+.action-container {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 12px; /* ระยะห่างระหว่างแถวบนกับแถวร่าง */
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* จัดให้สองปุ่มบนอยู่คู่กันแนวนอน และแบ่งพื้นที่คนละครึ่ง */
+.action-buttons-top {
+    display: flex;
+    gap: 12px; /* ระยะห่างระหว่างปุ่มซ้ายและขวา */
+    width: 100%;
+}
+
+.action-buttons-top .btn-action {
+    flex: 1; /* ให้ขยายขนาดเท่ากันพอดี */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* ปุ่มด้านล่างให้แสดงผลเต็มความกว้าง */
+.btn-full {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .btn {
