@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>little mlue</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+<body>
+    <!-- ปุ่มเปลี่ยนธีมและภาษา (ลอยอยู่มุมบนขวาอย่างอิสระ) -->
+    <div class="top-controls">
+        <button id="themeToggle" class="theme-toggle-btn">
+            <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
+        <div class="lang-selector">
+            <button class="lang-btn">
+                <i class="fa-solid fa-globe"></i>
+                <span class="lang-th">TH</span>
+                <span class="lang-ko" style="display:none;">KO</span>
+                <span class="lang-en" style="display:none;">EN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="lang-dropdown">
+                <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- แถบเมนูหลัก (แยกออกมาอยู่นอก top-controls เพื่อไม่ให้ซ้อนทับกัน) -->
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="index.html">
+                <span class="lang-th">หน้าแรก</span>
+                <span class="lang-ko">홈</span>
+                <span class="lang-en">HOME</span>
+            </a>
+            <a href="order.html">
+                <span class="lang-th">สั่งซื้อ</span>
+                <span class="lang-ko">주문하기</span>
+                <span class="lang-en">ORDER</span>
+            </a>
+            <a href="track.html">
+                <span class="lang-th">สถานะ</span>
+                <span class="lang-ko">조회</span>
+                <span class="lang-en">TRACK</span>
+            </a>
+            <a href="contact.html">
+                <span class="lang-th">ติดต่อ</span>
+                <span class="lang-ko">문의하기</span>
+                <span class="lang-en">CONTACT</span>
+            </a>
+            <a href="review.html" class="active">
+                <span class="lang-th">รีวิว</span>
+                <span class="lang-ko">홈</span>
+                <span class="lang-en">review</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-card">
+        <h2>🎰 ตู้กาชาปองรีวิวหนังสือ</h2>
+        <p>เขียนความประทับใจแล้วหยอดลงโหล เพื่อสุ่มอ่านรีวิวกัน!</p>
+        
+        <div class="form-box">
+            <textarea id="reviewInput" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea><br>
+            <button class="action-btn" onclick="addReview()">โยนลงโหลกาชาปอง 🎁</button>
+        </div>
+
+        <!-- โหลกาชาปอง -->
+        <div id="jar"></div>
+
+        <!-- หน้าต่างอ่านรีวิว -->
+        <div id="modal">
+            <h3>💌 ข้อความจากแคปซูล</h3>
+            <p id="modalText" style="margin: 15px 0; word-break: break-word;"></p>
+            <button class="action-btn" onclick="closeModal()">ปิด</button>
+        </div>
+    </main>
+
+    <script>
+        // --- 1. ระบบฟิสิกส์ Matter.js สำหรับทำหน้าที่ให้บอลร่วงลงมากองในโหล ---
+        let engine, runner, world;
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxTr_IGcj32pFWK3oZW7sazgy600VaIbbWD5lqRcwAt7QYoEyBEPSTh4N9r2IrzM845VA/exec'; 
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const { Engine, Runner, Bodies, Composite } = Matter;
+
+            engine = Engine.create();
+            world = engine.world;
+
+            const jarElement = document.getElementById('jar');
+            if (jarElement) {
+                const width = jarElement.clientWidth;
+                const height = jarElement.clientHeight;
+
+                const ground = Bodies.rectangle(width / 2, height + 25, width, 50, { isStatic: true });
+                const leftWall = Bodies.rectangle(-25, height / 2, 50, height, { isStatic: true });
+                const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, { isStatic: true });
+
+                Composite.add(world, [ground, leftWall, rightWall]);
+
+                runner = Runner.create();
+                Runner.run(runner, engine);
+
+                loadExistingReviews();
+            }
+        });
+
+        function loadExistingReviews() {
+            fetch(scriptURL)
+                .then(response => response.json())
+                .then(reviews => {
+                    if (Array.isArray(reviews)) {
+                        reviews.forEach((text, index) => {
+                            setTimeout(() => {
+                                createPhysicsBall(text);
+                            }, index * 150);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading reviews:', error));
+        }
+
+        // --- 2. ฟังก์ชันสลับธีมและภาษา ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            let particleInterval = null;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                    startFallingEffect('snow');
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    startFallingEffect('flower');
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            function startFallingEffect(type) {
+                if (particleInterval) clearInterval(particleInterval);
+                document.querySelectorAll('.falling-particle').forEach(el => el.remove());
+                const items = type === 'snow' ? ['❄', '✧', '•'] : ['🍂'];
+                const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
+                particleInterval = setInterval(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle';
+                    const startLeft = Math.random() * window.innerWidth;
+                    const duration = Math.random() * 4 + 4;
+                    const fontSize = Math.random() * 12 + 10;
+                    particle.innerText = items[Math.floor(Math.random() * items.length)];
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = startLeft + 'px';
+                    particle.style.fontSize = fontSize + 'px';
+                    particle.style.animationDuration = duration + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => { particle.remove(); }, duration * 1000);
+                }, 300);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            applyTheme(savedTheme);
+
+            const langOptions = document.querySelectorAll('.lang-option');
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+            }
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    changeLanguage(this.getAttribute('data-lang'));
+                });
+            });
+            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
+        });
+
+        // --- 3. ฟังก์ชันเพิ่มรีวิวและสร้างลูกบอลตกลงโหลด้วยฟิสิกส์ ---
+        function addReview() {
+            const input = document.getElementById('reviewInput');
+            const text = input.value;
+            if (!text.trim()) return alert('กรุณาพิมพ์ข้อความก่อนนะ');
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ review: text })
+            }).catch(error => console.error('Error!', error.message));
+
+            createPhysicsBall(text);
+
+            input.value = '';
+            alert('โยนรีวิวลงโหลและบันทึกสำเร็จแล้ว! 🎉');
+        }
+
+        function createPhysicsBall(reviewText) {
+            const { Bodies, Composite } = Matter;
+            const jar = document.getElementById('jar');
+            if (!jar) return;
+            const width = jar.clientWidth;
+
+            const ballSize = 25; 
+            const startX = (width / 2) + (Math.random() - 0.5) * 80; 
+            const startY = -30; 
+
+            const ball = Bodies.circle(startX, startY, ballSize, {
+                restitution: 0.2, 
+                friction: 0.8,    
+                density: 0.001
+            });
+
+            const ballElement = document.createElement('div');
+            ballElement.className = 'gacha-ball';
+            
+            const colors = [
+                'linear-gradient(135deg, #ff9a9e, #fecfef)', 
+                'linear-gradient(135deg, #a1c4fd, #c2e9fb)', 
+                'linear-gradient(135deg, #ffecd2, #fcb69f)', 
+                'linear-gradient(135deg, #d4fc79, #96e6a1)', 
+                'linear-gradient(135deg, #f093fb, #f5576c)'  
+            ];
+            const patterns = ['🎁', '⭐', '✨', '🎈', '🍭'];
+            
+            ballElement.style.background = colors[Math.floor(Math.random() * colors.length)];
+            ballElement.innerText = patterns[Math.floor(Math.random() * patterns.length)];
+            ballElement.style.width = `${ballSize * 2}px`;
+            ballElement.style.height = `${ballSize * 2}px`;
+            ballElement.style.position = 'absolute';
+            ballElement.style.borderRadius = '50%';
+            ballElement.style.display = 'flex';
+            ballElement.style.alignItems = 'center';
+            ballElement.style.justifyContent = 'center';
+            ballElement.style.cursor = 'pointer';
+            ballElement.style.fontSize = '18px';
+
+            ballElement.onclick = function() {
+                document.getElementById('modalText').innerText = reviewText;
+                document.getElementById('modal').style.display = 'block';
+            };
+
+            jar.appendChild(ballElement);
+            Composite.add(world, ball);
+
+            function updatePosition() {
+                const { x, y } = ball.position;
+                ballElement.style.left = `${x - ballSize}px`;
+                ballElement.style.top = `${y - ballSize}px`;
+
+                requestAnimationFrame(updatePosition);
+            }
+            updatePosition();
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>     
+</body>
+</html>

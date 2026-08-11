@@ -161,7 +161,7 @@
             resultDiv.innerHTML = "<h3>กำลังค้นหาข้อมูล...</h3>";
 
             // 1. ใช้ URL ของ Google Apps Script ตัวจริงที่คุณ Deploy ล่าสุด
-            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDLg6KRP_lehDbm3MT2HozXU0kBTZJ29zD_w_9yolwl3bbeDy-2dAAz_Obj4ukquMv/exec";
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
             // 2. เรียกใช้งาน doGet พร้อมส่งค่า id ไปค้นหา
             fetch(WEB_APP_URL + "?id=" + encodeURIComponent(id))
             .then(res => res.json())

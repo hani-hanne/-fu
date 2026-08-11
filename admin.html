@@ -6,7 +6,7 @@
     <title>Admin Dashboard - รายการสั่งซื้อ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h2 { color: #333; text-align: center; }
         
         /* หน้าต่างกรอกรหัส */
@@ -29,6 +29,7 @@
         th { background-color: #f9fafb; color: #374151; }
         tr:nth-child(even) { background-color: #fcfcfc; }
         .loading { text-align: center; color: #6b7280; padding: 20px; }
+        .badge { background: #e0e7ff; color: #4f46e5; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -73,6 +74,7 @@
                     <th>ที่อยู่</th>
                     <th>ยอดเงิน</th>
                     <th>สลิป</th>
+                    <th>เลขออเดอร์</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -83,11 +85,9 @@
 </div>
 
 <script>
-    // ตั้งรหัสผ่านสำหรับเข้าหน้าแอดมิน (เปลี่ยนได้ตามต้องการ)
     const CORRECT_PIN = "0827"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
     
-    // URL ของ Google Apps Script
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec";
     function checkPin() {
         const enteredPin = document.getElementById("pin-input").value;
         if (enteredPin === CORRECT_PIN) {
@@ -111,12 +111,11 @@
             let totalBooks = 0;
 
             if(totalOrders === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">ยังไม่มีข้อมูลคำสั่งซื้อ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">ยังไม่มีข้อมูลคำสั่งซื้อ</td></tr>`;
             } else {
                 data.forEach(row => {
                     let price = parseFloat(row.Total) || 0;
                     totalRevenue += price;
-                    // คำนวณจำนวนเล่มจากราคารวม (เล่มละ 790 บาท)
                     totalBooks += Math.round(price / 790);
                 });
 
@@ -129,12 +128,12 @@
                         <td>${row.Address || '-'}</td>
                         <td>${row.Total || '-'}</td>
                         <td>${row.Slip && row.Slip !== '-' ? `<a href="${row.Slip}" target="_blank">ดูสลิป</a>` : 'ไม่มีสลิป'}</td>
+                        <td><span class="badge">${row.OrderId || 'little-000'}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
             }
 
-            // แสดงผลตัวเลขสถิติ
             document.getElementById("stat-orders").innerText = totalOrders;
             document.getElementById("stat-revenue").innerText = totalRevenue.toLocaleString() + " ฿";
             document.getElementById("stat-books").innerText = totalBooks;

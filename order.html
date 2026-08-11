@@ -101,14 +101,28 @@
                         </div>
                     </div>
 
-                    <!-- แยกที่อยู่ตามแบบมาตรฐานไทย -->
                     <div class="address-grid">
-                        <div class="form-group"><label>จังหวัด</label><input type="text" id="province" required></div>
-                        <div class="form-group"><label>อำเภอ/เขต</label><input type="text" id="district" required></div>
-                        <div class="form-group"><label>รหัสไปรษณีย์</label><input type="text" id="zipcode" required></div>
+                        <div class="form-group">
+                            <label><span class="lang-th">จังหวัด</span><span class="lang-ko">시/도</span><span class="lang-en">Province</span></label>
+                            <input type="text" id="province" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-th">อำเภอ/เขต</span><span class="lang-ko">군/구</span><span class="lang-en">District</span></label>
+                            <input type="text" id="district" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-th">ตำบล/แขวง</span><span class="lang-ko">읍/면/동</span><span class="lang-en">Sub-district</span></label>
+                            <input type="text" id="subdistrict" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-th">รหัสไปรษณีย์</span><span class="lang-ko">우편번호</span><span class="lang-en">Zipcode</span></label>
+                            <input type="text" id="zipcode" required>
+                        </div>
                     </div>
-                    <div class="form-group"><label>บ้านเลขที่/ถนน/ตำบล</label><textarea id="address" rows="2" required></textarea></div>
-
+                    <div class="form-group">
+                        <label><span class="lang-th">บ้านเลขที่ / ชื่อหมู่บ้าน / ถนน</span><span class="lang-ko">상세 주소</span><span class="lang-en">Street Address / Apt</span></label>
+                        <textarea id="address" rows="2" required></textarea>
+                    </div>
                     <button type="button" class="buy-btn" onclick="goToPayment()">ยืนยันการสั่งซื้อ</button>
                 </form>
 
@@ -139,7 +153,7 @@
 
  <script>
         // URL ของ Google Apps Script
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDLg6KRP_lehDbm3MT2HozXU0kBTZJ29zD_w_9yolwl3bbeDy-2dAAz_Obj4ukquMv/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
         // ฟังก์ชันปรับจำนวนสินค้า
         function changeQty(val) {
             let qtyInput = document.getElementById('qty');
@@ -174,29 +188,31 @@
                 return;
             }
 
-            // 1. ดึงค่าทั้งหมดจากฟอร์ม
+            // 1. ดึงค่าจากฟอร์มแต่ละช่อง (รวมถึง subdistrict ที่เพิ่มเข้ามาใหม่)
             let name = document.getElementById('fullname').value;
             let email = document.getElementById('email').value;
             let phone = document.getElementById('phone').value;
             let qty = document.getElementById('qty').value;
             let province = document.getElementById('province').value;
             let district = document.getElementById('district').value;
+            let subdistrict = document.getElementById('subdistrict').value; // ตำบล/แขวง
             let zipcode = document.getElementById('zipcode').value;
-            let address = document.getElementById('address').value;
+            let houseAddress = document.getElementById('address').value; // บ้านเลขที่/ถนน
             let total = document.getElementById('total-price').innerText;
 
-            // 2. บันทึกข้อมูลลง sessionStorage ทั้งหมด (รวมถึงจังหวัด อำเภอ รหัสไปรษณีย์)
+            // 2. 🌟 นำข้อมูลที่อยู่ทั้งหมดมาต่อกันเป็นก้อนเดียวตรงนี้ (เลียนแบบรูปแบบเดิมที่ Apps Script คาดหวัง)
+            let fullAddress = houseAddress + ' ต.' + subdistrict + ' อ.' + district + ' จ.' + province;
+
+            // 3. บันทึกข้อมูลลง sessionStorage 
             sessionStorage.setItem('orderTotal', total);
             sessionStorage.setItem('orderName', name);
             sessionStorage.setItem('orderEmail', email);
             sessionStorage.setItem('orderPhone', phone);
-            sessionStorage.setItem('orderAddress', address);
-            sessionStorage.setItem('orderProvince', province);
-            sessionStorage.setItem('orderDistrict', district);
+            sessionStorage.setItem('orderAddress', fullAddress); // ส่งที่อยู่ที่ประกอบร่างเสร็จแล้วไป
             sessionStorage.setItem('orderZipcode', zipcode);
             sessionStorage.setItem('orderQty', qty);
 
-            // 3. เปลี่ยนไปหน้าชำระเงิน (payment_2.html) ทันที
+            // 4. เปลี่ยนไปหน้าชำระเงินทันที
             window.location.href = 'payment.html';
         }
 
