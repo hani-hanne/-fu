@@ -895,11 +895,14 @@ body.dark-theme .account-number {
 
     .kid-photo {
         position: fixed;
-        top: 200px; right: 0; width: 80%; height: 50%;
-        object-fit: contain; z-index: -1;
+        top: 320px; /* 🔹 ปรับตัวเลขนี้เพิ่มขึ้นเพื่อให้รูปขยับต่ำลงมา ไม่บังตัวหนังสือ */
+        right: 0; 
+        width: 70%;  /* ปรับขนาดให้เล็กลงอีกนิดได้ตามต้องการ */
+        height: auto;
+        object-fit: contain; 
+        z-index: -1;
         object-position: center right; 
         transform: scale(1);
-        background-size: 80%;
     }
     /* 1. ให้ข้อความไม่กว้างเกินไปและไม่บังวิดีโอ */
     .hero-section {
