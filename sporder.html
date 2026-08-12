@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-th">시계의 세계와계절의 색โลกของนาฬิกาและสีของฤดู</title>
+    <title class="lang-ko">시계의 세계와 계절의 색</title>
+    <title class="lang-en">The World of Time and Colors of the Seasons</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="main-content" style="display: none;">
+    </div>
+    
+    <div class="web-container">
+        <header class="navbar">
+            <div class="top-controls">
+                <button id="themeToggle" class="theme-toggle-btn">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+
+                <div class="lang-selector">
+                    <button class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="lang-th">TH</span>
+                        <span class="lang-ko" style="display:none;">KO</span>
+                        <span class="lang-en" style="display:none;">EN</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                        <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                        <div class="lang-item lang-option" data-lang="en">English (EN)</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-card">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">
+                <span class="lang-th">สั่งซื้อสินค้า</span>
+                <span class="lang-ko">주문하기</span>
+                <span class="lang-en">PLACE AN ORDER</span>
+            </h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 30px;">
+                <span class="lang-th">กรอกข้อมูลรายละเอียดเพื่อสั่งซื้อหนังสือ (ชุดพิเศษ 4 เล่ม)</span>
+                <span class="lang-ko">책을 주문하려면 상세 정보를 입력하세요.</span>
+                <span class="lang-en">Fill out the details below to order your book.</span>
+            </p>
+            
+            <div class="order-grid">
+                <!-- ฟอร์มสั่งซื้อ -->
+                <form id="orderForm">
+                    <!-- ข้อมูลลูกค้า -->
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-th">ชื่อ-นามสกุล</span>
+                            <span class="lang-ko">이름</span>
+                            <span class="lang-en">Full Name</span>
+                        </label>
+                        <input type="text" id="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <!-- ช่องกรอกเบอร์โทรศัพท์ -->
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-th">เบอร์โทรศัพท์</span>
+                            <span class="lang-ko">전화번호</span>
+                            <span class="lang-en">Phone Number</span>
+                        </label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <!-- ระบบจำนวนและราคาแบบฟิกซ์ค่า -->
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-th">จำนวนเล่ม (ชุดพิเศษ 4 เล่ม)</span>
+                            <span class="lang-ko">수량 (특별 세트 4권)</span>
+                            <span class="lang-en">Quantity (Special Set 4 Books)</span>
+                        </label>
+                        <div class="quantity-control">
+                            <input type="number" id="qty" value="4" readonly style="width: 100%; text-align: center; background-color: rgba(255,255,255,0.1); cursor: not-allowed;">
+                        </div>
+                    </div>
+
+                    <div class="address-grid">
+                        <div class="form-group">
+                            <label>
+                                <span class="lang-th">จังหวัด</span>
+                                <span class="lang-ko">시/도</span>
+                                <span class="lang-en">Province</span>
+                            </label>
+                            <input type="text" id="province" required>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <span class="lang-th">อำเภอ/เขต</span>
+                                <span class="lang-ko">군/구</span>
+                                <span class="lang-en">District</span>
+                            </label>
+                            <input type="text" id="district" required>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <span class="lang-th">ตำบล/แขวง</span>
+                                <span class="lang-ko">읍/면/동</span>
+                                <span class="lang-en">Sub-district</span>
+                            </label>
+                            <input type="text" id="subdistrict" required>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <span class="lang-th">รหัสไปรษณีย์</span>
+                                <span class="lang-ko">우편번호</span>
+                                <span class="lang-en">Zipcode</span>
+                            </label>
+                            <input type="text" id="zipcode" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="lang-th">บ้านเลขที่ / ชื่อหมู่บ้าน / ถนน</span>
+                            <span class="lang-ko">상세 주소</span>
+                            <span class="lang-en">Street Address / Apt</span>
+                        </label>
+                        <textarea id="address" rows="2" required></textarea>
+                    </div>
+                    <button type="button" class="buy-btn" onclick="goToPayment()">
+                        <span class="lang-th">ยืนยันการสั่งซื้อ</span>
+                        <span class="lang-ko">주문 확인</span>
+                        <span class="lang-en">Confirm Order</span>
+                    </button>
+                </form>
+
+                <div class="order-summary">
+                    <h3>
+                        <span class="lang-th">สรุปรายการสั่งซื้อ</span>
+                        <span class="lang-ko">주문 요약</span>
+                        <span class="lang-en">Order Summary</span>
+                    </h3>
+                    <div class="summary-item">
+                        <span class="lang-th">โลกของนาฬิกาและสีของฤดู</span>
+                        <span class="lang-ko">시계의 세계와 계절의 색</span>
+                        <span class="lang-en">The World of Time Book</span>
+                        <p> <span id="total-price">3160</span> <span class="lang-th">บาท</span><span class="lang-ko">원</span><span class="lang-en">THB</span></p>
+                    </div>
+                    <div class="summary-item">
+                        <span class="lang-th">ค่าจัดส่ง </span>
+                        <span class="lang-ko">배송비 </span>
+                        <span class="lang-en">Shipping Fee </span>
+                        <span class="lang-th">ฟรี</span>
+                        <span class="lang-ko">무료 배송</span>
+                        <span class="lang-en">Free</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyDY_Og1Dcx_ZKnFPIkYv0RsHYmFfhmf2lyzokBwwgTyqFVJYpdZbCuOMQYjBibe_Hj7w/exec";
+
+        function goToPayment() {
+            let form = document.getElementById('orderForm');
+            if (!form.checkValidity()) {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วนก่อนดำเนินการต่อ');
+                form.reportValidity();
+                return;
+            }
+
+            // 1. ตรวจสอบสต็อก (นับเป็นจำนวนเล่ม สูงสุด 200 เล่ม)
+            let currentOrders = parseInt(localStorage.getItem('specialSetOrders')) || 0; 
+            let orderedQty = 4; // สั่ง 1 ครั้ง ได้ 4 เล่ม
+
+            if (currentOrders + orderedQty > 200) {
+                alert('สินค้าชุดพิเศษหมดแล้ว (SOLD OUT) ค่ะ');
+                return;
+            }
+
+            // 2. ถ้ายังไม่หมด ให้บวกยอดสะสมเพิ่มทีละ 4 เล่ม
+            currentOrders += orderedQty;
+            localStorage.setItem('specialSetOrders', currentOrders);
+
+            let name = document.getElementById('fullname').value;
+            let email = document.getElementById('email').value;
+            let phone = document.getElementById('phone').value;
+            let qty = "4";
+            let province = document.getElementById('province').value;
+            let district = document.getElementById('district').value;
+            let subdistrict = document.getElementById('subdistrict').value;
+            let zipcode = document.getElementById('zipcode').value;
+            let houseAddress = document.getElementById('address').value;
+            let total = "3160";
+
+            let fullAddress = houseAddress + ' ต.' + subdistrict + ' อ.' + district + ' จ.' + province;
+
+            // ==========================================
+            // ระบบรันเลขออเดอร์เรียงลำดับ เริ่มจาก 1
+            // ==========================================
+            let lastOrderSeq = parseInt(localStorage.getItem('lastOrderSeq')) || 0;
+            let nextOrderSeq = lastOrderSeq + 1;
+            
+            // บันทึกกลับลง localStorage เพื่อให้เลขออเดอร์ครั้งต่อไปบวกเพิ่มขึ้นเรื่อยๆ
+            localStorage.setItem('lastOrderSeq', nextOrderSeq);
+
+            // จัดรูปแบบให้เป็น 3 หลัก (เช่น 1 กลายเป็น 001, 12 กลายเป็น 012)
+            let formattedSeq = String(nextOrderSeq).padStart(3, '0');
+            let displayOrderId = "SPLITTLE-" + formattedSeq;
+
+            sessionStorage.setItem('displayOrderId', displayOrderId);
+            sessionStorage.setItem('finalOrderId', displayOrderId); // เซฟเผื่อไว้ใช้หน้า final ทันที
+            // ==========================================
+
+            // เก็บข้อมูลลง sessionStorage เพื่อส่งไปหน้าชำระเงินต่อ
+            sessionStorage.setItem('orderTotal', total);
+            sessionStorage.setItem('orderName', name);
+            sessionStorage.setItem('orderEmail', email);
+            sessionStorage.setItem('orderPhone', phone);
+            sessionStorage.setItem('orderAddress', fullAddress);
+            sessionStorage.setItem('orderZipcode', zipcode);
+            sessionStorage.setItem('orderQty', qty);
+
+            // ไปหน้าชำระเงิน
+            window.location.href = 'sppayment.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
+                } else {
+                    body.classList.remove('dark-theme');
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                }
+                localStorage.setItem('selectedTheme', theme);
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+                    applyTheme(currentTheme);
+                });
+            }
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            applyTheme(savedTheme);
+
+            // ระบบสลับภาษา
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.lang-' + lang).forEach(el => {
+                    el.style.display = '';
+                });
+            }
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    changeLanguage(selectedLang);
+                });
+            });
+
+            const savedLang = localStorage.getItem('selectedLanguage') || 'th';
+            changeLanguage(savedLang);
+        });
+
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById("loading-screen");
+                if (loadingScreen) loadingScreen.style.display = "none";
+                const mainContent = document.getElementById("main-content");
+                if (mainContent) mainContent.style.display = "block";
+            }, 500);
+        });
+    </script>
+</body>
+</html>

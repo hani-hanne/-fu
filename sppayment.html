@@ -26,6 +26,15 @@
             <span class="lang-en">⚠️ Please wait until the page redirects automatically. Do not close or refresh!</span>
         </p>
     </div>
+
+    <!-- CSS สำหรับอนิเมชันหมุนๆ -->
+    <style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    </style>
+
     <div class="web-container">
         <header class="navbar">
             <div class="trols">
@@ -43,9 +52,9 @@
             <form id="paymentForm" onsubmit="finishOrder(event)">
                 <div class="qr-box">
                     <h2>สแกนเพื่อชำระเงิน</h2>
-                    <p>ยอดที่ต้องชำระ: <span id="final-amount">0</span> บาท</p>
-                    <!-- เปลี่ยนมาใช้โฟลเดอร์ img เพื่อป้องกันปัญหาหาภาพไม่เจอ -->
-                    <img id="qrImage" src="payment/1.jpg" alt="QR Code" class="qr-img" style="max-width: 250px; display: block; margin: 0 auto;">
+                    <p>ยอดที่ต้องชำระ: <span id="final-amount">3160</span> บาท</p>
+                    <!-- ฟิกซ์ QR Code เป็นรูป 3160.jpg ตัวเดียว -->
+                    <img id="qrImage" src="payment/3160.jpg" alt="QR Code" class="qr-img" style="max-width: 250px; display: block; margin: 0 auto;">
                     <p style="color: red; margin-top: 10px;">*แนบสลิปการโอนเงิน แล้วกดปุ่มด้านล่างเพื่อยืนยัน*</p>
                     <div class="form-group" style="margin: 15px 0;">
                         <label>แนบสลิปการโอนเงิน: </label>
@@ -60,30 +69,17 @@
 
     <!-- โค้ด JavaScript ควบคุมหน้าชำระเงิน -->
     <script>
-        // โค้ดดึงยอดเงินจากหน้าสั่งซื้อ
-        const savedTotal = sessionStorage.getItem('orderTotal');
+        // ฟิกซ์ยอดเงินเป็น 3160 บาทเสมอ
+        const fixedTotal = "3160";
+        sessionStorage.setItem('orderTotal', fixedTotal);
         
-        if (savedTotal && document.getElementById('final-amount')) {
-            document.getElementById('final-amount').innerText = savedTotal;
-            
-            const totalAmount = parseInt(savedTotal);
-            const qrImage = document.getElementById('qrImage');
-
-            // เงื่อนไขเปลี่ยน QR Code ตามยอดเงิน
-            if (totalAmount === 790) {
-                qrImage.src = 'payment/1.jpg'; 
-            } else if (totalAmount === 1580) {
-                qrImage.src = 'payment/p2.jpg';
-            } else if (totalAmount === 2370) {
-                qrImage.src = 'payment/S__41599020.jpg';
-            } else {
-                qrImage.src = 'payment/1.jpg';
-            }
+        if (document.getElementById('final-amount')) {
+            document.getElementById('final-amount').innerText = fixedTotal;
         }
         
         // ฟังก์ชันเมื่อกดปุ่มสั่งซื้อสำเร็จ
         async function finishOrder(event) {
-            event.preventDefault(); // ป้องกันการรีเฟรชหน้า
+            event.preventDefault(); 
             
             const slipInput = document.getElementById('slipInput');
             if (slipInput.files.length === 0) {
@@ -92,60 +88,67 @@
             }
 
             const file = slipInput.files[0];
-            const totalAmount = document.getElementById('final-amount').innerText;
 
-            // ดึงจำนวนเล่มที่บันทึกไว้ หรือคำนวณสำรองจากยอดเงิน
-            let qty = parseInt(sessionStorage.getItem('orderQty')) || 1;
-            const parsedTotal = parseInt(totalAmount);
-            if (parsedTotal === 1580) qty = 2;
-            else if (parsedTotal === 2370) qty = 3;
-
-            // แสดงสถานะกำลังโหลด
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'กำลังบันทึกข้อมูล...';
-            submitBtn.disabled = true;
+            // 🌟 แสดงหน้าจอดำโหลดเต็มจอทันทีที่กด
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+            }
 
             try {
                 // แปลงไฟล์รูปภาพเป็น Base64
                 const base64Data = await toBase64(file);
 
-                // **ดึงข้อมูลทั้งหมดจาก sessionStorage ให้ครบถ้วนตรงกับที่ Google Apps Script รอรับ**
+                // ดึงเลขออเดอร์ SPLITTLE-XXXX ที่สร้างมาจากหน้าสั่งซื้อ
+                const currentOrderId = sessionStorage.getItem('displayOrderId') || 'SPLITTLE-0000';
+
                 const payload = {
+                    orderId: currentOrderId, // 👈 ส่งเลขออเดอร์ไปบันทึกใน Google Sheets ด้วย
                     name: sessionStorage.getItem('orderName') || '-',
                     email: sessionStorage.getItem('orderEmail') || '-',
                     phone: sessionStorage.getItem('orderPhone') || '-',
-                    qty: qty,
+                    qty: "4", // ฟิกซ์จำนวน 4 เล่ม
                     province: sessionStorage.getItem('orderProvince') || '-',
                     district: sessionStorage.getItem('orderDistrict') || '-',
                     zipcode: sessionStorage.getItem('orderZipcode') || '-',
                     address: sessionStorage.getItem('orderAddress') || '-',
-                    total: totalAmount,
+                    total: fixedTotal, // ส่งยอด 3160
                     fileName: file.name,
                     mimeType: file.type,
                     fileData: base64Data
                 };
 
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec';
+                
                 await fetch(scriptURL, {
                     method: 'POST',
-                     
                     headers: {
                         'Content-Type': 'text/plain;charset=utf-8',
                     },
                     body: JSON.stringify(payload)
                 });
 
-                // ล้างข้อมูลเวลาและ Session จากนั้นพาไปหน้าสำเร็จ
+                // ล้างเวลา แต่เก็บ displayOrderId ไว้โชว์ที่หน้าสุดท้าย (final.html)
                 localStorage.removeItem('paymentTimer');
-                sessionStorage.clear();
+                
+                // ล้างข้อมูลอื่นๆ ยกเว้นเลขออเดอร์
+                sessionStorage.removeItem('orderTotal');
+                sessionStorage.removeItem('orderName');
+                sessionStorage.removeItem('orderEmail');
+                sessionStorage.removeItem('orderPhone');
+                sessionStorage.removeItem('orderAddress');
+                sessionStorage.removeItem('orderZipcode');
+                sessionStorage.removeItem('orderQty');
+
                 window.location.href = 'final.html';
 
             } catch (error) {
                 console.error('Error!', error.message);
                 alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+                
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = 'none';
+                }
             }
         }
           
