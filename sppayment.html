@@ -17,21 +17,24 @@
         <div class="spinner" style="border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #fff; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
         <h2 style="margin-bottom: 10px;">
             <span class="lang-th">กำลังบันทึกข้อมูลและอัปโหลดสลิป...</span>
-            <span class="lang-ko">정보를 저장하고 영수증을 업로드하는 중입니다...</span>
-            <span class="lang-en">Saving data and uploading slip...</span>
+            <span class="lang-ko lang-hidden">정보를 저장하고 영수증을 업로드하는 중입니다...</span>
+            <span class="lang-en lang-hidden">Saving data and uploading slip...</span>
         </h2>
         <p style="color: #ff4757; font-weight: bold; font-size: 16px;">
-            <span class="lang-th">⚠️ กรุณารอจนกว่าจะเปลี่ยนหน้าอัตโนมัติ ห้ามปิดหรือรีเฟรชหน้าเว็บเด็ดขาด!</span>
-            <span class="lang-ko">⚠️ 화면이 자동으로 전환될 때까지 기다려주세요. 페이지를 닫거나 새로고침하지 마세요!</span>
-            <span class="lang-en">⚠️ Please wait until the page redirects automatically. Do not close or refresh!</span>
+            <span class="lang-th">⚠️ กำลังดำเนินการ…ห้ามปิดหน้าจอหรือกดปุ่มย้อนกลับ (Back) เด็ดขาด!</span>
+            <span class="lang-ko lang-hidden">⚠️ 처리 중입니다… 화면을 닫거나 뒤로 가기 버튼을 누르지 마세요!</span>
+            <span class="lang-en lang-hidden">⚠️ Processing… Do not close the screen or press the back button!</span>
         </p>
     </div>
 
-    <!-- CSS สำหรับอนิเมชันหมุนๆ -->
+    <!-- CSS สำหรับอนิเมชันหมุนๆ และซ่อนภาษา -->
     <style>
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+    }
+    .lang-hidden {
+        display: none !important;
     }
     </style>
 
@@ -46,8 +49,8 @@
                     <button class="lang-btn">
                         <i class="fa-solid fa-globe"></i>
                         <span class="lang-th">TH</span>
-                        <span class="lang-ko" style="display:none;">KO</span>
-                        <span class="lang-en" style="display:none;">EN</span>
+                        <span class="lang-ko lang-hidden">KO</span>
+                        <span class="lang-en lang-hidden">EN</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="lang-dropdown">
@@ -104,7 +107,7 @@
 
             const file = slipInput.files[0];
 
-            // 🌟 แสดงหน้าจอดำโหลดเต็มจอทันทีที่กด
+            // 🌟 แสดงหน้าจอดำโหลดเต็มจอทันทีที่กด (พร้อมดึงภาษาที่เลือกมาแสดงผล)
             const loadingOverlay = document.getElementById('loadingOverlay');
             if (loadingOverlay) {
                 loadingOverlay.style.display = 'flex';
@@ -115,19 +118,19 @@
                 const base64Data = await toBase64(file);
 
                 // ดึงเลขออเดอร์ SPLITTLE-XXXX ที่สร้างมาจากหน้าสั่งซื้อ
-                const currentOrderId = sessionStorage.getItem('displayOrderId') || 'SPLITTLE-0000';
+                const currentOrderId = sessionStorage.getItem('displayOrderId') || 'SP0000';
 
                 const payload = {
-                    orderId: currentOrderId, // 👈 ส่งเลขออเดอร์ไปบันทึกใน Google Sheets ด้วย
+                    orderId: currentOrderId, 
                     name: sessionStorage.getItem('orderName') || '-',
                     email: sessionStorage.getItem('orderEmail') || '-',
                     phone: sessionStorage.getItem('orderPhone') || '-',
-                    qty: "4", // ฟิกซ์จำนวน 4 เล่ม
+                    qty: "4", 
                     province: sessionStorage.getItem('orderProvince') || '-',
                     district: sessionStorage.getItem('orderDistrict') || '-',
                     zipcode: sessionStorage.getItem('orderZipcode') || '-',
                     address: sessionStorage.getItem('orderAddress') || '-',
-                    total: fixedTotal, // ส่งยอด 3160
+                    total: fixedTotal, 
                     fileName: file.name,
                     mimeType: file.type,
                     fileData: base64Data
@@ -175,8 +178,27 @@
             reader.onerror = error => reject(error);
         });
         
-        // ควบคุม Dark/Light Mode
+        // จัดการ Dark/Light Mode และระบบเปลี่ยนภาษาภายใน DOMContentLoaded เดียวกัน
         document.addEventListener("DOMContentLoaded", function() {
+            // --- ระบบเปลี่ยนภาษา ---
+            const langOptions = document.querySelectorAll('.lang-option');
+
+            function changeLanguage(lang) {
+                localStorage.setItem('selectedLanguage', lang);
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+            }
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    changeLanguage(this.getAttribute('data-lang'));
+                });
+            });
+
+            const savedLang = localStorage.getItem('selectedLanguage') || 'th';
+            changeLanguage(savedLang);
+
+            // --- ควบคุม Dark/Light Mode ---
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
             const body = document.body;
@@ -228,17 +250,6 @@
 
             timeLeft--;
         }, 1000);
-        function changeLanguage(lang) {
-                localStorage.setItem('selectedLanguage', lang);
-                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
-                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
-            }
-            langOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    changeLanguage(this.getAttribute('data-lang'));
-                });
-            });
-            changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
     </script>
 </body>
 </html>
