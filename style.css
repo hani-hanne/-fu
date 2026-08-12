@@ -922,9 +922,12 @@ body.dark-theme .account-number {
         flex-direction: column; /* วางรูปไว้บน ข้อความไว้ล่าง */
         padding: 15px;
     }
-    .book-cover{
-        width: 100%;
-        background-size: cover;
+    .book-cover {
+        height: auto !important;
+        aspect-ratio: 3 / 4;        /* ล็อกสัดส่วนรูปบนมือถือไม่ให้ยืด */
+        background-size: contain !important; /* ให้รูปแสดงเต็มใบ ไม่โดนตัดขอบ */
+        background-repeat: no-repeat;
+        background-position: center;
     }
     
     /* 3. ปรับขนาดรูปหนังสือบนมือถือ */
