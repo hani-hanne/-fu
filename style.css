@@ -10,25 +10,25 @@
     --text-main: #2d2214;             
     --text-muted: #785a3c;            
     --text-active: #b5540a;           
-    --border-color: #fde68a;          
-    --toggle-color: #f59e0b;          
+    --border-color: #feeeaf;          
+    --toggle-color: #f8be59;          
     --bg-preview: #fefaf0;
 }
 
 body.dark-theme {
-    /* ❄️ ธีมฤดูหนาว - เน้นโทนเย็น หิมะ ค่ำคืน ไอซ์บลู */
+    /* ❄️ ธีมฤดูหนาว - โทนสีกลมกลืน ดึงจากภาพพื้นหลังและลวดลายดาว */
     /*background-image: url(img/Gemini_Generated_Image_tbmwkytbmwkytbmw.png);
-    */--bg-main: #1e2530;               
-    --bg-container: rgba(203, 221, 241, 0.7); 
-    --bg-card: #283548;               
-    --text-main: #f1f5f9;             
-    --text-muted: #fff;            
-    --text-active: #38bdf8;           
-    --border-color: #3f516a;          
-    --toggle-color: #38bdf8;          
-    --bg-preview: #151f32;
+    */
+    --bg-main: #FFFFFF;                                     /* พื้นหลังหลัก: สีขาวบริสุทธิ์ */
+    --bg-container: rgba(229, 238, 246, 0.45);              /* กล่องคอนเทนเนอร์: ใช้สีดาวโปร่งแสงให้ดูมีมิติละมุน */
+    --bg-card: #F8FAFC;                                     /* สีการ์ด: ขาวอมเทาอ่อนมากๆ เพื่อให้ตัดกับพื้นหลังขาว */
+    --text-main: #1E293B;                                   /* สีข้อความหลัก: เทาเข้มเกือบดำ อ่านง่ายสบายตา */
+    --text-muted: #64748B;                                  /* สีข้อความรอง: เทากลางๆ สำหรับรายละเอียด */
+    --text-active: #0284C7;                                 /* สีไฮไลต์/แอคทีฟ: ฟ้าสดใสตัดกับพื้นหลังขาวได้ดี */
+    --border-color: #E2E8F0;                                /* สีเส้นขอบ: เทาอ่อนสะอาดตา */
+    --toggle-color: #0284C7;                                /* สีปุ่มเปิด-ปิด: โทนฟ้าเข้ากับสีแอคทีฟ */
+    --bg-preview: #E5EEF6;                                  /* สีพรีวิว: ใช้สีดาวพาสเทล */
 }
-
 /* คลาสสำหรับซ่อนข้อความภาษาที่ไม่ได้เลือก */
 .lang-hidden {
     display: none !important;
@@ -253,8 +253,7 @@ body {
 
 /* ธีมมืด / เปลี่ยนลายดาวให้เข้ากับความมืดโทนพาสเทลจางๆ */
 body.dark-theme {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="rgba(255, 255, 255, 0.05)"/></svg>');
-}
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="%23E5EEF6"/></svg>');}
 
 .web-container {
     width: 100%;
