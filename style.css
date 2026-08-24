@@ -1338,3 +1338,97 @@ button.action-btn:hover {
     z-index: 10;
     width: 280px;
 }
+
+/* จัดความเรียบร้อยของหน้าต่างตัวเลือก */
+.customizer-panel {
+    width: 100%;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.part-section {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* 🧱 จัดระเบียบปุ่มให้เรียงเป็นตารางแถวละ 3-4 ช่องตามความกว้างหน้าจอ */
+.grid-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* 🖼️ ดีไซน์ตัวปุ่มสำหรับรองรับภาพลายเส้นวาดเอง */
+.img-opt-btn {
+    background: #fcfcfc;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 6px;
+    aspect-ratio: 1 / 1; /* บังคับให้เป็นสี่เหลี่ยมจัตุรัส */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.img-opt-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.7; /* ทำภาพให้จางลงเล็กน้อยเมื่อยังไม่ได้เลือก */
+}
+
+/* เอฟเฟกต์ยืดหยุ่นตอนเอาเมาส์ไปชี้ปุ่ม */
+.img-opt-btn:hover {
+    transform: scale(1.05);
+    background: #ffffff;
+    border-color: var(--text-muted);
+}
+
+/* ✨ สไตล์เมื่อปุ่มรูปภาพนั้นถูกคลิกเลือก */
+.img-opt-btn.active {
+    background: #ffffff;
+    border-color: var(--text-active);
+    box-shadow: 0 4px 10px rgba(181, 84, 10, 0.15);
+}
+
+.img-opt-btn.active img {
+    opacity: 1; /* แสดงผลความเข้มรูปภาพเต็มร้อยเมื่อถูกกดเลือก */
+}
+
+/* ควบคุมขนาดพื้นที่พรีวิวและเลเยอร์ซ้อนภาพ */
+.avatar-preview-container {
+    width: 100%;
+    padding: 10px 0;
+}
+.avatar-preview-circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 4px solid var(--toggle-color);
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.layer-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

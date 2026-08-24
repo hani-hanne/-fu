@@ -60,30 +60,109 @@
     </nav>
 
     <main class="main-card">
-        <h2>🎰 ตู้กาชาปองรีวิวหนังสือ</h2>
-        <p>เขียนความประทับใจแล้วหยอดลงโหล เพื่อสุ่มอ่านรีวิวกัน!</p>
+        <h2>🎰 รีวิวแล้วส่งอวตารลงโหลกัน!</h2>
         
         <div class="form-box">
+            <!-- แสดงพรีวิวหน้าตาที่เลือกอยู่ปัจจุบัน -->
+            <div class="avatar-preview-container">
+                <div class="avatar-preview-circle">
+                    <img id="currentAvatarPreview" src="images/char1.png" style="width:100%; height:100%; object-fit:contain;">
+                </div>
+            </div>
+
+            <!-- 🧱 ตารางปุ่มเลือกหน้าวาดเอง (สไตล์ตาราง Grid แบบภาพที่คุณส่งมา) -->
+            <div class="customizer-panel">
+                <span class="section-title">👤 คลิกเลือกใบหน้าของคุณ (Select Face)</span>
+                <div class="grid-options">
+                    <!-- หน้าที่ 1 -->
+                    <button class="img-opt-btn active" onclick="selectAvatar('cartoon/1.jpeg', this)">
+                        <img src="cartoon/1.jpeg">
+                    </button>
+                    <!-- หน้าที่ 2 -->
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/2.jpeg', this)">
+                        <img src="cartoon/2.jpeg">
+                    </button>
+                    <!-- หน้าที่ 3 -->
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/3.jpeg', this)">
+                        <img src="cartoon/3.jpeg">
+                    </button>
+                    <!-- หน้าที่ 4 -->
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/4.jpeg', this)">
+                        <img src="cartoon/4.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/5.jpeg', this)">
+                        <img src="cartoon/5.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/6.jpeg', this)">
+                        <img src="cartoon/6.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/7.jpeg', this)">
+                        <img src="cartoon/7.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/8.jpeg', this)">
+                        <img src="cartoon/8.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/9.jpeg', this)">
+                        <img src="cartoon/9.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/11.jpeg', this)">
+                        <img src="cartoon/11.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/12.jpeg', this)">
+                        <img src="cartoon/12.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/13.jpeg', this)">
+                        <img src="cartoon/13.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/14.jpeg', this)">
+                        <img src="cartoon/14.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/15.jpeg', this)">
+                        <img src="cartoon/15.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/16.jpeg', this)">
+                        <img src="cartoon/16.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/17.jpeg', this)">
+                        <img src="cartoon/17.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/18.jpeg', this)">
+                        <img src="cartoon/18.jpeg">
+                    </button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/19.jpeg', this)">
+                        <img src="cartoon/19.jpeg">
+                    </button>
+                    <!-- (ถ้ามีหน้าเพิ่ม สามารถก๊อปปี้ปุ่มเพิ่มตรงนี้ได้เลยครับ) -->
+                </div>
+            </div>
+
+            <!-- ช่องเขียนรีวิว -->
             <textarea id="reviewInput" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea><br>
             <button class="action-btn" onclick="addReview()">โยนลงโหลกาชาปอง 🎁</button>
         </div>
 
-        <!-- โหลกาชาปอง -->
+        <!-- โหลแก้ว Matter.js -->
         <div id="jar"></div>
-
-        <!-- หน้าต่างอ่านรีวิว -->
-        <div id="modal">
-            <h3>💌 ข้อความจากแคปซูล</h3>
-            <p id="modalText" style="margin: 15px 0; word-break: break-word;"></p>
-            <button class="action-btn" onclick="closeModal()">ปิด</button>
-        </div>
     </main>
 
     <script>
-        // --- 1. ระบบฟิสิกส์ Matter.js สำหรับทำหน้าที่ให้บอลร่วงลงมากองในโหล ---
+        // --- 1. ตัวแปรและค่าเริ่มต้นระบบฟิสิกส์ ---
         let engine, runner, world;
+        let selectedAvatarSrc = 'cartoon/1.jpeg'; // ค่าเริ่มต้นหน้าแรก
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxTr_IGcj32pFWK3oZW7sazgy600VaIbbWD5lqRcwAt7QYoEyBEPSTh4N9r2IrzM845VA/exec'; 
 
+        // --- 2. ฟังก์ชันเลือกรูปอวตาร ---
+        function selectAvatar(imagePath, btnElement) {
+            selectedAvatarSrc = imagePath;
+            document.getElementById('currentAvatarPreview').src = imagePath;
+            
+            // ไฮไลต์สีปุ่มที่เลือก
+            const buttons = btnElement.parentNode.querySelectorAll('.img-opt-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        // --- 3. เริ่มต้น Matter.js เมื่อโหลดหน้าเว็บเสร็จ ---
         window.addEventListener('DOMContentLoaded', () => {
             const { Engine, Runner, Bodies, Composite } = Matter;
 
@@ -92,8 +171,8 @@
 
             const jarElement = document.getElementById('jar');
             if (jarElement) {
-                const width = jarElement.clientWidth;
-                const height = jarElement.clientHeight;
+                const width = jarElement.clientWidth || 300;
+                const height = jarElement.clientHeight || 400;
 
                 const ground = Bodies.rectangle(width / 2, height + 25, width, 50, { isStatic: true });
                 const leftWall = Bodies.rectangle(-25, height / 2, 50, height, { isStatic: true });
@@ -106,25 +185,118 @@
 
                 loadExistingReviews();
             }
+
+            // ระบบสลับธีมและภาษา
+            initThemeAndLang();
         });
 
+        // --- 4. โหลดรีวิวเดิมจาก Google Sheets ---
         function loadExistingReviews() {
             fetch(scriptURL)
                 .then(response => response.json())
                 .then(reviews => {
                     if (Array.isArray(reviews)) {
-                        reviews.forEach((text, index) => {
+                        reviews.forEach((item, index) => {
+                            // รองรับทั้งแบบข้อมูลเก่า (ข้อความอย่างเดียว) หรือแบบใหม่ (object ถ้ามี)
+                            const text = typeof item === 'object' ? item.review : item;
+                            const avatar = typeof item === 'object' && item.avatar ? item.avatar : 'cartoon/1.jpeg';
+                            
                             setTimeout(() => {
-                                createPhysicsBall(text);
+                                createPhysicsBall(text, avatar);
                             }, index * 150);
                         });
                     }
                 })
-                .catch(error => console.error('Error loading reviews:', error));
+                .catch(error => console.log('ยังไม่มีข้อมูลรีวิว หรือ CORS policy โหลดไม่ได้:', error));
         }
 
-        // --- 2. ฟังก์ชันสลับธีมและภาษา ---
-        document.addEventListener("DOMContentLoaded", function() {
+        // --- 5. สร้างลูกบอลฟิสิกส์พร้อมรูปภาพอวตาร ---
+        function createPhysicsBall(reviewText, avatarImgSrc) {
+            const { Bodies, Composite } = Matter;
+            const jarElement = document.getElementById('jar');
+            if (!jarElement) return;
+            
+            const width = jarElement.clientWidth || 300;
+            const radius = 25; 
+            const startX = Math.random() * (width - 60) + 30;
+
+            const ball = Bodies.circle(startX, -50, radius, {
+                restitution: 0.5,
+                friction: 0.05,
+                render: {
+                    sprite: {
+                        texture: avatarImgSrc,
+                        xScale: (radius * 2) / 200, 
+                        yScale: (radius * 2) / 200
+                    }
+                }
+            });
+
+            // สร้าง DOM Element ครอบลูกบอลเพื่อให้กดดูข้อความรีวิวได้
+            const ballElement = document.createElement('div');
+            ballElement.className = 'gacha-ball-avatar';
+            ballElement.style.width = `${radius * 2}px`;
+            ballElement.style.height = `${radius * 2}px`;
+            ballElement.style.position = 'absolute';
+            ballElement.style.borderRadius = '50%';
+            ballElement.style.overflow = 'hidden';
+            ballElement.style.cursor = 'pointer';
+            ballElement.style.border = '2px solid #fff';
+            ballElement.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+
+            const img = document.createElement('img');
+            img.src = avatarImgSrc;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            ballElement.appendChild(img);
+
+            // คลิกเพื่อดูรีวิว
+            ballElement.onclick = function() {
+                alert(`💬 รีวิว: ${reviewText}`);
+            };
+
+            jarElement.appendChild(ballElement);
+            Composite.add(world, ball);
+
+            // อัปเดตตำแหน่งบอลตามฟิสิกส์
+            function updatePosition() {
+                const { x, y } = ball.position;
+                ballElement.style.left = `${x - radius}px`;
+                ballElement.style.top = `${y - radius}px`;
+                requestAnimationFrame(updatePosition);
+            }
+            updatePosition();
+        }
+
+        // --- 6. กดปุ่มส่งรีวิว ---
+        function addReview() {
+            const input = document.getElementById('reviewInput');
+            const text = input.value.trim();
+
+            if (!text) {
+                alert('กรุณาเขียนรีวิวก่อนน้าาา! 📝');
+                return;
+            }
+
+            // ส่งข้อมูลไป Google Sheets
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ review: text, avatar: selectedAvatarSrc })
+            }).catch(error => console.error('Error!', error.message));
+
+            // สร้างลูกบอลตกลงโหลทันที
+            createPhysicsBall(text, selectedAvatarSrc);
+
+            // รีเซ็ตช่องพิมพ์
+            input.value = '';
+            alert('โยนรีวิวลงโหลสำเร็จแล้ว! 🎉');
+        }
+
+        // --- 7. จัดการระบบธีมและภาษา ---
+        function initThemeAndLang() {
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
             const body = document.body;
@@ -185,88 +357,7 @@
                 });
             });
             changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
-        });
-
-        // --- 3. ฟังก์ชันเพิ่มรีวิวและสร้างลูกบอลตกลงโหลด้วยฟิสิกส์ ---
-        function addReview() {
-            const input = document.getElementById('reviewInput');
-            const text = input.value;
-            if (!text.trim()) return alert('กรุณาพิมพ์ข้อความก่อนนะ');
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ review: text })
-            }).catch(error => console.error('Error!', error.message));
-
-            createPhysicsBall(text);
-
-            input.value = '';
-            alert('โยนรีวิวลงโหลและบันทึกสำเร็จแล้ว! 🎉');
         }
-
-        function createPhysicsBall(reviewText) {
-            const { Bodies, Composite } = Matter;
-            const jar = document.getElementById('jar');
-            if (!jar) return;
-            const width = jar.clientWidth;
-
-            const ballSize = 25; 
-            const startX = (width / 2) + (Math.random() - 0.5) * 80; 
-            const startY = -30; 
-
-            const ball = Bodies.circle(startX, startY, ballSize, {
-                restitution: 0.2, 
-                friction: 0.8,    
-                density: 0.001
-            });
-
-            const ballElement = document.createElement('div');
-            ballElement.className = 'gacha-ball';
-            
-            const colors = [
-                'linear-gradient(135deg, #ff9a9e, #fecfef)', 
-                'linear-gradient(135deg, #a1c4fd, #c2e9fb)', 
-                'linear-gradient(135deg, #ffecd2, #fcb69f)', 
-                'linear-gradient(135deg, #d4fc79, #96e6a1)', 
-                'linear-gradient(135deg, #f093fb, #f5576c)'  
-            ];
-            const patterns = ['🎁', '⭐', '✨', '🎈', '🍭'];
-            
-            ballElement.style.background = colors[Math.floor(Math.random() * colors.length)];
-            ballElement.innerText = patterns[Math.floor(Math.random() * patterns.length)];
-            ballElement.style.width = `${ballSize * 2}px`;
-            ballElement.style.height = `${ballSize * 2}px`;
-            ballElement.style.position = 'absolute';
-            ballElement.style.borderRadius = '50%';
-            ballElement.style.display = 'flex';
-            ballElement.style.alignItems = 'center';
-            ballElement.style.justifyContent = 'center';
-            ballElement.style.cursor = 'pointer';
-            ballElement.style.fontSize = '18px';
-
-            ballElement.onclick = function() {
-                document.getElementById('modalText').innerText = reviewText;
-                document.getElementById('modal').style.display = 'block';
-            };
-
-            jar.appendChild(ballElement);
-            Composite.add(world, ball);
-
-            function updatePosition() {
-                const { x, y } = ball.position;
-                ballElement.style.left = `${x - ballSize}px`;
-                ballElement.style.top = `${y - ballSize}px`;
-
-                requestAnimationFrame(updatePosition);
-            }
-            updatePosition();
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-    </script>     
+    </script>    
 </body>
 </html>
