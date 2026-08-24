@@ -240,7 +240,10 @@ p{font-size: small;}
 }
 body {
     background-color: var(--bg-main);
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="rgba(181, 84, 10, 0.08)"/></svg>');
+    background-image: url(bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg);
+    background-size: cover;   /*    ปรับให้รูปภาพขยายเต็มจอพอดี */
+    background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
+    background-position: center;  /* จัดรูปให้อยู่กึ่งกลาง */
     background-attachment: fixed; /* 🔥 เพิ่มบรรทัดนี้เพื่อล็อกพื้นหลังดาวไม่ให้หลุดเวลาเลื่อนหน้าจอ */
     color: var(--text-main);
     display: block;
@@ -253,7 +256,11 @@ body {
 
 /* ธีมมืด / เปลี่ยนลายดาวให้เข้ากับความมืดโทนพาสเทลจางๆ */
 body.dark-theme {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 15l3.5 9.5 9.5 3.5-9.5 3.5-3.5 9.5-3.5-9.5-9.5-3.5 9.5-3.5z" fill="%23E5EEF6"/></svg>');}
+    background-image: url('bg-/S__1835069.jpg');
+    background-size: cover;      /* ปรับให้รูปภาพขยายเต็มจอพอดี */
+    background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
+    background-position: center;  /* จัดรูปให้อยู่กึ่งกลาง */
+}
 
 .web-container {
     width: 100%;
@@ -1247,14 +1254,14 @@ button.action-btn {
     display: inline-block;
     margin-top: 12px;
     padding: 10px 24px;
-    background: linear-gradient(135deg, #ff6b6b, #ff8e53); /* ไล่เฉดสีให้ดูมีมิติ */
+    background: linear-gradient(135deg, #7c7f80, #eff1f1e9); /* ไล่เฉดสีให้ดูมีมิติ */
     color: #ffffff;
     border: none;
     border-radius: 25px; /* ทำขอบโค้งมนสวยงาม */
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); /* เงาฟุ้งๆ ให้ดูลอยขึ้นมา */
+    box-shadow: 0 4px 15px rgba(209, 229, 236, 0.4); /* เงาฟุ้งๆ ให้ดูลอยขึ้นมา */
     transition: all 0.3s ease; /* เอฟเฟกต์ตอนขยับ */
 }
 
@@ -1262,8 +1269,9 @@ button.action-btn {
 .form-box button.action-btn:hover, 
 button.action-btn:hover {
     transform: translateY(-3px); /* ขยับลอยขึ้นเบาๆ */
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
-    background: linear-gradient(135deg, #fb6d6d, #f5996b);
+    box-shadow: 0 6px 20px rgba(204, 241, 242, 0.577);
+    color: #000;
+    background: linear-gradient(135deg,  #90a2b6, #d3dbe1);
 }
 
 /* เอฟเฟกต์เวลาคลิกปุ่ม */

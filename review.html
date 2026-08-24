@@ -60,85 +60,61 @@
     </nav>
 
     <main class="main-card">
-        <h2>🎰 รีวิวแล้วส่งอวตารลงโหลกัน!</h2>
+        <h2>
+            <span class="lang-th"> รีวิวแล้วส่งอวตารลงโหลกัน!</span>
+            <span class="lang-ko" style="display:none;"> 리뷰를 남기고 아바타를 병에 넣으세요!</span>
+            <span class="lang-en" style="display:none;"> Leave a review and drop your avatar into the jar!</span>
+        </h2>
         
         <div class="form-box">
             <!-- แสดงพรีวิวหน้าตาที่เลือกอยู่ปัจจุบัน -->
             <div class="avatar-preview-container">
                 <div class="avatar-preview-circle">
-                    <img id="currentAvatarPreview" src="images/char1.png" style="width:100%; height:100%; object-fit:contain;">
+                    <img id="currentAvatarPreview" src="cartoon/1.jpeg" style="width:100%; height:100%; object-fit:contain;">
                 </div>
             </div>
 
-            <!-- 🧱 ตารางปุ่มเลือกหน้าวาดเอง (สไตล์ตาราง Grid แบบภาพที่คุณส่งมา) -->
+            <!-- 🧱 ตารางปุ่มเลือกหน้าวาดเอง -->
             <div class="customizer-panel">
-                <span class="section-title">👤 คลิกเลือกใบหน้าของคุณ (Select Face)</span>
+                <span class="section-title">
+                    <span class="lang-th">👤 คลิกเลือกใบหน้าของคุณ (Select Face)</span>
+                    <span class="lang-ko" style="display:none;">👤 아바타 얼굴을 선택하세요 (Select Face)</span>
+                    <span class="lang-en" style="display:none;">👤 Select your face (Select Face)</span>
+                </span>
                 <div class="grid-options">
-                    <!-- หน้าที่ 1 -->
-                    <button class="img-opt-btn active" onclick="selectAvatar('cartoon/1.jpeg', this)">
-                        <img src="cartoon/1.jpeg">
-                    </button>
-                    <!-- หน้าที่ 2 -->
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/2.jpeg', this)">
-                        <img src="cartoon/2.jpeg">
-                    </button>
-                    <!-- หน้าที่ 3 -->
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/3.jpeg', this)">
-                        <img src="cartoon/3.jpeg">
-                    </button>
-                    <!-- หน้าที่ 4 -->
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/4.jpeg', this)">
-                        <img src="cartoon/4.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/5.jpeg', this)">
-                        <img src="cartoon/5.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/6.jpeg', this)">
-                        <img src="cartoon/6.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/7.jpeg', this)">
-                        <img src="cartoon/7.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/8.jpeg', this)">
-                        <img src="cartoon/8.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/9.jpeg', this)">
-                        <img src="cartoon/9.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/11.jpeg', this)">
-                        <img src="cartoon/11.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/12.jpeg', this)">
-                        <img src="cartoon/12.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/13.jpeg', this)">
-                        <img src="cartoon/13.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/14.jpeg', this)">
-                        <img src="cartoon/14.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/15.jpeg', this)">
-                        <img src="cartoon/15.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/16.jpeg', this)">
-                        <img src="cartoon/16.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/17.jpeg', this)">
-                        <img src="cartoon/17.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/18.jpeg', this)">
-                        <img src="cartoon/18.jpeg">
-                    </button>
-                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/19.jpeg', this)">
-                        <img src="cartoon/19.jpeg">
-                    </button>
-                    <!-- (ถ้ามีหน้าเพิ่ม สามารถก๊อปปี้ปุ่มเพิ่มตรงนี้ได้เลยครับ) -->
+                    <button class="img-opt-btn active" onclick="selectAvatar('cartoon/1.jpeg', this)"><img src="cartoon/1.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/2.jpeg', this)"><img src="cartoon/2.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/3.jpeg', this)"><img src="cartoon/3.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/4.jpeg', this)"><img src="cartoon/4.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/5.jpeg', this)"><img src="cartoon/5.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/6.jpeg', this)"><img src="cartoon/6.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/7.jpeg', this)"><img src="cartoon/7.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/8.jpeg', this)"><img src="cartoon/8.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/9.jpeg', this)"><img src="cartoon/9.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/11.jpeg', this)"><img src="cartoon/11.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/12.jpeg', this)"><img src="cartoon/12.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/13.jpeg', this)"><img src="cartoon/13.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/14.jpeg', this)"><img src="cartoon/14.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/15.jpeg', this)"><img src="cartoon/15.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/16.jpeg', this)"><img src="cartoon/16.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/17.jpeg', this)"><img src="cartoon/17.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/18.jpeg', this)"><img src="cartoon/18.jpeg"></button>
+                    <button class="img-opt-btn" onclick="selectAvatar('cartoon/19.jpeg', this)"><img src="cartoon/19.jpeg"></button>
                 </div>
             </div>
 
-            <!-- ช่องเขียนรีวิว -->
-            <textarea id="reviewInput" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea><br>
-            <button class="action-btn" onclick="addReview()">โยนลงโหลกาชาปอง 🎁</button>
+            <!-- ช่องเขียนรีวิว (ใช้ Placeholder แบบเปลี่ยนตามภาษาได้) -->
+            <textarea id="reviewInput" 
+                data-ph-th="เขียนรีวิวของคุณที่นี่..." 
+                data-ph-ko="여기에 리뷰를 작성하세요..." 
+                data-ph-en="Write your review here..." 
+                placeholder="เขียนรีวิวของคุณที่นี่..."></textarea><br>
+            
+            <button class="action-btn" onclick="addReview()">
+                <span class="lang-th">โยนลงโหลกาชาปอง 🎁</span>
+                <span class="lang-ko" style="display:none;">가챠 병에 던지기 🎁</span>
+                <span class="lang-en" style="display:none;">Drop into Gacha Jar 🎁</span>
+            </button>
         </div>
 
         <!-- โหลแก้ว Matter.js -->
@@ -149,17 +125,24 @@
         // --- 1. ตัวแปรและค่าเริ่มต้นระบบฟิสิกส์ ---
         let engine, runner, world;
         let selectedAvatarSrc = 'cartoon/1.jpeg'; // ค่าเริ่มต้นหน้าแรก
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxTr_IGcj32pFWK3oZW7sazgy600VaIbbWD5lqRcwAt7QYoEyBEPSTh4N9r2IrzM845VA/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwshpXbRNDl_n3a3gAZCNc9OmfLu4FS4_DB-uDqcBOMqquaOGfEE1ah_1Gk-AP6kB8W/exec'; 
 
-        // --- 2. ฟังก์ชันเลือกรูปอวตาร ---
+        // --- 2. ฟังก์ชันเลือกรูปอวตาร (แก้ให้ดึง src จากรูปภายในปุ่มชัวร์ๆ) ---
         function selectAvatar(imagePath, btnElement) {
             selectedAvatarSrc = imagePath;
-            document.getElementById('currentAvatarPreview').src = imagePath;
             
-            // ไฮไลต์สีปุ่มที่เลือก
-            const buttons = btnElement.parentNode.querySelectorAll('.img-opt-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
+            // อัปเดตภาพพรีวิววงกลมด้านบนทันที
+            const previewImg = document.getElementById('currentAvatarPreview');
+            if (previewImg) {
+                previewImg.src = imagePath;
+            }
+            
+            // จัดการสลับคลาส active ของปุ่ม
+            if (btnElement) {
+                const buttons = btnElement.parentNode.querySelectorAll('.img-opt-btn');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
         }
 
         // --- 3. เริ่มต้น Matter.js เมื่อโหลดหน้าเว็บเสร็จ ---
@@ -171,12 +154,13 @@
 
             const jarElement = document.getElementById('jar');
             if (jarElement) {
-                const width = jarElement.clientWidth || 300;
-                const height = jarElement.clientHeight || 400;
+                const rect = jarElement.getBoundingClientRect();
+                const width = rect.width || 350;
+                const height = rect.height || 450;
 
-                const ground = Bodies.rectangle(width / 2, height + 25, width, 50, { isStatic: true });
-                const leftWall = Bodies.rectangle(-25, height / 2, 50, height, { isStatic: true });
-                const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, { isStatic: true });
+                const ground = Bodies.rectangle(width / 2, height - 10, width, 40, { isStatic: true });
+                const leftWall = Bodies.rectangle(0, height / 2, 20, height, { isStatic: true });
+                const rightWall = Bodies.rectangle(width, height / 2, 20, height, { isStatic: true });
 
                 Composite.add(world, [ground, leftWall, rightWall]);
 
@@ -186,9 +170,9 @@
                 loadExistingReviews();
             }
 
-            // ระบบสลับธีมและภาษา
             initThemeAndLang();
         });
+
 
         // --- 4. โหลดรีวิวเดิมจาก Google Sheets ---
         function loadExistingReviews() {
@@ -197,7 +181,6 @@
                 .then(reviews => {
                     if (Array.isArray(reviews)) {
                         reviews.forEach((item, index) => {
-                            // รองรับทั้งแบบข้อมูลเก่า (ข้อความอย่างเดียว) หรือแบบใหม่ (object ถ้ามี)
                             const text = typeof item === 'object' ? item.review : item;
                             const avatar = typeof item === 'object' && item.avatar ? item.avatar : 'cartoon/1.jpeg';
                             
@@ -212,27 +195,32 @@
 
         // --- 5. สร้างลูกบอลฟิสิกส์พร้อมรูปภาพอวตาร ---
         function createPhysicsBall(reviewText, avatarImgSrc) {
-            const { Bodies, Composite } = Matter;
             const jarElement = document.getElementById('jar');
-            if (!jarElement) return;
-            
             const width = jarElement.clientWidth || 300;
-            const radius = 25; 
-            const startX = Math.random() * (width - 60) + 30;
+            
+            const radius = 22; 
+            const startX = Math.random() * (width - 80) + 40; 
+            const startY = -40;
 
-            const ball = Bodies.circle(startX, -50, radius, {
-                restitution: 0.5,
-                friction: 0.05,
+            const ball = Matter.Bodies.circle(startX, startY, radius, {
+                restitution: 0.6,
+                friction: 0.02,
+                density: 0.005,
                 render: {
                     sprite: {
-                        texture: avatarImgSrc,
-                        xScale: (radius * 2) / 200, 
-                        yScale: (radius * 2) / 200
+                        texture: avatarImgSrc, 
+                        xScale: (radius * 2.3) / 200, 
+                        yScale: (radius * 2.3) / 200
                     }
                 }
             });
 
-            // สร้าง DOM Element ครอบลูกบอลเพื่อให้กดดูข้อความรีวิวได้
+            const randomForceX = (Math.random() - 0.5) * 0.02; 
+            Matter.Body.applyForce(ball, ball.position, { x: randomForceX, y: 0 });
+
+            ball.reviewText = reviewText;
+            Matter.Composite.add(world, ball);
+
             const ballElement = document.createElement('div');
             ballElement.className = 'gacha-ball-avatar';
             ballElement.style.width = `${radius * 2}px`;
@@ -251,15 +239,12 @@
             img.style.objectFit = 'cover';
             ballElement.appendChild(img);
 
-            // คลิกเพื่อดูรีวิว
             ballElement.onclick = function() {
                 alert(`💬 รีวิว: ${reviewText}`);
             };
 
             jarElement.appendChild(ballElement);
-            Composite.add(world, ball);
 
-            // อัปเดตตำแหน่งบอลตามฟิสิกส์
             function updatePosition() {
                 const { x, y } = ball.position;
                 ballElement.style.left = `${x - radius}px`;
@@ -269,7 +254,7 @@
             updatePosition();
         }
 
-        // --- 6. กดปุ่มส่งรีวิว ---
+        // --- 6. กดปุ่มส่งรีวิว (ดึงค่ารูปจากปุ่ม Active ชัวร์ที่สุด) ---
         function addReview() {
             const input = document.getElementById('reviewInput');
             const text = input.value.trim();
@@ -279,18 +264,27 @@
                 return;
             }
 
+            // 🌟 ดึงค่ารูปจากปุ่มที่กำลัง active อยู่ตอนนี้โดยตรง
+            let currentAvatar = selectedAvatarSrc;
+            const activeBtn = document.querySelector('.img-opt-btn.active');
+            if (activeBtn) {
+                const imgTag = activeBtn.querySelector('img');
+                if (imgTag) {
+                    currentAvatar = imgTag.getAttribute('src');
+                }
+            }
+
+            // สร้างลูกบอลในโหลโดยใช้รูปที่เลือก
+            createPhysicsBall(text, currentAvatar);
+
             // ส่งข้อมูลไป Google Sheets
             fetch(scriptURL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ review: text, avatar: selectedAvatarSrc })
-            }).catch(error => console.error('Error!', error.message));
+                body: JSON.stringify({ review: text, avatar: currentAvatar }) 
+            }).catch(error => console.error('Error Sheets!', error.message));
 
-            // สร้างลูกบอลตกลงโหลทันที
-            createPhysicsBall(text, selectedAvatarSrc);
-
-            // รีเซ็ตช่องพิมพ์
             input.value = '';
             alert('โยนรีวิวลงโหลสำเร็จแล้ว! 🎉');
         }
@@ -346,16 +340,27 @@
             applyTheme(savedTheme);
 
             const langOptions = document.querySelectorAll('.lang-option');
+            
             function changeLanguage(lang) {
                 localStorage.setItem('selectedLanguage', lang);
-                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
-                document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
+                
+                // ซ่อนทุกภาษาและแสดงเฉพาะภาษาที่ถูกเลือก
+                document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-' + lang).forEach(el => el.style.display = 'inline-block'); // หรือ block ตามความเหมาะสมของแท็ก
+                
+                // 🌟 อัปเดต Placeholder ของ textarea ตามภาษาที่เลือก
+                const reviewInput = document.getElementById('reviewInput');
+                if (reviewInput) {
+                    reviewInput.placeholder = reviewInput.getAttribute('data-ph-' + lang);
+                }
             }
+
             langOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     changeLanguage(this.getAttribute('data-lang'));
                 });
             });
+
             changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
         }
     </script>    
