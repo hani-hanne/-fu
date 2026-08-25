@@ -185,6 +185,32 @@
         
         changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
     });
+    document.addEventListener('click', function(e) {
+        // สร้าง element รูปดาว
+        const star = document.createElement('div');
+        star.innerHTML = '⭐'; // สามารถเปลี่ยนเป็นอีโมจิอื่นหรือรูปภาพได้
+        star.style.position = 'fixed';
+        star.style.left = e.clientX + 'px';
+        star.style.top = e.clientY + 'px';
+        star.style.fontSize = '20px';
+        star.style.pointerEvents = 'none';
+        star.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+        star.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        star.style.zIndex = '99999';
+        
+        document.body.appendChild(star);
+
+        // สั่งให้ดาวขยายขึ้นและจางหายไป
+        setTimeout(() => {
+            star.style.transform = 'translate(-50%, -150%) scale(1.5)';
+            star.style.opacity = '0';
+        }, 20);
+
+        // ลบ element ทิ้งหลังจากอนิเมชันเล่นจบ
+        setTimeout(() => {
+            star.remove();
+        }, 600);
+    });
 </script>
 </body>
 </html>

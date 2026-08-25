@@ -201,18 +201,10 @@
             let fullAddress = houseAddress + ' ต.' + subdistrict + ' อ.' + district + ' จ.' + province;
 
             // ==========================================
-            // ระบบรันเลขออเดอร์เรียงลำดับ เริ่มจาก 1
+            // <<< เพิ่มโค้ดสร้างและเก็บเลตรงนี้ครับ >>>
             // ==========================================
-            let lastOrderSeq = parseInt(localStorage.getItem('lastOrderSeq')) || 0;
-            let nextOrderSeq = lastOrderSeq + 1;
-            
-            // บันทึกกลับลง localStorage เพื่อให้เลขออเดอร์ครั้งต่อไปบวกเพิ่มขึ้นเรื่อยๆ
-            localStorage.setItem('lastOrderSeq', nextOrderSeq);
-
-            // จัดรูปแบบให้เป็น 3 หลัก (เช่น 1 กลายเป็น 001, 12 กลายเป็น 012)
-            let formattedSeq = String(nextOrderSeq).padStart(3, '0');
-            let displayOrderId = "SPLITTLE-" + formattedSeq;
-
+            let randomNum = Math.floor(1000 + Math.random() * 9000);
+            let displayOrderId = "SPLITTLE-" + randomNum;
             sessionStorage.setItem('displayOrderId', displayOrderId);
             sessionStorage.setItem('finalOrderId', displayOrderId); // เซฟเผื่อไว้ใช้หน้า final ทันที
             // ==========================================
@@ -286,6 +278,32 @@
                 const mainContent = document.getElementById("main-content");
                 if (mainContent) mainContent.style.display = "block";
             }, 500);
+        });
+        document.addEventListener('click', function(e) {
+            // สร้าง element รูปดาว
+            const star = document.createElement('div');
+            star.innerHTML = '⭐'; // สามารถเปลี่ยนเป็นอีโมจิอื่นหรือรูปภาพได้
+            star.style.position = 'fixed';
+            star.style.left = e.clientX + 'px';
+            star.style.top = e.clientY + 'px';
+            star.style.fontSize = '20px';
+            star.style.pointerEvents = 'none';
+            star.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+            star.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            star.style.zIndex = '99999';
+            
+            document.body.appendChild(star);
+
+            // สั่งให้ดาวขยายขึ้นและจางหายไป
+            setTimeout(() => {
+                star.style.transform = 'translate(-50%, -150%) scale(1.5)';
+                star.style.opacity = '0';
+            }, 20);
+
+            // ลบ element ทิ้งหลังจากอนิเมชันเล่นจบ
+            setTimeout(() => {
+                star.remove();
+            }, 600);
         });
     </script>
 </body>

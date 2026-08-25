@@ -238,6 +238,23 @@ p{font-size: small;}
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
 }
+
+/* 🌟 กำหนดเคอร์เซอร์รูปดาวให้ทั่วทั้งหน้าเว็บและทุกองค์ประกอบ */
+/* ☀️ โหมดปกติ: ใช้เคอร์เซอร์ดาวโทนอุ่น */
+body, body * {
+    cursor: url('https://img.icons8.com/?size=32&id=yHHKfGb6BxjU&format=png&color=f8be59'), auto !important;
+}
+button, a, input, textarea, label, .action-btn, .img-opt-btn, .gacha-ball-avatar, .btn, [onclick] {
+    cursor: url('https://img.icons8.com/?size=32&id=yHHKfGb6BxjU&format=png&color=f8be59') 0 0, pointer !important;
+}
+
+/* 🌙 ธีมมืด: เปลี่ยนสีเคอร์เซอร์ดาวให้เป็นโทนฟ้าเข้ากับโหมดมืด */
+body.dark-theme, body.dark-theme * {
+    cursor: url('https://img.icons8.com/?size=32&id=yHHKfGb6BxjU&format=png&color=0284C7'), auto !important;
+}
+body.dark-theme button, body.dark-theme a, body.dark-theme input, body.dark-theme textarea, body.dark-theme label, body.dark-theme .action-btn, body.dark-theme .img-opt-btn, body.dark-theme .gacha-ball-avatar, body.dark-theme .btn, body.dark-theme [onclick] {
+    cursor: url('https://img.icons8.com/?size=32&id=yHHKfGb6BxjU&format=png&color=0284C7') 0 0, pointer !important;
+}
 body {
     background-color: var(--bg-main);
     background-image: url(bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg);
@@ -885,6 +902,7 @@ body.dark-theme .account-number {
 @media screen and (max-width: 768px) {
     /* 📱 ตั้งค่าเฉพาะสำหรับหน้าจอโทรศัพท์มือถือ (ความกว้างไม่เกิน 768px) */
     body {
+    
     background-color: var(--bg-main);
     background-image: url(bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg);
     background-size: cover;   /*    ปรับให้รูปภาพขยายเต็มจอพอดี */
