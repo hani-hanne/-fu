@@ -903,10 +903,10 @@ body.dark-theme .account-number {
 @media screen and (max-width: 768px) {
     /* 📱 ตั้งค่าเฉพาะสำหรับหน้าจอโทรศัพท์มือถือ (ความกว้างไม่เกิน 768px) */
     body, body.dark-theme {
-        background-size: cover;     /* ขนาดลายเมฆบนมือถือ */
+        background-size: 150% auto;     /* ขนาดลายเมฆบนมือถือ */
         background-repeat: no-repeat;
         background-position: center top;
-        background-attachment: scroll !important; /* 🔥 ใช้ scroll แทน fixed เพื่อป้องกันภาพขยับและกระตุกบนมือถือ */
+        background-attachment: fixed; /* 🔥 ใช้ scroll แทน fixed เพื่อป้องกันภาพขยับและกระตุกบนมือถือ */
         padding: 15px;
     }
     
