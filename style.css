@@ -905,7 +905,8 @@ body.dark-theme .account-number {
     body, body.dark-theme {
         background-size: cover;     /* ขนาดลายเมฆบนมือถือ */
         background-repeat: no-repeat;
-        background-attachment: fixed; /* ป้องกันจอยืดบนมือถือ */
+        background-position: center top;
+        background-attachment: scroll !important; /* 🔥 ใช้ scroll แทน fixed เพื่อป้องกันภาพขยับและกระตุกบนมือถือ */
         padding: 15px;
     }
     
