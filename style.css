@@ -257,7 +257,7 @@ body.dark-theme button, body.dark-theme a, body.dark-theme input, body.dark-them
 }
 body {
     background-color: var(--bg-main);
-    background-image: url('bg-/S__1835069.jpg'); /* 👈 ใส่รูปพื้นหลังที่ต้องการสำหรับโหมดปกติที่นี่ */
+    background-image: url('bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg'); /* 👈 ใส่รูปพื้นหลังที่ต้องการสำหรับโหมดปกติที่นี่ */
     background-size: 400px auto;     
     background-repeat: repeat;       
     background-position: top left;
@@ -271,7 +271,7 @@ body {
 
 /* 🌙 โหมดมืด (Dark Theme - เมื่อกดเปลี่ยนโหมด) */
 body.dark-theme {
-    background-image: url('bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg'); /* 👈 ใส่รูปพื้นหลังที่ต้องการสำหรับโหมดมืดที่นี่ */
+    background-image: url('bg-/S__1835069.jpg'); /* 👈 ใส่รูปพื้นหลังที่ต้องการสำหรับโหมดมืดที่นี่ */
     background-size: 400px auto;     
     background-repeat: repeat;       
     background-position: top left;
