@@ -900,7 +900,7 @@ body.dark-theme .account-number {
 @media screen and (max-width: 768px) {
     /* 📱 ตั้งค่าเฉพาะสำหรับหน้าจอโทรศัพท์มือถือ (ความกว้างไม่เกิน 768px) */
     body, body.dark-theme {
-        background-size: 100px auto;     /* ขนาดลายเมฆบนมือถือ */
+        background-size: 100% auto;     /* ขนาดลายเมฆบนมือถือ */
         background-repeat: repeat !important;
         background-attachment: fixed; /* ป้องกันจอยืดบนมือถือ */
         padding: 15px;
