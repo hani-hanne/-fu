@@ -46,7 +46,7 @@
 
     <!-- ส่วนตารางข้อมูลและสถิติหลังบ้าน -->
     <div id="dashboard-box">
-        <h2>📦 รายการสั่งซื้อและสถิติภาพรวม</h2>
+        <h2>📦 รายการสั่งซื้อและสถิติภาพรวม (รวมทุกรายการ)</h2>
         
         <!-- กล่องแสดงสถิติ -->
         <div class="stats-container">
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+        <div id="loading" class="loading">กำลังโหลดข้อมูลจากทั้ง 3 แหล่ง...</div>
         <table id="order-table" style="display: none;">
             <thead>
                 <tr>
@@ -85,9 +85,13 @@
 </div>
 
 <script>
-    const CORRECT_PIN = "0827"; 
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
+    const CORRECT_PIN = "0827";
     
+    // 🔗 กำหนด URL ของเว็บแอปทั้ง 3 แหล่ง
+    const NORMAL_API_URL = "https://script.google.com/macros/s/AKfycbzSo9xIKBBobeQT8bpl-eAVO1V0f34LfoP8P2sdR-UzVA-BugyPvF1Nwyl9CGrl9aevHQ/exec"; 
+    const SPECIAL_API_URL = "https://script.google.com/macros/s/AKfycbwiZdJcyz0aa4td5mkH7dY7wqtuvqdBFmraNbE3zbDqRQvGJV6h1GaXDzfyPT4zeEzx/exec"; 
+    const OLD_DATA_API_URL = "https://script.google.com/macros/s/AKfycbwZ6CIbWXZ0s_fThXLlJkU4bsp60R33ShsJQwzoVoRMHlEBDFiC79MoWzlpYv29ONs9/exec";
+
     function checkPin() {
         const enteredPin = document.getElementById("pin-input").value;
         if (enteredPin === CORRECT_PIN) {
@@ -100,9 +104,16 @@
     }
 
     function fetchData() {
-        fetch(WEB_APP_URL)
-        .then(response => response.json())
-        .then(data => {
+        // ใช้ Promise.all เพื่อดึงข้อมูลจากทั้ง 3 URL พร้อมกัน
+        Promise.all([
+            fetch(NORMAL_API_URL).then(res => res.json()).catch(() => []), 
+            fetch(SPECIAL_API_URL).then(res => res.json()).catch(() => []),
+            fetch(OLD_DATA_API_URL).then(res => res.json()).catch(() => [])
+        ])
+        .then(([normalData, specialData, oldData]) => {
+            // รวมข้อมูลทั้งสามชุดเข้าด้วยกันเป็นก้อนเดียว
+            let data = [...normalData, ...specialData, ...oldData];
+
             const tbody = document.getElementById("table-body");
             tbody.innerHTML = "";
             
@@ -119,7 +130,10 @@
                     totalBooks += Math.round(price / 790);
                 });
 
-                data.reverse().forEach(row => {
+                // เรียงลำดับตามเวลาล่าสุดขึ้นก่อน
+                data.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+
+                data.forEach(row => {
                     let tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td>${row.Timestamp ? new Date(row.Timestamp).toLocaleString() : '-'}</td>
@@ -128,7 +142,7 @@
                         <td>${row.Address || '-'}</td>
                         <td>${row.Total || '-'}</td>
                         <td>${row.Slip && row.Slip !== '-' ? `<a href="${row.Slip}" target="_blank">ดูสลิป</a>` : 'ไม่มีสลิป'}</td>
-                        <td><span class="badge">${row.OrderId || 'little-001'}</span></td>
+                        <td><span class="badge">${row.OrderId || '-'}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });

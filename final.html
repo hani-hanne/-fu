@@ -38,7 +38,7 @@
             <i id="themeIcon" class="fa-solid fa-sun"></i>
         </button>
 
-        <div class="lang-selector">
+        <!--<div class="lang-selector">
             <button class="lang-btn">
                 <i class="fa-solid fa-globe"></i>
                 <span class="lang-th">TH</span>
@@ -51,7 +51,7 @@
                 <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
                 <div class="lang-item lang-option" data-lang="en">English (EN)</div>
             </div>
-        </div>
+        </div>-->
     </div>
 </header>
 
@@ -73,6 +73,13 @@
                 <span class="lang-ko lang-hidden">주문 번호:</span>
                 <span class="lang-en lang-hidden">Your Order ID:</span>
             </p>
+            <script>
+                // ดึงเลขออเดอร์จริงที่เก็บบันทึกไว้มาแสดงผล
+                const realOrderId = sessionStorage.getItem('successOrderId');
+                if (realOrderId) {
+                    document.getElementById('display-order-id').innerText = realOrderId;
+                }
+            </script>
             <div id="display-order-id" class="order-number">กำลังโหลดเลขออเดอร์...</div>
         </div>
 
@@ -114,8 +121,8 @@
         let savedOrderId = sessionStorage.getItem('displayOrderId');
         const orderIdElement = document.getElementById("display-order-id");
         
-        if (!savedOrderId || savedOrderId === 'SPLITTLE-0000') {
-            savedOrderId = 'SPLITTLE-' + Math.floor(1000 + Math.random() * 9000);
+        if (!savedOrderId || savedOrderId === 'LITTLE-0000') {
+            savedOrderId = 'LITTLE-' + Math.floor(1000 + Math.random() * 9000);
             sessionStorage.setItem('displayOrderId', savedOrderId);
         }
         
@@ -134,7 +141,7 @@
                 startFallingEffect('snow');
             } else {
                 body.classList.remove('dark-theme');
-                if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                if(themeIcon) { themeIcon.className = 'fa-solid fa-cloud'; themeIcon.style.color = '#94a3b8'; }
                 startFallingEffect('flower');
             }
             localStorage.setItem('selectedTheme', theme);

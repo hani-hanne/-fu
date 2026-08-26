@@ -23,7 +23,7 @@
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
 
-                <div class="lang-selector">
+                <!--<div class="lang-selector">
                     <button class="lang-btn">
                         <i class="fa-solid fa-globe"></i>
                         <span class="lang-th">TH</span>
@@ -36,8 +36,20 @@
                         <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
                         <div class="lang-item lang-option" data-lang="en">English (EN)</div>
                     </div>
-                </div>
+                </div>-->
             </div>
+            <nav class="nav-links">
+               <a href="index.html" >
+                    <span class="lang-th">หน้าแรก</span>
+                    <span class="lang-ko">홈</span>
+                    <span class="lang-en">HOME</span>
+                </a>
+                <a href="order.html" class="active">
+                    <span class="lang-th">สั่งซื้อ Limited SET</span>
+                    <span class="lang-ko" style="display:none;">리미티드 세트 주문하기</span>
+                    <span class="lang-en" style="display:none;">Order Limited SET</span>
+                </a>
+            </nav>
         </header>
 
         <main class="main-card">
@@ -164,7 +176,7 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyDY_Og1Dcx_ZKnFPIkYv0RsHYmFfhmf2lyzokBwwgTyqFVJYpdZbCuOMQYjBibe_Hj7w/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwiZdJcyz0aa4td5mkH7dY7wqtuvqdBFmraNbE3zbDqRQvGJV6h1GaXDzfyPT4zeEzx/exec";
 
         function goToPayment() {
             let form = document.getElementById('orderForm');
@@ -201,13 +213,22 @@
             let fullAddress = houseAddress + ' ต.' + subdistrict + ' อ.' + district + ' จ.' + province;
 
             // ==========================================
-            // <<< เพิ่มโค้ดสร้างและเก็บเลตรงนี้ครับ >>>
+            // 🌟 ระบบรันเลขออเดอร์ต่อเนื่อง ไม่ซ้ำ และไม่รีเซ็ตใหม่
             // ==========================================
-            let randomNum = Math.floor(1000 + Math.random() * 9000);
-            let displayOrderId = "SPLITTLE-" + randomNum;
+            // 🌟 ตั้งค่าให้เริ่มนับต่อจาก 12 (หรือเปลี่ยนเลข 12 เป็นเลขออเดอร์ล่าสุดที่คุณมีอยู่ตอนนี้ครับ)
+            let lastOrderNumber = parseInt(localStorage.getItem('lastSplittleOrderNum')) || 12;
+            let nextOrderNumber = lastOrderNumber + 1;
+            
+            // บันทึกเลขออเดอร์ล่าสุดเก็บไว้
+            localStorage.setItem('lastSplittleOrderNum', nextOrderNumber);
+
+            // จัดรูปแบบให้เป็น 3 หลัก เช่น 013, 014...
+            let paddedNum = String(nextOrderNumber).padStart(3, '0');
+            let displayOrderId = "SPLITTLE-" + paddedNum;
+
             sessionStorage.setItem('displayOrderId', displayOrderId);
-            sessionStorage.setItem('finalOrderId', displayOrderId); // เซฟเผื่อไว้ใช้หน้า final ทันที
-            // ==========================================
+            sessionStorage.setItem('finalOrderId', displayOrderId);
+            // ===================================================================================
 
             // เก็บข้อมูลลง sessionStorage เพื่อส่งไปหน้าชำระเงินต่อ
             sessionStorage.setItem('orderTotal', total);
@@ -233,7 +254,7 @@
                     if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
                 } else {
                     body.classList.remove('dark-theme');
-                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-cloud'; themeIcon.style.color = '#94a3b8'; }
                 }
                 localStorage.setItem('selectedTheme', theme);
             }

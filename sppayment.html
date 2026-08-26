@@ -45,7 +45,7 @@
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
 
-                <div class="lang-selector">
+                <!--<div class="lang-selector">
                     <button class="lang-btn">
                         <i class="fa-solid fa-globe"></i>
                         <span class="lang-th">TH</span>
@@ -58,7 +58,7 @@
                         <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
                         <div class="lang-item lang-option" data-lang="en">English (EN)</div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </header>
         
@@ -136,7 +136,7 @@
                     fileData: base64Data
                 };
 
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbx24d53TZpwyFbkCWqGaH2nZvLIHYtYnrtPQLek8tcf2YIjt9jMKKyaYek_7fzkvMTY/exec';
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwiZdJcyz0aa4td5mkH7dY7wqtuvqdBFmraNbE3zbDqRQvGJV6h1GaXDzfyPT4zeEzx/exec';
                 
                 await fetch(scriptURL, {
                     method: 'POST',
@@ -158,7 +158,7 @@
                 sessionStorage.removeItem('orderZipcode');
                 sessionStorage.removeItem('orderQty');
 
-                window.location.href = 'final.html';
+                window.location.href = 'spfinal.html';
 
             } catch (error) {
                 console.error('Error!', error.message);
@@ -209,7 +209,7 @@
                     if(themeIcon) { themeIcon.className = 'fa-solid fa-sun'; themeIcon.style.color = '#f59e0b'; }
                 } else {
                     body.classList.remove('dark-theme');
-                    if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                    if(themeIcon) { themeIcon.className = 'fa-solid fa-cloud'; themeIcon.style.color = '#94a3b8'; }
                 }
                 localStorage.setItem('selectedTheme', theme);
             }

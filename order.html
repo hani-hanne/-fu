@@ -22,7 +22,7 @@
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
 
-                <div class="lang-selector">
+                <!---<div class="lang-selector">
                     <button class="lang-btn">
                         <i class="fa-solid fa-globe"></i>
                         <span class="lang-th">TH</span>
@@ -35,7 +35,7 @@
                         <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
                         <div class="lang-item lang-option" data-lang="en">English (EN)</div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <nav class="nav-links">
                <a href="index.html" >
@@ -43,22 +43,10 @@
                     <span class="lang-ko">홈</span>
                     <span class="lang-en">HOME</span>
                 </a>
-
                 <a href="sporder.html" class="active">
-                    <span class="lang-th">สั่งซื้อ</span>
-                    <span class="lang-ko">주문하기</span>
-                    <span class="lang-en">ORDER</span>
-                </a>
-                
-                <a href="track.html">
-                    <span class="lang-th">สถานะ</span>
-                    <span class="lang-ko">조회</span>
-                    <span class="lang-en">TRACK</span>
-                </a>
-                <a href="contact.html">
-                    <span class="lang-th">ติดต่อ</span>
-                    <span class="lang-ko">문의하기</span>
-                    <span class="lang-en">CONTACT</span>
+                    <span class="lang-th">สั่งซื้อ Special SET Limited</span>
+                    <span class="lang-ko" style="display:none;">스페셜 세트 한정판 주문하기</span>
+                    <span class="lang-en" style="display:none;">Order Special SET Limited</span>
                 </a>
             </nav>
         </header>
@@ -155,7 +143,7 @@
 
  <script>
         // URL ของ Google Apps Script
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzSo9xIKBBobeQT8bpl-eAVO1V0f34LfoP8P2sdR-UzVA-BugyPvF1Nwyl9CGrl9aevHQ/exec";
         // ฟังก์ชันปรับจำนวนสินค้า
         function changeQty(val) {
             let qtyInput = document.getElementById('qty');
@@ -236,7 +224,7 @@
                 } else {
                     body.classList.remove('dark-theme');
                     if(themeIcon) {
-                        themeIcon.className = 'fa-solid fa-moon';
+                        themeIcon.className = 'fa-solid fa-cloud';
                         themeIcon.style.color = '#94a3b8';
                     }
                     startFallingEffect('flower');

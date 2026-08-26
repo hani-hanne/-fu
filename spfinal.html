@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     /* สไตล์สำหรับกล่องแสดงเลขออเดอร์ */
     .order-box {
@@ -26,93 +25,103 @@
         font-weight: bold;
         color: #4f46e5;
     }
+    /* ซ่อนภาษาตามระบบสลับภาษา */
+    .lang-hidden {
+        display: none !important;
+    }
 </style>
 </head>
 <body>
 <header class="navbar">
-            <div class="top-controls">
-                <button id="themeToggle" class="theme-toggle-btn">
-                    <i id="themeIcon" class="fa-solid fa-sun"></i>
-                </button>
+    <div class="top-controls">
+        <button id="themeToggle" class="theme-toggle-btn">
+            <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
 
-                <div class="lang-selector">
-                    <button class="lang-btn">
-                        <i class="fa-solid fa-globe"></i>
-                        <span class="lang-th">TH</span>
-                        <span class="lang-ko" style="display:none;">KO</span>
-                        <span class="lang-en" style="display:none;">EN</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="lang-dropdown">
-                        <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
-                        <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
-                        <div class="lang-item lang-option" data-lang="en">English (EN)</div>
-                    </div>
-                </div>
+        <!--<div class="lang-selector">
+            <button class="lang-btn">
+                <i class="fa-solid fa-globe"></i>
+                <span class="lang-th">TH</span>
+                <span class="lang-ko lang-hidden">KO</span>
+                <span class="lang-en lang-hidden">EN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="lang-dropdown">
+                <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
+                <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
+                <div class="lang-item lang-option" data-lang="en">English (EN)</div>
             </div>
+        </div>-->
+    </div>
 </header>
-</div>
+
 <div class="web-container" style="text-align: center; margin-top: 50px;">
-<main class="main-card">
-<div style="color: #28a745; font-size: 60px; margin-bottom: 20px;">
-<i class="fa-solid fa-circle-check"></i>
-</div>
-<h2 class="section-title" style="text-align: center; margin-bottom: 5px;">
-<span class="lang-th">สั่งซื้อสำเร็จ!</span>
-<span class="lang-ko">주문 완료</span>
-<span class="lang-en">ORDER PLACED SUCCESSFULLY</span>
-</h2>
+    <main class="main-card">
+        <div style="color: #28a745; font-size: 60px; margin-bottom: 20px;">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">
+            <span class="lang-th">สั่งซื้อสำเร็จ!</span>
+            <span class="lang-ko lang-hidden">주문 완료</span>
+            <span class="lang-en lang-hidden">ORDER PLACED SUCCESSFULLY</span>
+        </h2>
 
-<!-- 📦 เพิ่มกล่องแสดงเลขออเดอร์ตรงนี้ -->
-<div class="order-box">
-    <p style="margin: 0; font-size: 14px; color: #64748b;">
-        <span class="lang-th">เลขออเดอร์ของคุณ:</span>
-        <span class="lang-ko">주문 번호:</span>
-        <span class="lang-en">Your Order ID:</span>
-    </p>
-    <div id="display-order-id" class="order-number">กำลังโหลดเลขออเดอร์...</div>
+        <!-- 📦 กล่องแสดงเลขออเดอร์ -->
+        <div class="order-box">
+            <p style="margin: 0; font-size: 14px; color: #64748b;">
+                <span class="lang-th">เลขออเดอร์ของคุณ:</span>
+                <span class="lang-ko lang-hidden">주문 번호:</span>
+                <span class="lang-en lang-hidden">Your Order ID:</span>
+            </p>
+            <div id="display-order-id" class="order-number">กำลังโหลดเลขออเดอร์...</div>
+        </div>
+
+        <p class="section-subtitle" style="margin: 20px 0;">
+            <span class="lang-th">ขอบคุณที่อุดหนุนหนังสือ "โลกของนาฬิกาและสีของฤดู"ค่ะ</span>
+            <span class="lang-ko lang-hidden">이용해 주셔서 감사합니다</span>
+            <span class="lang-en lang-hidden">THANK YOU FOR YOUR PATRONAGE</span>
+        </p>
+        
+        <p class="section-subtitle" style="margin: 20px 0; font-size: 14px; color: #e11d48;">
+            <span class="lang-th">**สามารถนำเลขออเดอร์ไปเช็คเลขพัสดุได้ในภายหลัง**</span>
+            <span class="lang-ko lang-hidden">**나중에 주문 번호로 택배 번호를 확인하실 수 있습니다.**</span>
+            <span class="lang-en lang-hidden">**You can use your Order ID to check the tracking number later.**</span>
+        </p>
+
+        <div>
+            <a href="index.html" class="btn btn-action" style="text-decoration: none; display: inline-block; margin: 10px;">
+                <span class="lang-th">กลับสู่หน้าแรก</span>
+                <span class="lang-ko lang-hidden">홈페이지로 돌아가기</span>
+                <span class="lang-en lang-hidden">RETURN TO HOME PAGE</span>
+            </a>
+            <a href="review.html" class="btn btn-action" style="text-decoration: none; display: inline-block; margin: 10px;">
+                <span class="lang-th">รีวิว</span>
+                <span class="lang-ko lang-hidden">후기</span>
+                <span class="lang-en lang-hidden">Review</span>
+            </a>
+            <a href="contact.html" class="btn btn-action" style="text-decoration: none; display: inline-block; margin: 10px;">
+                <span class="lang-th">ติดต่อ</span>
+                <span class="lang-ko lang-hidden">문의하기</span>
+                <span class="lang-en lang-hidden">CONTACT</span>
+            </a>
+        </div>
+    </main>
 </div>
 
-<p class="section-subtitle" style="margin: 20px 0;">
-<span class="lang-th">ขอบคุณที่อุดหนุนหนังสือ "โลกของนาฬิกาและสีของฤดู"ค่ะ</span>
-<span class="lang-ko">이용해 주셔서 감사합니다</span>
-<span class="lang-en">THANK YOU FOR YOUR PATRONAGE</span>
-</p>
-<a href="index.html" class="btn btn-action" style="text-decoration: none; display: inline-block; margin-top: 20px;">
-<span class="lang-th">กลับสู่หน้าแรก</span>
-<span class="lang-ko">홈페이지로 돌아가기 </span>
-<span class="lang-en">RETURN TO HOME PAGE</span>
-</a>
-<a href="review.html">
-    <span class="lang-th">รีวิว</span>
-    <span class="lang-ko">후기</span>
-    <span class="lang-en">Review</span>
-</a>
-</a>
-</main>
-</div>
 <script>
-    // URL ของ Google Apps Script ตัวเดิมของคุณ
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyDY_Og1Dcx_ZKnFPIkYv0RsHYmFfhmf2lyzokBwwgTyqFVJYpdZbCuOMQYjBibe_Hj7w/exec";
-
     document.addEventListener("DOMContentLoaded", function() {
-        // ดึงข้อมูลจาก Google Sheets เพื่อเอาเลขออเดอร์ล่าสุดมาแสดง
-        fetch(WEB_APP_URL)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.length > 0) {
-                // เอาข้อมูลตัวล่าสุด (แถวสุดท้าย)
-                const latestOrder = data[data.length - 1];
-                document.getElementById("display-order-id").innerText = latestOrder.OrderId || "splittle-001";
-            } else {
-                document.getElementById("display-order-id").innerText = "ไม่พบเลขออเดอร์";
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching order ID:", error);
-            document.getElementById("display-order-id").innerText = "little-XXX";
-        });
+        // 🌟 ดึงเลขออเดอร์จาก sessionStorage (ถ้าไม่มี ระบบจะสร้างให้อัตโนมัติทันทีเพื่อให้ตัวเลขไม่ค้าง)
+        let savedOrderId = sessionStorage.getItem('displayOrderId');
+        const orderIdElement = document.getElementById("display-order-id");
+        
+        if (!savedOrderId || savedOrderId === 'SPLITTLE-0000') {
+            savedOrderId = 'SPLITTLE-' + Math.floor(1000 + Math.random() * 9000);
+            sessionStorage.setItem('displayOrderId', savedOrderId);
+        }
+        
+        orderIdElement.innerText = savedOrderId;
 
+        // --- ระบบ Dark/Light Mode ---
         const themeToggleBtn = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const body = document.body;
@@ -125,7 +134,7 @@
                 startFallingEffect('snow');
             } else {
                 body.classList.remove('dark-theme');
-                if(themeIcon) { themeIcon.className = 'fa-solid fa-moon'; themeIcon.style.color = '#94a3b8'; }
+                if(themeIcon) { themeIcon.className = 'fa-solid fa-cloud'; themeIcon.style.color = '#94a3b8'; }
                 startFallingEffect('flower');
             }
             localStorage.setItem('selectedTheme', theme);
@@ -160,17 +169,20 @@
         }
         applyTheme(localStorage.getItem('selectedTheme') || 'light');
 
+        // --- ระบบเปลี่ยนภาษา ---
         const langOptions = document.querySelectorAll('.lang-option');
         function changeLanguage(lang) {
             localStorage.setItem('selectedLanguage', lang);
             document.querySelectorAll('.lang-th, .lang-ko, .lang-en').forEach(el => el.classList.add('lang-hidden'));
             document.querySelectorAll('.lang-' + lang).forEach(el => el.classList.remove('lang-hidden'));
         }
+        
         langOptions.forEach(option => {
             option.addEventListener('click', function() {
                 changeLanguage(this.getAttribute('data-lang'));
             });
         });
+        
         changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
     });
     document.addEventListener('click', function(e) {
