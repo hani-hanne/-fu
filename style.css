@@ -904,23 +904,28 @@ body.dark-theme .account-number {
     /* 📱 ตั้งค่าเฉพาะสำหรับหน้าจอโทรศัพท์มือถือ (ความกว้างไม่เกิน 768px) */
     body {
         background-color: var(--bg-main);
-        background-image: url('bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center top; /* จัดให้โฟกัสด้านบนของภาพ */
-        background-attachment: scroll !important; /* เปลี่ยนจาก fixed เป็น scroll บนมือถือเพื่อแก้ปัญหาภาพขยายใหญ่/ล้น */
+        background-image: url(bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg);
+        background-size: cover; /* ปรับให้รูปภาพขยายเต็มจอพอดี */
+        background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
+        background-position: center; /* จัดรูปให้อยู่กึ่งกลาง */
+        background-attachment: fixed; /* 🔥 เพิ่มบรรทัดนี้เพื่อล็อกพื้นหลังดาวไม่ให้หลุดเวลาเลื่อนหน้าจอ */
+        color: var(--text-main);
+        display: block;
+        justify-content: center;
+        align-items: center;
         min-height: 100vh;
-        padding: 15px; /* ลด Padding บนมือถือลงเล็กน้อยเพื่อให้มีพื้นที่แสดงผลมากขึ้น */
+        padding: 25px;
+        transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
     }
 
-    /* ธีมมืดบนมือถือ */
+
     body.dark-theme {
         background-image: url('bg-/S__1835069.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center top;
-        background-attachment: scroll !important;
-    }
+        background-size: cover; /* ปรับให้รูปภาพขยายเต็มจอพอดี */
+        background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
+        background-position: center; /* จัดรูปให้อยู่กึ่งกลาง */
+    } 
+
     
     .character {
     width: 100%; /* ให้ยืดตาม container */
