@@ -904,10 +904,10 @@ body.dark-theme .account-number {
     body {
         background-color: var(--bg-main);
         background-image: url('bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg');
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
-        background-position: center top; /* จัดให้โฟกัสด้านบนของภาพ */
-        background-attachment: scroll !important; /* เปลี่ยนจาก fixed เป็น scroll บนมือถือเพื่อแก้ปัญหาภาพขยายใหญ่/ล้น */
+        background-position: center;  
+        background-attachment: fixed; /* เปลี่ยนจาก fixed เป็น scroll บนมือถือเพื่อแก้ปัญหาภาพขยายใหญ่/ล้น */
         min-height: 100vh;
         padding: 15px; /* ลด Padding บนมือถือลงเล็กน้อยเพื่อให้มีพื้นที่แสดงผลมากขึ้น */
     }
@@ -915,10 +915,9 @@ body.dark-theme .account-number {
     /* ธีมมืดบนมือถือ */
     body.dark-theme {
         background-image: url('bg-/S__1835069.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center top;
-        background-attachment: scroll !important;
+        background-size: contain;     /* ลดขนาดความกว้างลงบนมือถือ เพื่อให้ลายเมฆดูถี่และพอดีจอ ไม่ใหญ่เกินไป */
+        background-repeat: no-repeats ;
+        background-attachment: fixed; /* ป้องกันปัญหาจอยืดบนมือถือ */
     }
     
     .character {
