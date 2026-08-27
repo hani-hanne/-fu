@@ -196,7 +196,7 @@
                     // 📌 แก้ไขตรงนี้ให้ใช้ foundData แทน "เลขพัสดุ"
                     const trackingNo = foundData.TrackingT || foundData.Tracking || 'ยังไม่ระบุเลขพัสดุ';
                     const kerryLink = trackingNo !== 'ยังไม่ระบุเลขพัสดุ' 
-                        ? `https://th.kerryexpress.com/th/track/?track=${trackingNo}` 
+                        ? `https://th.kex-express.com/th/track-parcel` 
                         : '#';
 
                     resultDiv.innerHTML = `
