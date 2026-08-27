@@ -24,7 +24,7 @@
                     <span class="lang-en">HOME</span>
                 </a>
 
-                <a href="order4.html">
+                <a href="order.html">
                     <span class="lang-th">สั่งซื้อ</span>
                     <span class="lang-ko">주문하기</span>
                     <span class="lang-en">ORDER</span>
@@ -149,11 +149,12 @@
                 document.getElementById("main-content").style.display = "block";
             }, 3000); // 3000 คือ 3 วินาที
         });
-        function trackOrder() {
-            const id = document.getElementById('orderId').value.trim();
+    
+        async function trackOrder() {
+            const searchId = document.getElementById('orderId').value.trim();
             const resultDiv = document.getElementById('result');
             
-            if (!id) {
+            if (!searchId) {
                 alert('กรุณากรอกหมายเลขคำสั่งซื้อก่อนค้นหาค่ะ');
                 return;
             }
@@ -162,32 +163,70 @@
             resultDiv.style.backgroundColor = "#fef08a";
             resultDiv.innerHTML = "<h3>กำลังค้นหาข้อมูล...</h3>";
 
-            // 1. ใช้ URL ของ Google Apps Script ตัวจริงที่คุณ Deploy ล่าสุด
-            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6NbcyOfIeaBbASlICLhOlBuYiWKSIzxa2PzFFOJEQ311G6EqlCLT-wISVQ10X9NvW/exec";
-            // 2. เรียกใช้งาน doGet พร้อมส่งค่า id ไปค้นหา
-            fetch(WEB_APP_URL + "?id=" + encodeURIComponent(id))
-            .then(res => res.json())
-            .then(data => {
+            // 3 ลิงก์ Web App ของคุณ old splittle little
+            const WEB_APP_URLS = [
+                "https://script.google.com/macros/s/AKfycbxY9gW4Mokk98Moi_Jhn9bZ7bAPy2qljA_lc2ejBegiWL1Mr5h72gn9dER8yq5ejxSj/exec",
+                "https://script.google.com/macros/s/AKfycbzHupNdz8W_NYCfwQShX_bmXDrLvfnRMZmDBWXSmTqDbqMA7yutOngHzhquWRx6heUn/exec",
+                "https://script.google.com/macros/s/AKfycbzLDTvaWbF-3fGFGj_M7QUPFbo_Avz4YvwsXVKCpLzNx9FUXS10xqF-G1QNoKT6DRRibg/exec"
+            ];
+
+            let foundData = null;
+
+            try {
+                // วนลูปเช็คทีละลิงก์
+                for (let i = 0; i < WEB_APP_URLS.length; i++) {
+                    const response = await fetch(WEB_APP_URLS[i]);
+                    const rows = await response.json(); // ได้ข้อมูลมาเป็นตาราง (Array) ทั้งหมด
+                    
+                    // ค้นหาแถวที่ OrderId ตรงกับที่ลูกค้ากรอก (ไม่สนตัวพิมพ์เล็ก-ใหญ่)
+                    const matched = rows.find(item => 
+                        item.OrderId && String(item.OrderId).trim().toLowerCase() === searchId.toLowerCase()
+                    );
+                    
+                    if (matched) {
+                        foundData = matched;
+                        break; // เจอแล้วหยุดหาเลย
+                    }
+                }
+
                 resultDiv.style.display = "block";
-                if(data && data.result === "found") {
+                if (foundData) {
                     resultDiv.style.backgroundColor = "#dcfce7";
+                    
+                    // 📌 แก้ไขตรงนี้ให้ใช้ foundData แทน "เลขพัสดุ"
+                    const trackingNo = foundData.TrackingT || foundData.Tracking || 'ยังไม่ระบุเลขพัสดุ';
+                    const kerryLink = trackingNo !== 'ยังไม่ระบุเลขพัสดุ' 
+                        ? `https://th.kerryexpress.com/th/track/?track=${trackingNo}` 
+                        : '#';
+
                     resultDiv.innerHTML = `
                         <h3>✅ พบข้อมูลคำสั่งซื้อ!</h3>
-                        <p>ชื่อผู้รับ: <b>${data.name || '-'}</b></p>
-                        <p>สถานะ: <b>พบรายการในระบบ</b></p>
-                        <p>เลขพัสดุ: <b>${data.tracking || 'กำลังรอการจัดส่ง / ออกเลขพัสดุ'}</b></p>
+                        <p>ชื่อผู้รับ: <b>${foundData.Name || '-'}</b></p>
+                        <p>หมายเลขคำสั่งซื้อ: <b>${foundData.OrderId || '-'}</b></p>
+                        <p>เบอร์โทรศัพท์: <b>${foundData.Phone || '-'}</b></p>
+                        <hr style="border:0; border-top:1px solid #cbd5e1; margin:10px 0;">
+                        <p>📦 <strong>เลขพัสดุ Kerry:</strong> <span style="color: #d97706; font-size: 18px;"><b>${trackingNo}</b></span></p>
+                        <div style="margin-top: 15px;">
+                            ${trackingNo !== 'ยังไม่ระบุเลขพัสดุ' ? `
+                                <a href="${kerryLink}" target="_blank" class="btn" style="background-color: #2563eb; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-block;">
+                                    <i class="fa-solid fa-truck-fast"></i> คลิกเพื่อเช็คพัสดุกับ Kerry
+                                </a>
+                            ` : `
+                                <p style="color: #64748b; font-size: 14px;">(กำลังเตรียมจัดส่ง หรือยังไม่,อัปเดตเลขพัสดุ)</p>
+                            `}
+                        </div>
                     `;
                 } else {
                     resultDiv.style.backgroundColor = "#fee2e2";
-                    resultDiv.innerHTML = "<h3>❌ ไม่พบข้อมูล</h3><p>กรุณาตรวจสอบชื่อหรือหมายเลขคำสั่งซื้อใหม่อีกครั้ง</p>";
+                    resultDiv.innerHTML = "<h3>❌ ไม่พบข้อมูล</h3><p>กรุณาตรวจสอบหมายเลขคำสั่งซื้อใหม่อีกครั้ง</p>";
                 }
-            })
-            .catch(err => {
+
+            } catch (err) {
                 console.error(err);
                 resultDiv.style.display = "block";
                 resultDiv.style.backgroundColor = "#fee2e2";
                 resultDiv.innerHTML = "<h3>⚠️ เกิดข้อผิดพลาด</h3><p>ไม่สามารถเชื่อมต่อกับฐานข้อมูลได้ โปรดลองใหม่อีกครั้ง</p>";
-            });
+            }
         }
 
         // ระบบสลับภาษา (คัดลอกมาจาก index.html เดิมของคุณ)
