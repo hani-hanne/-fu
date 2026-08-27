@@ -37,21 +37,6 @@
         <button id="themeToggle" class="theme-toggle-btn">
             <i id="themeIcon" class="fa-solid fa-sun"></i>
         </button>
-
-        <!--<div class="lang-selector">
-            <button class="lang-btn">
-                <i class="fa-solid fa-globe"></i>
-                <span class="lang-th">TH</span>
-                <span class="lang-ko lang-hidden">KO</span>
-                <span class="lang-en lang-hidden">EN</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            <div class="lang-dropdown">
-                <div class="lang-item lang-option" data-lang="th">ไทย (TH)</div>
-                <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
-                <div class="lang-item lang-option" data-lang="en">English (EN)</div>
-            </div>
-        </div>-->
     </div>
 </header>
 
@@ -73,13 +58,6 @@
                 <span class="lang-ko lang-hidden">주문 번호:</span>
                 <span class="lang-en lang-hidden">Your Order ID:</span>
             </p>
-            <script>
-                // ดึงเลขออเดอร์จริงที่เก็บบันทึกไว้มาแสดงผล
-                const realOrderId = sessionStorage.getItem('successOrderId');
-                if (realOrderId) {
-                    document.getElementById('display-order-id').innerText = realOrderId;
-                }
-            </script>
             <div id="display-order-id" class="order-number">กำลังโหลดเลขออเดอร์...</div>
         </div>
 
@@ -117,16 +95,14 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 🌟 ดึงเลขออเดอร์จาก sessionStorage (ถ้าไม่มี ระบบจะสร้างให้อัตโนมัติทันทีเพื่อให้ตัวเลขไม่ค้าง)
-        let savedOrderId = sessionStorage.getItem('displayOrderId');
+        const savedOrderId = sessionStorage.getItem('successOrderId');
         const orderIdElement = document.getElementById("display-order-id");
-        
-        if (!savedOrderId || savedOrderId === 'LITTLE-0000') {
-            savedOrderId = 'LITTLE-' + Math.floor(1000 + Math.random() * 9000);
-            sessionStorage.setItem('displayOrderId', savedOrderId);
+
+        if (savedOrderId) {
+            orderIdElement.innerText = savedOrderId;
+        } else {
+            orderIdElement.innerText = "LITTLE-001"; // ค่าเริ่มต้นถ้าไม่มีข้อมูลส่งมา
         }
-        
-        orderIdElement.innerText = savedOrderId;
 
         // --- ระบบ Dark/Light Mode ---
         const themeToggleBtn = document.getElementById('themeToggle');
@@ -192,10 +168,11 @@
         
         changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
     });
+
+    // เอฟเฟกต์คลิกรูปดาว
     document.addEventListener('click', function(e) {
-        // สร้าง element รูปดาว
         const star = document.createElement('div');
-        star.innerHTML = '⭐'; // สามารถเปลี่ยนเป็นอีโมจิอื่นหรือรูปภาพได้
+        star.innerHTML = '⭐';
         star.style.position = 'fixed';
         star.style.left = e.clientX + 'px';
         star.style.top = e.clientY + 'px';
@@ -207,13 +184,11 @@
         
         document.body.appendChild(star);
 
-        // สั่งให้ดาวขยายขึ้นและจางหายไป
         setTimeout(() => {
             star.style.transform = 'translate(-50%, -150%) scale(1.5)';
             star.style.opacity = '0';
         }, 20);
 
-        // ลบ element ทิ้งหลังจากอนิเมชันเล่นจบ
         setTimeout(() => {
             star.remove();
         }, 600);

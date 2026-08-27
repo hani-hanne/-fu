@@ -159,7 +159,7 @@
 
         // ฟังก์ชันตรวจสอบข้อมูลและบันทึกลง sessionStorage เพื่อส่งต่อไปหน้าชำระเงิน
         function goToPayment() {
-            let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 1250;
+            let currentOrders = parseInt(localStorage.getItem('totalOrders')) || 300;
             let orderedQty = parseInt(document.getElementById('qty').value) || 1;
             currentOrders += orderedQty;
 
