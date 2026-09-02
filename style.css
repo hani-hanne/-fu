@@ -904,13 +904,13 @@ body.dark-theme .account-number {
     /* 📱 ตั้งค่าเฉพาะสำหรับหน้าจอโทรศัพท์มือถือ (ความกว้างไม่เกิน 768px) */
     body {
         background-color: var(--bg-main);
-        background-image: url(bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg);
+        background-image: url('bg-/DC821668-3008-4B2A-9D73-FBE4F4B2DF6C.jpg');
         background-size: cover; /* ปรับให้รูปภาพขยายเต็มจอพอดี */
         background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
         background-position: center; /* จัดรูปให้อยู่กึ่งกลาง */
         background-attachment: fixed; /* 🔥 เพิ่มบรรทัดนี้เพื่อล็อกพื้นหลังดาวไม่ให้หลุดเวลาเลื่อนหน้าจอ */
         color: var(--text-main);
-        display: block;
+        
         justify-content: center;
         align-items: center;
         min-height: 100vh;
@@ -924,6 +924,7 @@ body.dark-theme .account-number {
         background-size: cover; /* ปรับให้รูปภาพขยายเต็มจอพอดี */
         background-repeat: no-repeat; /* ป้องกันไม่ให้รูปซ้ำกัน */
         background-position: center; /* จัดรูปให้อยู่กึ่งกลาง */
+        background-attachment: fixed;
     } 
 
     
@@ -1140,7 +1141,7 @@ body.dark-theme .account-number {
         font-size: 14px;    /* ตัวหนังสือใหญ่ขึ้นนิดหน่อยให้อ่านง่าย */
     }
     #jar {
-        width: 380px;
+        width: 350px;
         height: 600px;
         border: 4px solid var(--border-color);
         border-top: none;
