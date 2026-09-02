@@ -1140,7 +1140,7 @@ body.dark-theme .account-number {
         font-size: 14px;    /* ตัวหนังสือใหญ่ขึ้นนิดหน่อยให้อ่านง่าย */
     }
     #jar {
-        width: 400px;
+        width: 380px;
         height: 600px;
         border: 4px solid var(--border-color);
         border-top: none;
