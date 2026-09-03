@@ -1345,9 +1345,11 @@ button.action-btn:hover {
 }
 
 /* โหลใส่กาชาปอง */
+/* โหลใส่กาชาปอง */
 #jar {
-    width: 350px;
-    height: 600px;
+    width: 100%;             /* เปลี่ยนจาก 350px ให้ยืดเต็มความกว้างกล่องแม่ */
+    max-width: 600px;         /* จำกัดขนาดไม่ให้ใหญ่เกินไปบนหน้าจอคอม */
+    height: 500px;           /* ปรับความสูงมาตรฐาน */
     border: 4px solid var(--border-color);
     border-top: none;
     border-radius: 0 0 60px 60px;
@@ -1356,6 +1358,14 @@ button.action-btn:hover {
     background: var(--jar-bg);
     overflow: hidden;
     box-shadow: inset 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* 📱 ปรับขนาดโหลให้เหมาะกับหน้าจอมือถือ */
+@media screen and (max-width: 768px) {
+    #jar {
+        max-width: 300px;    /* ย่อขนาดโหลบนมือถือลงมาให้พอดีสายตา */
+        height: 400px;       /* ลดความสูงลงเพื่อไม่ให้ต้องไถหน้าจอยาวเกินไป */
+    }
 }
 
 /* ลูกบอลกาชาปอง (เอาอนิเมชันเด้งดึ๋งออกแล้ว นิ่งสนิทตามฟิสิกส์) */
