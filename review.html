@@ -187,9 +187,15 @@
             const jarElement = document.getElementById('jar');
             const width = jarElement.clientWidth || 300;
             
-            const radius = 22; 
+            // 🔴 แก้ไขจุดนี้: ปรับขนาดรัศมีตามความกว้างหน้าจอ (ถ้าจอเล็กกว่า 768px ให้ปรับขนาดเหลือ 14px)
+            const isMobile = window.innerWidth <= 768;
+            const radius = isMobile ? 14 : 22; 
+            
             const startX = Math.random() * (width - 80) + 40; 
             const startY = -40;
+
+            // 🔴 แก้ไขจุดนี้: ปรับอัตราส่วนสเกลของรูปภาพภาพใน Matter.js
+            const spriteScale = (radius * 2.3) / 200;
 
             const ball = Matter.Bodies.circle(startX, startY, radius, {
                 restitution: 0.6,
@@ -198,8 +204,8 @@
                 render: {
                     sprite: {
                         texture: avatarImgSrc, 
-                        xScale: (radius * 2.3) / 200, 
-                        yScale: (radius * 2.3) / 200
+                        xScale: spriteScale, 
+                        yScale: spriteScale
                     }
                 }
             });
@@ -218,8 +224,8 @@
             ballElement.style.borderRadius = '50%';
             ballElement.style.overflow = 'hidden';
             ballElement.style.cursor = 'pointer';
-            ballElement.style.border = '2px solid #fff';
-            ballElement.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            ballElement.style.border = '1.5px solid #fff'; // ลดความหนาเส้นขอบลงเล็กน้อยบนมือถือ
+            ballElement.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
 
             const img = document.createElement('img');
             img.src = avatarImgSrc;
