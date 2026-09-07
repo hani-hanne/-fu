@@ -1540,8 +1540,8 @@ button.action-btn:hover {
   border-radius: 50%;
   
   /* ดึงสีส้มอิฐ คุมโทนอุ่น */
-  border: 3px double var(--text-muted); 
-  color: var(--text-main);
+  border: 3px double #C8633F; 
+  color: #C8633F;
   
   padding: 10px;
   font-family: 'Arial', sans-serif;
@@ -1565,7 +1565,7 @@ button.action-btn:hover {
 }
 .stamp-bottom {
     font-size: 12px; /* ปรับขนาดให้เล็กลงและรับกับตัวด้านบน */
-    border-top: 2px solid var(--toggle-color);
+    border-top: 2px solid #c8633f;
     padding-top: 2px;
     display: block;
 }
