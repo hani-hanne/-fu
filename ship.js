@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             body.classList.remove('dark-theme');
             if (themeIcon) { 
-                themeIcon.className = 'fa-solid fa-moon'; 
+                themeIcon.className = 'fa-solid fa-cloud'; 
                 themeIcon.style.color = '#94a3b8'; 
             }
         }
