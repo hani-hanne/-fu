@@ -147,7 +147,7 @@
                 const width = rect.width || 350;
                 const height = rect.height || 450;
 
-                const ground = Bodies.rectangle(width / 2, height - 10, width, 40, { isStatic: true });
+                const ground = Bodies.rectangle(width / 2, height +10, width, 40, { isStatic: true });
                 const leftWall = Bodies.rectangle(0, height / 2, 20, height, { isStatic: true });
                 const rightWall = Bodies.rectangle(width, height / 2, 20, height, { isStatic: true });
 
@@ -189,7 +189,7 @@
             
             // 🔴 แก้ไขจุดนี้: ปรับขนาดรัศมีตามความกว้างหน้าจอ (ถ้าจอเล็กกว่า 768px ให้ปรับขนาดเหลือ 14px)
             const isMobile = window.innerWidth <= 768;
-            const radius = isMobile ? 14 : 22; 
+            const radius = isMobile ? 20 : 22; 
             
             const startX = Math.random() * (width - 80) + 40; 
             const startY = -40;
