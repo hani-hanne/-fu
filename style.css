@@ -1566,7 +1566,7 @@ button.action-btn:hover {
 }
 .stamp-bottom {
     font-size: 12px; /* ปรับขนาดให้เล็กลงและรับกับตัวด้านบน */
-    /*border-top: 2px solid #c8633f;*/
+    
     padding-top: 2px;
     display: block;
 }
