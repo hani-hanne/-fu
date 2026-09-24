@@ -1562,7 +1562,7 @@ button.action-btn:hover {
     font-size: 14px; /* ปรับลดจาก 6vw เป็นขนาดที่พอดีตา */
     letter-spacing: 1px;
     margin-bottom: 2px;
-    /*border-top: 2px solid #c8633f;*/
+    
 }
 .stamp-bottom {
     font-size: 12px; /* ปรับขนาดให้เล็กลงและรับกับตัวด้านบน */
