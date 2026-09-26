@@ -19,6 +19,35 @@
         </div>
     </div>
     
+
+    <!-- โครงสร้าง Popup แจ้งเตือน -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <h3 class="modal-title" style="color: var(--text-active); margin-bottom: 12px; font-size: 20px;">
+                ประกาศจาก LITTLE MLUE ✿
+            </h3>
+            <div class="modal-content" style="color: var(--text-main); font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
+                ใครสั่งหนังสือมาช่วงนี้เดี๋ยวทางเราจะแถม<br>
+                ตัวที่คั่นหนังสือ 4 อัน (4 ฤดู) ไปให้นะคะ <br>
+                ในเล่มจะมีแบบสุ่ม 2 + แถม 4 <br>
+                รวมทั้งหมดเป็น 6 อัน! <br>
+                "เนื่องจากเกิดเหตุอุทกภัย <br>
+                ขออภัยที่อาจจะส่งล่าช้านิดนึงนะค้า 🙇🏻‍♀️✨"
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-cancel" id="closeModalBtn" style="flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer;">
+                    ปิด
+                </button>
+                <button class="btn btn-confirm" id="actionModalBtn" style="flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer;">
+                    ตกลง
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <div id="main-content" style="display: none;">
         <section id="home" class="hero-section">
             <div class="content-wrapper">
@@ -414,6 +443,43 @@
             star.remove();
         }, 600);
     });
+    // เปิดหน้าต่าง Popup อัตโนมัติทันทีที่โหลดเว็บเสร็จ
+        window.addEventListener('load', () => {
+            const modalOverlay = document.getElementById('modalOverlay');
+            if (modalOverlay) {
+                // หน่วงเวลาเล็กน้อย (เช่น 0.5 วินาที) ให้หน้าเว็บโหลดส่วนอื่นเสร็จเรียบร้อยก่อน
+                setTimeout(() => {
+                    modalOverlay.style.display = 'flex';
+                }, 2500);
+            }
+        });
+
+        // ควบคุมการปิด Popup
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const actionModalBtn = document.getElementById('actionModalBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+        // ปิดเมื่อกดปุ่ม "ปิด"
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                modalOverlay.style.display = 'none';
+            });
+        }
+
+        // ปิดเมื่อกดปุ่ม "ตกลง"
+        if (actionModalBtn) {
+            actionModalBtn.addEventListener('click', () => {
+                alert('บันทึกการตั้งค่าเรียบร้อยแล้วค่า! ✿');
+                modalOverlay.style.display = 'none';
+            });
+        }
+
+        // ปิดเมื่อคลิกพื้นที่ว่างรอบนอก (Overlay)
+        window.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
     </script>
     
 </body>
