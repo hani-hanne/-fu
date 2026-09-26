@@ -35,7 +35,9 @@
                 ในเล่มจะมีแบบสุ่ม 2 + แถม 4 <br>
                 รวมทั้งหมดเป็น 6 อัน! <br>
                 "เนื่องจากเกิดเหตุอุทกภัย <br>
-                ขออภัยที่อาจจะส่งล่าช้านิดนึงนะค้า 🙇🏻‍♀️✨"
+                ขออภัยที่อาจจะส่งล่าช้านิดนึงนะค้า 🙇🏻‍♀️✨"<br>
+                <br>
+                ขอให้ทุกคนปลอดภัยนะคะ
             </div>
             <div class="modal-actions">
                 <button class="btn btn-cancel" id="closeModalBtn" style="flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer;">
@@ -447,37 +449,37 @@
         window.addEventListener('load', () => {
             const modalOverlay = document.getElementById('modalOverlay');
             if (modalOverlay) {
-                // หน่วงเวลาเล็กน้อย (เช่น 0.5 วินาที) ให้หน้าเว็บโหลดส่วนอื่นเสร็จเรียบร้อยก่อน
                 setTimeout(() => {
                     modalOverlay.style.display = 'flex';
                 }, 2500);
             }
         });
 
-        // ควบคุมการปิด Popup
+        // ควบคุมการปิด Popup (รวมปุ่มปิดและตกลงให้ทำงานร่วมกันอย่างราบรื่น ไม่ซ้ำซ้อน)
+        const modalOverlay = document.getElementById('modalOverlay');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const actionModalBtn = document.getElementById('actionModalBtn');
-        const modalOverlay = document.getElementById('modalOverlay');
 
-        // ปิดเมื่อกดปุ่ม "ปิด"
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', () => {
+        function closeModal() {
+            if (modalOverlay) {
                 modalOverlay.style.display = 'none';
-            });
+            }
         }
 
-        // ปิดเมื่อกดปุ่ม "ตกลง"
+        // เมื่อกดปุ่ม "ปิด"
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        // เมื่อกดปุ่ม "ตกลง"
         if (actionModalBtn) {
-            actionModalBtn.addEventListener('click', () => {
-                alert('บันทึกการตั้งค่าเรียบร้อยแล้วค่า! ✿');
-                modalOverlay.style.display = 'none';
-            });
+            actionModalBtn.addEventListener('click', closeModal);
         }
 
         // ปิดเมื่อคลิกพื้นที่ว่างรอบนอก (Overlay)
         window.addEventListener('click', (e) => {
             if (e.target === modalOverlay) {
-                modalOverlay.style.display = 'none';
+                closeModal();
             }
         });
     </script>
