@@ -43,9 +43,6 @@
                 <button class="btn btn-cancel" id="closeModalBtn" style="flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer;">
                     ปิด
                 </button>
-                <button class="btn btn-confirm" id="actionModalBtn" style="flex: 1; padding: 10px; border-radius: 20px; border: none; cursor: pointer;">
-                    ตกลง
-                </button>
             </div>
         </div>
     </div>
@@ -471,10 +468,6 @@
             closeModalBtn.addEventListener('click', closeModal);
         }
 
-        // เมื่อกดปุ่ม "ตกลง"
-        if (actionModalBtn) {
-            actionModalBtn.addEventListener('click', closeModal);
-        }
 
         // ปิดเมื่อคลิกพื้นที่ว่างรอบนอก (Overlay)
         window.addEventListener('click', (e) => {
