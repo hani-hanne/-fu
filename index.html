@@ -48,7 +48,7 @@
     </div>
     
     <div id="main-content" style="display: none;">
-        <section id="home" class="hero-section">
+        <section id="home" class="hero-section" style="display: flex; justify-content: flex-start ;">
             <div class="content-wrapper">
                 <img src="img/23C58E1B-DD30-4058-9885-B6F803C785AA.png" alt="Kid Photo" class="kid-photo">
 
@@ -58,11 +58,11 @@
                 <article class="bio-box">
                     <h2>🕰️시계의 세계와 계절의 색<br>โลกของนาฬิกาและสีของฤดู🍂</h2>
                     <p>
-                        <span class="lang-en">Our book tells someone’s story through four seasons, each represented by colors that may not be visible to anyone other than yourself.
-                            <br>For our first edition, the story is available in Korean🇰🇷 and Thai🇹🇭.<br>Follow along for more ✿◕ ‿ ◕✿</span>
-                        <span class="lang-th">หนังสือที่เล่าเรื่องราวผ่านการเติบโตผ่านแต่ละฤดูกาลของใครบางคน <br>ออกมาในรูปแบบของสีที่อาจมองเห็นได้ชัดขึ้นเมื่อเราหลับตาลงในการพิมพ์ครั้งแรกนี้ จะมีเป็น version ภาษาเกาหลี🇰🇷และภาษาไทย🇹🇭<br>ติดตามสำหรับเล่มอื่น ๆ ได้ผ่านเว็ปนี้ค่า  ✿◕ ‿ ◕✿</span> </p>
-                        <span class="lang-ko">눈을 감을 때 더욱 선명해지는 색으로, 사계절을 그리며 성장하는 누군가의 이야기를 담은 책입니다.이번 초판은 한국어 🇰🇷·태국어 🇹🇭 버전으로 출간되었습니다.<br>앞으로의 이야기들도 이곳에서 함께해 주세요 ✿◕ ‿ ◕✿ </span>
-                    </article>
+                        <span class="lang-en">Our book tells someone’s story through four seasons, each represented by colors that may not be visible to anyone other than yourself.<br>For our first edition, the story is available in Korean🇰🇷 and Thai🇹🇭.<br>Follow along for more ✿◕ ‿ ◕✿</span>
+                        <span class="lang-th">หนังสือที่เล่าเรื่องราวผ่านการเติบโตผ่านแต่ละฤดูกาลโดย<br>การพิมพ์ครั้งแรกนี้ จะมีเป็น version ภาษาเกาหลี🇰🇷และภาษาไทย🇹🇭<br>ติดตามสำหรับเล่มอื่น ๆ ได้ผ่านเว็ปนี้ค่า  ✿◕ ‿ ◕✿</span>
+                        <span class="lang-ko">눈을 감을 때 더욱 선명해지는 색으로, 사계절을 그리며 성장하는 누군가의 이야기를 담은 책입니다.이번 초판은 한국어 🇰🇷·태국어 🇹🇭 버전으로 출간되었습니다.<br>앞으로의 이야기들도 이곳에서 함께해 주세요 ✿◕ ‿ ◕✿</span>
+                    </p>
+                </article>
 
                 <div class="social-buttons">
                     <a href="https://www.tiktok.com/@monajung23" target="_blank" class="btn"><i class="fa-brands fa-tiktok"></i></a>
@@ -103,19 +103,35 @@
             <header class="navbar">
                 
                 <div class="promo-banner">
-                    <div class="book-preview"></div>
-                    <div class="promo-box">
-                        <img src="img/350C83CE-9F2F-4E93-815B-D081356CED35.jpeg" width="50%">
-                        <span class="lang-ko"><i class="fa-solid fa-gift"></i> <span>사은품 증정! <br> 리미티드 에디션 <br>랜덤 책갈피!</span></span>
-                        <span class="lang-th"><i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ <br> Limited Edition <br>แบบจุ่ม!</span></span>
-                        <span class="lang-en"><i class="fa-solid fa-gift"></i> <span>Free gift! <br> Limited Edition <br>random bookmark!</span></span>
-                        <span class="lang-th"><span>"ด้านหลังหนังสือจะมี No. ประจำเล่มที่ไม่ซ้ำกันค่า"</span></span>
-                        <span class="lang-ko"><span>"책 뒷면에는 고유한 No.가 적혀 있습니다."</span></span>
-                        <span class="lang-en" ><span>"There will be a unique book number (No.) on the back of each book."</span></span>
-                
+                <!-- กล่องหลัก จัดเป็นแนวนอน (ซ้าย-ขวา) และจัดให้อยู่กึ่งกลางแนวตั้ง -->
+                <div class="promo-box" style="display: flex; flex-direction: row; align-items: center; gap: 20px;">
+                    
+                    <!-- 1. รูปภาพ (อยู่ฝั่งซ้าย) - ตัด div ซ้อนออกแล้วใส่รูปตรงนี้ได้เลย -->
+                    <div class="promo-img" style="flex-shrink: 0; max-width: 250px; width: 100%;">
+                        <img src="img/350C83CE-9F2F-4E93-815B-D081356CED35.jpeg" alt="Book Bookmark" style="width: 100%; height: auto; display: block; border-radius: 8px;">
+                    </div>
+                    
+                    <!-- 2. กลุ่มข้อความ (อยู่ฝั่งขวา - จัดเรียงแบบแนวตั้ง บนลงล่าง) -->
+                    <div class="promo-content" style="display: flex; flex-direction: column; text-align: left;">
+                        
+                        <!-- ข้อความส่วนบน (ของแถม / ที่คั่นหนังสือ) -->
+                        <div class="promo-top" style="margin-bottom: 10px;">
+                            <span class="lang-ko"><i class="fa-solid fa-gift"></i> <span>사은품 증정! <br> 리미티드 에디션 <br>랜덤 책갈피 2종 중 1종 랜덤!</span></span>
+                            <span class="lang-th"><i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ Limited Edition <br> (แบบสุ่ม 2 ลาย)</span></span>
+                            <span class="lang-en"><i class="fa-solid fa-gift"></i> <span>Free gift! <br> Limited Edition <br> random bookmark (2 designs, random)!</span></span>
+                        </div>
+                        
+                        <!-- ข้อความส่วนล่าง (เลขประจำเล่ม) -->
+                        <div class="keyword" style="font-size: small;">
+                            <span class="lang-th"><span>"ด้านหลังหนังสือจะมี No. ประจำเล่มที่ไม่ซ้ำกันค่า"</span></span>
+                            <span class="lang-ko"><span>"책 뒷면에는 고유한 No.가 적혀 있습니다."</span></span>
+                            <span class="lang-en"><span>"There will be a unique book number (No.) on the back of each book."</span></span>
+                        </div>
+                        
                     </div>
                     
                 </div>
+            </div>
                 <nav class="nav-links">
                     <a href="index.html" class="active">
                         <span class="lang-th">หน้าแรก</span>
@@ -263,6 +279,11 @@
                             <span class="lang-th">4 เล่ม</span>
                             <span class="lang-en">4 books</span>
                         </h4>
+                        <h5 style="color: steelblue; padding: 10px;">
+                            <span class="lang-ko">"북마크 전종 세트 + 시크릿 1종 증정 보장"</span>
+                            <span class="lang-th">"การันตีลายที่คั่นหนังสือได้ครบทุกลาย + แถม secret"</span>
+                            <span class="lang-en">"Guaranteed all bookmark designs + includes a secret bonus design."</span>
+                        </h5>
                         <h3> --- </h3>
                         <div class="author-credits">
                             <p>
@@ -404,10 +425,22 @@
             changeLanguage(localStorage.getItem('selectedLanguage') || 'th');
         });
         window.addEventListener("load", function() {
-            setTimeout(function() {
-                document.getElementById("loading-screen").style.display = "none";
-                document.getElementById("main-content").style.display = "block";
-            }, 3000); // 3000 คือ 3 วินาที
+            const loadingScreen = document.getElementById("loading-screen");
+            const mainContent = document.getElementById("main-content");
+            
+            // เช็คว่าเคยโหลดไปแล้วหรือยังใน Session นี้
+            if (sessionStorage.getItem("hasLoaded")) {
+                // ถ้าเคยโหลดแล้ว ซ่อนหน้า loading ทันทีโดยไม่มีดีเลย์
+                if (loadingScreen) loadingScreen.style.display = "none";
+                if (mainContent) mainContent.style.display = "block";
+            } else {
+                // ถ้ายัง ให้แสดง 3 วินาทีตามปกติ แล้วบันทึกสถานะลง sessionStorage
+                setTimeout(function() {
+                    if (loadingScreen) loadingScreen.style.display = "none";
+                    if (mainContent) mainContent.style.display = "block";
+                    sessionStorage.setItem("hasLoaded", "true");
+                }, 3000); 
+            }
         });
         // เปลี่ยนคำสวัสดี
         const greetings = ["สวัสดี...", "你好...", "안녕하세요...", "こんにちは...", "Hello..."];
@@ -443,12 +476,18 @@
         }, 600);
     });
     // เปิดหน้าต่าง Popup อัตโนมัติทันทีที่โหลดเว็บเสร็จ
+       // เปิดหน้าต่าง Popup (แสดงแค่ครั้งแรกครั้งเดียวใน Session นี้)
         window.addEventListener('load', () => {
             const modalOverlay = document.getElementById('modalOverlay');
             if (modalOverlay) {
-                setTimeout(() => {
-                    modalOverlay.style.display = 'flex';
-                }, 2500);
+                // เช็คว่าเคยแสดง Popup ไปแล้วหรือยังใน sessionStorage
+                if (!sessionStorage.getItem("popupShown")) {
+                    setTimeout(() => {
+                        modalOverlay.style.display = 'flex';
+                        // บันทึกสถานะว่าแสดงแล้ว จะได้ไม่เด้งขึ้นมาซ้ำอีก
+                        sessionStorage.setItem("popupShown", "true");
+                    }, 2500);
+                }
             }
         });
 

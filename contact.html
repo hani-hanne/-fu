@@ -242,14 +242,6 @@
             changeLanguage(savedLang);
         });
 
-        window.addEventListener("load", function() {
-            setTimeout(function() {
-                const loadingScreen = document.getElementById("loading-screen");
-                if (loadingScreen) loadingScreen.style.display = "none";
-                const mainContent = document.getElementById("main-content");
-                if (mainContent) mainContent.style.display = "block";
-            }, 3000);
-        });
         document.addEventListener('click', function(e) {
             // สร้าง element รูปดาว
             const star = document.createElement('div');
