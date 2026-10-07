@@ -47,11 +47,13 @@
         </div>
     </div>
     
+    
     <div id="main-content" style="display: none;">
-        <section id="home" class="hero-section" style="display: flex; justify-content: flex-start ;">
-            <div class="content-wrapper">
-                <img src="img/23C58E1B-DD30-4058-9885-B6F803C785AA.png" alt="Kid Photo" class="kid-photo">
+        
+        <section id="home" class="hero-section">
+            <img src="img/23C58E1B-DD30-4058-9885-B6F803C785AA.png" alt="Kid Photo" class="kid-photo">
 
+            <div class="content-wrapper">
                 <h1 id="greeting">สวัสดี</h1>
                 <h2>Welcome to LITTLE MLUE’s world</h2>
                 
@@ -63,17 +65,22 @@
                         <span class="lang-ko">눈을 감을 때 더욱 선명해지는 색으로, 사계절을 그리며 성장하는 누군가의 이야기를 담은 책입니다.이번 초판은 한국어 🇰🇷·태국어 🇹🇭 버전으로 출간되었습니다.<br>앞으로의 이야기들도 이곳에서 함께해 주세요 ✿◕ ‿ ◕✿</span>
                     </p>
                 </article>
+                
 
                 <div class="social-buttons">
                     <a href="https://www.tiktok.com/@monajung23" target="_blank" class="btn"><i class="fa-brands fa-tiktok"></i></a>
                     <a href="https://www.instagram.com/jung__mn___/" target="_blank" class="btn"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
+
+            <!-- ย้ายรูปเด็กมาไว้ฝั่งขวาตรงนี้ (อยู่ในกรอบแดง) -->
+            
+
             <div class="top-controls">
-            <button id="themeToggle" class="theme-toggle-btn">
-                <i id="themeIcon" class="fa-solid fa-sun"></i>
-            </button>
-            <div class="lang-selector">
+                <button id="themeToggle" class="theme-toggle-btn">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+                <div class="lang-selector">
                     <button class="lang-btn">
                         <i class="fa-solid fa-globe"></i>
                         <span class="lang-th">TH</span>
@@ -86,8 +93,8 @@
                         <div class="lang-item lang-option" data-lang="ko">한국어 (KO)</div>
                         <div class="lang-item lang-option" data-lang="en">English (EN)</div>
                     </div>
+                </div>
             </div>
-        </div>
         </section>
        
     </div>
@@ -103,26 +110,25 @@
             <header class="navbar">
                 
                 <div class="promo-banner">
-                <!-- กล่องหลัก จัดเป็นแนวนอน (ซ้าย-ขวา) และจัดให้อยู่กึ่งกลางแนวตั้ง -->
-                <div class="promo-box" style="display: flex; flex-direction: row; align-items: center; gap: 20px;">
+                <div class="promo-box">
                     
-                    <!-- 1. รูปภาพ (อยู่ฝั่งซ้าย) - ตัด div ซ้อนออกแล้วใส่รูปตรงนี้ได้เลย -->
-                    <div class="promo-img" style="flex-shrink: 0; max-width: 250px; width: 100%;">
-                        <img src="img/350C83CE-9F2F-4E93-815B-D081356CED35.jpeg" alt="Book Bookmark" style="width: 100%; height: auto; display: block; border-radius: 8px;">
+                    <!-- 1. รูปภาพ (อยู่ฝั่งซ้าย) -->
+                    <div class="promo-img">
+                        <img src="img/350C83CE-9F2F-4E93-815B-D081356CED35.jpeg" alt="Book Bookmark">
                     </div>
                     
-                    <!-- 2. กลุ่มข้อความ (อยู่ฝั่งขวา - จัดเรียงแบบแนวตั้ง บนลงล่าง) -->
-                    <div class="promo-content" style="display: flex; flex-direction: column; text-align: center; ">
+                    <!-- 2. กลุ่มข้อความ (อยู่ฝั่งขวา) -->
+                    <div class="promo-content">
                         
                         <!-- ข้อความส่วนบน (ของแถม / ที่คั่นหนังสือ) -->
-                        <div class="promo-top" style="margin-bottom: 10px; ">
+                        <div class="promo-top">
                             <span class="lang-ko"><i class="fa-solid fa-gift"></i> <span>사은품 증정! <br> 리미티드 에디션 <br>랜덤 책갈피 2종 중 1종 랜덤!</span></span>
-                            <span class="lang-th"><i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ  <br>Limited Edition แบบจุ่ม 2 ลาย</span></span>
-                            <span class="lang-en"><i class="fa-solid fa-gift"></i> <span>Free gift! <br> Limited Edition random bookmark 2 designs, random!</span></span>
+                            <span class="lang-th"><i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ <br>Limited Edition แบบสุ่ม 2 ลาย</span></span>
+                            <span class="lang-en"><i class="fa-solid fa-gift"></i> <span>Free gift! <br> Limited Edition random bookmark (2 designs)!</span></span>
                         </div>
                         
                         <!-- ข้อความส่วนล่าง (เลขประจำเล่ม) -->
-                        <div class="keyword" style="font-size: small;">
+                        <div class="keyword">
                             <span class="lang-th"><span>"ด้านหลังหนังสือจะมี No. ประจำเล่มที่ไม่ซ้ำกันค่า"</span></span>
                             <span class="lang-ko"><span>"책 뒷면에는 고유한 No.가 적혀 있습니다."</span></span>
                             <span class="lang-en"><span>"There will be a unique book number (No.) on the back of each book."</span></span>
@@ -131,6 +137,7 @@
                     </div>
                     
                 </div>
+            </div>
             </div>
                 <nav class="nav-links">
                     <a href="index.html" class="active">

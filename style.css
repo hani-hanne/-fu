@@ -123,35 +123,13 @@ body.dark-theme .header-section .theme-img-dark {
 /* ==========================================================================
    จัดการหน้า Loading (ปรับขนาดรูปภาพให้เล็กลง)
    ========================================================================== */
-/* กำหนดสไตล์ให้รูปภาพ */
-.kid-photo {
-    position: fixed;      
-    top: 70px;             /* ปรับให้ขยับขึ้นมาด้านบนของกล่อง .content-wrapper */
-    right: 0px;           /* ขยับเข้ามาจากขอบขวาเล็กน้อย */
-    width: 650px;            /* ลดขนาดลงเล็กน้อยเพื่อให้พอดีกับช่องว่าง */
-    height: auto;
-    border-radius: 15px;     
-    z-index: -1;             
-    object-fit: contain;
-    object-position: center right; 
-    background-size: 120%;
-    transform: none !important;
-}
+
 .content-container, .card, body {
   text-align: left; /* ทำให้ข้อความชิดซ้าย */
   justify-content: flex-start; /* จัดเรียงไอเท็มใน Flexbox ไปทางซ้าย */
   align-items: flex-start;
 }
 
-/* อย่าลืมเช็คให้แน่ใจว่า .content-wrapper มีการตั้งค่า position เป็น relative */
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start !important; /* บังคับให้ทุกอย่างในกล่องชิดซ้าย */
-    text-align: left !important;       /* บังคับข้อความทั้งหมดชิดซ้าย */
-    width: 100%;
-    margin: 0 auto 0 0 !important;     /* ไม่ให้มีการจัดกึ่งกลางอัตโนมัติ */
-}
 /* จัดข้อความทักทายและหัวข้อให้ชิดซ้าย */
 #greeting, 
 .hero-section h2 {
@@ -171,12 +149,6 @@ body.dark-theme .header-section .theme-img-dark {
     text-align: left !important;
 }
 
-.hero-section { 
-    position: relative; 
-    width: 100%; height: 45vh; 
-    overflow: hidden; 
-    background: transparent !important; }
-
 #greeting {
     font-size: 50px;
     color: var(--text-active);
@@ -188,7 +160,7 @@ body.dark-theme .header-section .theme-img-dark {
 .bio-box {
     margin-top: 20px;
     line-height: 1.6;
-    z-index: -2;
+    z-index: -9999;
     color: #333;
     max-width: 100%; /* ให้ยืดเต็มแค่ 40% ของหน้าจอที่เราตั้งไว้ข้างบน */
     background: rgba(255, 255, 255, 0.7); /* เพิ่มสีพื้นหลังแบบโปร่งแสงให้ข้อความอ่านง่ายขึ้น */
@@ -343,25 +315,7 @@ body.dark-theme {
     border-bottom: 2px solid var(--text-active);
 }
 
-.promo-banner {
-    border-radius: 20px;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    gap: 20px;
-    background: var(--border-color)
-}
 
-.book-preview {
-    width: auto;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #64748b;
-}
 .card-box {
     position: relative !important;
     display: inline-block !important;
@@ -389,20 +343,6 @@ body.dark-theme {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.promo-box{
-    background: var(--bg-card);            /* สีพื้นหลังกล่องโปรโมชั่น */
-    color: var(--text-main);                /* สีตัวอักษรให้ดูเป็นจุดสนใจ */
-    padding: 5px;                 /* เว้นระยะห่างภายในกล่อง */
-    border-radius: 10px;           /* ปรับมุมให้มน */
-    border: 2px dashed var(--text-muted);    /* ขอบเส้นประเพื่อให้ดูเป็น Limited Edition */
-    font-weight: bold;             /* ตัวหนา */
-    text-align: center;            /* จัดข้อความให้อยู่ตรงกลาง */
-    margin: 15px 0;                /* เว้นระยะห่างจากส่วนประกอบอื่น */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
 
 .limited-badge {
     position: absolute;
@@ -920,6 +860,210 @@ body.dark-theme .account-number {
 }
 .lang-hidden { display: none !important; }
 /* ==========================================================================
+   Hero Section & Kid Photo Layout (แก้ปัญหาข้อความทับรูปและจัดตำแหน่ง)
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    background: transparent !important;
+}
+
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    text-align: left !important;
+}
+
+/* กล่องห่อหุ้มรูปเด็กฝั่งขวา */
+.kid-photo-container {
+    position: sticky !important;
+    top: 20px !important;            /* ระยะห่างจากขอบบนเมื่อเลื่อนหน้าจอมาถึงจุดนี้จะหยุดนิ่ง */
+    align-self: flex-start;
+    
+}
+
+/* ตัวรูปการ์ตูน: ล็อกขนาดและปรับขนาดตามหน้าจอ */
+.kid-photo {
+    position: fixed !important;
+    top: 15% !important;
+    right: 5% !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: clamp(45%, 22vw, 300px) !important; /* ขยายและย่อขนาดตามหน้าจออัตโนมัติ */
+    height: auto !important;
+    border-radius: 15px !important;
+    object-fit: contain !important;
+    z-index: -9998 !important;                     /* อยู่หลังสุด ไม่ทับข้อความ และไม่ขยับไปไหน */
+    pointer-events: none !important;            /* ป้องกันไม่ให้เมาส์คลิกโดน เพื่อให้กดข้อความด้านหน้าได้ปกติ */
+    margin: 0 !important;
+    transform: none !important;
+}
+/* ปุ่มเปลี่ยนภาษาและธีม: ล็อกให้ชิดขวาบนเสมอ */
+.top-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: var(--bg-container);
+    border-radius: 30px;
+    padding: 2px 6px;
+    box-shadow: 0 10px 25px rgba(45, 34, 20, 0.05);
+}
+
+/* ==========================================================================
+   Responsive สำหรับหน้าจอมือถือหรือจอแคบ
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+
+    .content-wrapper {
+        max-width: 100% !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+    }
+
+    /* บนมือถือ ให้รูปเด็กขยับลงมาอยู่ด้านล่างข้อความ ไม่ให้บังตัวหนังสือ */
+    .hero-section {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .kid-photo-container {
+        position: sticky !important;
+        top: auto !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* บนมือถือ ให้รูปย่อลงและอยู่ใต้ข้อความตามปกติ */
+    .kid-photo {
+        position: fixed !important;
+        top: 50% !important;
+        right: 3% !important;
+        width: clamp(300px, 28vw, 150px) !important; /* ย่อขนาดลงบนมือถือตามหน้าจอ */
+        z-index:  -9999;
+    }
+
+    .top-controls {
+        right: -10px;
+    }
+}
+
+/* ==========================================================================
+   Promo Banner & Box Layout (Desktop: ซ้าย-ขวา)
+   ========================================================================== */
+.promo-banner {
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    background: var(--border-color);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.promo-box {
+    background: var(--bg-card);
+    color: var(--text-main);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px dashed var(--text-muted);
+    font-weight: bold;
+    display: flex;
+    flex-direction: row; /* Desktop: รูปซ้าย ข้อความขวา */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 650px;
+    box-sizing: border-box;
+}
+
+.promo-img {
+    flex-shrink: 0;
+    width: 35%;
+    max-width: 180px;
+}
+
+.promo-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.promo-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 65%;
+}
+
+.promo-top {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.promo-top i {
+    color: #ff6b6b;
+}
+
+.keyword {
+    font-size: 11px;
+    opacity: 0.85;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   Responsive สำหรับหน้าจอมือถือ (Mobile: รูปอยู่บน ข้อความอยู่ล่าง)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    .promo-banner {
+        padding: 10px !important;
+    }
+    
+    .promo-box {
+        flex-direction: column !important; /* มือถือ: สลับมาเรียงบน-ล่าง */
+        align-items: center !important;
+        text-align: center !important;     /* จัดข้อความให้อยู่ตรงกลางบนมือถือ */
+        padding: 15px !important;
+        gap: 15px !important;
+    }
+    
+    .promo-img {
+        width: 70% !important;             /* ขยายรูปให้เด่นขึ้นเมื่ออยู่ด้านบน */
+        max-width: 200px !important;
+    }
+    
+    .promo-content {
+        width: 100% !important;
+        text-align: center !important;     /* ข้อความจัดกลางบนมือถือ */
+    }
+    
+    .promo-top {
+        font-size: 12px !important;
+    }
+    
+    .keyword {
+        font-size: 11px !important;
+    }
+}
+
+/* ==========================================================================
    3. ระบบ Responsive จัดดีไซน์สำหรับหน้าจอมือถือ
    ========================================================================== */
 @media screen and (max-width: 768px) {
@@ -961,38 +1105,6 @@ body.dark-theme .account-number {
     object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
     animation: bounce 1.5s infinite ease-in-out;
     }
-    /* สำหรับหน้าจอมือถือ (ขนาดจอไม่เกิน 768px) */
-
-    .promo-box {
-        flex-direction: column; /* เปลี่ยนให้เรียงจากบนลงล่าง */
-        text-align: center;     /* จัดข้อความให้อยู่ตรงกลาง */
-        gap: 5px;               /* ปรับระยะห่างระหว่างข้อความกับรูปให้ชิดกันขึ้นตามต้องการ */
-    }
-
-
-    .kid-photo {
-        position: fixed;
-        top: 330px; /* 🔹 ปรับตัวเลขนี้เพิ่มขึ้นเพื่อให้รูปขยับต่ำลงมา ไม่บังตัวหนังสือ */
-        right: 0; 
-        width: 70%;  /* ปรับขนาดให้เล็กลงอีกนิดได้ตามต้องการ */
-        height: auto;
-        object-fit: contain; 
-        z-index: -1;
-        object-position: center right; 
-        transform: scale(1);
-    }
-    /* 1. ให้ข้อความไม่กว้างเกินไปและไม่บังวิดีโอ */
-    .hero-section {
-        height: auto !important;
-        min-height: 180px !important; /* ปรับตัวเลขนี้ให้สูงขึ้นตามต้องการเพื่อเพิ่มพื้นที่ */
-        padding-bottom: 30px;
-    }
-
-    /* 2. ขยายความสูงและเพิ่มระยะห่างของกล่องข้อความ */
-    .content-wrapper {
-        min-height: 380px !important; /* เพิ่มความสูงขั้นต่ำให้กล่อง */
-        margin-bottom: 70px !important;
-    }
 
     /* 2. จัดการการ์ดหนังสือให้เรียงเป็นแนวตั้ง */
     .product-card {
@@ -1022,22 +1134,7 @@ body.dark-theme .account-number {
         justify-content: center;
         gap: 10px;
     }
-    .top-controls {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 2px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
-    position: absolute;
-    top: 0;
-    z-index: 9999;
-    right: 0; 
-    background-color: var(--bg-container);
-    border-radius: 20px;
-    padding: 1px 2px;
-    box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
-    transition: background-color 0.3s ease;
-    }   
+      
 }
    @media (max-width: 768px) {
     .web-container { padding: 20px 15px; border-radius: 20px; }
@@ -1191,22 +1288,7 @@ body.dark-theme .account-number {
    
 }
 
-/* กล่องรวมปุ่ม จัดให้อยู่ขวาสุดและเรียงแนวนอน */
-.top-controls {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px; /* ระยะห่างระหว่างปุ่มเปลี่ยนธีมกับปุ่มเปลี่ยนภาษา */
-    position: absolute;
-    top: 0;
-    z-index: 9999;
-    right: 0; 
-    background-color: var(--bg-container);
-    border-radius: 30px;
-    padding: 1px 3px;
-    box-shadow: 0 15px 35px rgba(45, 34, 20, 0.05);
-    transition: background-color 0.3s ease;
-}
+
 
 /* ล้างตำแหน่ง absolute เดิมของปุ่มเปลี่ยนธีมไม่ให้ซ้อนทับ */
 .theme-toggle-btn {
