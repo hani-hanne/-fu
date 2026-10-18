@@ -1220,7 +1220,7 @@ body.dark-theme .account-number {
         max-width: 100% !important;
         aspect-ratio: auto !important;
         height: auto !important;
-        min-height: 300px !important;
+        min-height: 250px !important;
         display: flex !important;
     }
 
@@ -1235,6 +1235,57 @@ body.dark-theme .account-number {
         width: 30%; /* ให้รูปกว้างเต็มหน้าจอมือถือ */
         height: auto;
 
+    }
+}
+/* ==========================================================================
+   📱 เฉพาะหน้าจอมือถือ: ซ่อนเลขหน้า, ดึงปุ่มลงมาข้างใต้รูป, และขยายรูปให้เต็มกรอบพอดี
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+    
+    /* 1. ซ่อนเลขหน้าเฉพาะบนมือถือ */
+    .page-indicator {
+        display: none !important;
+    }
+
+    /* 2. จัดสไลเดอร์บนมือถือให้รูปอยู่บน ปุ่มเลื่อนอยู่ล่าง */
+    .book-slider {
+        position: relative !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin: 20px auto !important;
+    }
+
+    /* 3. ขยายกรอบรูปพรีวิวให้เต็มไซส์พอดีและไม่ล้นออกนอกขอบ */
+    .book-page-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 3 / 4 !important; /* ล็อกสัดส่วนกรอบให้สวยงาม */
+        overflow: hidden !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* 4. บังคับรูปภาพข้างในให้เต็มกรอบพอดี */
+    .book-page-wrapper .page-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important; /* ปรับเป็น contain ได้หากไม่อยากให้รูปโดนตัดขอบ */
+    }
+
+    /* 5. ย้ายปุ่มเลื่อนซ้าย-ขวาลงมาอยู่ด้านล่างรูป (หรือวางซ้อนขอบล่างของรูปให้กดง่าย) */
+    .book-slider .slider-btn {
+        position: absolute !important;
+        bottom: -35px !important;
+        z-index: 10 !important;
+    }
+
+    .book-slider .prev-btn {
+        left: 20% !important;
+    }
+
+    .book-slider .next-btn {
+        right: 20% !important;
     }
 }
 /* ==========================================================================
@@ -1477,9 +1528,9 @@ button.action-btn:hover {
 /* 📱 ปรับแต่งขนาดโหลสำหรับหน้าจอมือถือโดยเฉพาะ */
 @media screen and (max-width: 768px) {
     #jar {
-        width: 90% !important;
+        width: 95% !important;
         max-width: 320px !important;
-        height: 600px !important;
+        height: 800px !important;
         
         /* บังคับดันกึ่งกลางแนวนอนบนมือถือ */
         margin-left: auto !important;
