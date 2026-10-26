@@ -267,6 +267,29 @@ body.dark-theme {
   background-image: url('bg-/S__1835069.jpg');
 }
 
+.halloween-garland {
+  position: fixed;
+  top: -140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  z-index: 9999;
+  pointer-events: none;
+  display: block;
+}
+
+/* มือถือ */
+@media screen and (max-width: 768px) {
+  .halloween-garland {
+    top: -52px;
+    width: 100vw;
+    max-width: none;
+    height: auto;
+  }
+}
+
 
 .web-container {
     width: 100%;
