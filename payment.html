@@ -120,13 +120,36 @@
             }
         }
         
+        let isSubmitting = false;
+
         // ฟังก์ชันเมื่อกดปุ่มสั่งซื้อสำเร็จ
         async function finishOrder(event) {
-            event.preventDefault(); // ป้องกันการรีเฟรชหน้า
-            
+            event.preventDefault();
+
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const submitButton = document.querySelector(
+                '.btn-action-submit'
+            );
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'กำลังส่งข้อมูล...';
+            }
+        
             const slipInput = document.getElementById('slipInput');
+
             if (slipInput.files.length === 0) {
                 alert('กรุณาแนบสลิปการโอนเงินก่อนกดยืนยันค่ะ');
+
+                isSubmitting = false;
+
+                const submitButton = document.querySelector('.btn-action-submit');
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'สั่งซื้อสำเร็จ';
+                }
+
                 return;
             }
 
@@ -176,24 +199,38 @@
                 
                 const result = await response.json();
 
-                if (result.status === "success") {
-                    // 🌟 นำเลขออเดอร์จริงที่ได้จาก Google Sheet เก็บไว้โชว์หน้าถัดไป
-                    sessionStorage.setItem('successOrderId', result.orderId);
+                if (!response.ok || result.status !== "success" || !result.orderId) {
+                    throw new Error(result.message || 'บันทึกออเดอร์ไม่สำเร็จ');
                 }
 
-                // ล้างข้อมูลเวลาและ Session อื่นๆ (เว้นตัวเลขออเดอร์ที่เพิ่งเซฟไว้)
+                sessionStorage.setItem('successOrderId', result.orderId);
                 localStorage.removeItem('paymentTimer');
-                
-                // พาไปหน้าสำเร็จ
-                window.location.href = 'final.html';
 
+                window.location.href = 'final.html';
+            
             } catch (error) {
-                console.error('Error!', error.message);
+                console.error('Error!', error);
+
                 if (loadingOverlay) {
-                    loadingOverlay.style.display = 'none'; // ซ่อนหน้าโหลดถ้าเกิดข้อผิดพลาด
+                    loadingOverlay.style.display = 'none';
                 }
-                alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+
+                isSubmitting = false;
+
+                const submitButton = document.querySelector(
+                    '.btn-action-submit'
+                );
+
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'สั่งซื้อสำเร็จ';
+                }
+
+                alert(
+                    'ไม่สามารถยืนยันผลการบันทึกได้ กรุณาตรวจสอบออเดอร์ก่อนกดส่งใหม่'
+                );
             }
+
         }
           
         // ฟังก์ชันช่วยเหลือสำหรับแปลงไฟล์เป็น Base64
