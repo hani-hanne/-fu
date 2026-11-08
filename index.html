@@ -388,7 +388,7 @@
             function startFallingEffect(type) {
                 if (particleInterval) clearInterval(particleInterval);
                 document.querySelectorAll('.falling-particle').forEach(el => el.remove());
-                const items = type === 'snow' ? ['❄', '✧', '•', '🦇', '🩵'] : ['🍂', '🌙', '⭐', '🎃'];
+                const items = type === 'snow' ? ['❄', '✧', '•'] : ['🍂'];
                 const colors = type === 'snow' ? ['#ffffff', '#e2e8f0', '#93c5fd'] : ['#f43f5e', '#fda4af', '#f472b6'];
                 particleInterval = setInterval(() => {
                     const particle = document.createElement('div');
