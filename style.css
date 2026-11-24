@@ -84,6 +84,31 @@ body.dark-theme {
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
+
+.single-print-badge {
+    display: inline-block;
+    background-color: #FFF0E5; /* สีส้มพีชอ่อน เข้ากับธีมเว็บ */
+    color: #C85A32;            /* สีส้มอิฐ ตัดกับพื้นหลังให้อ่านเด่น */
+    border: 1.5px solid #E29578;
+    border-radius: 50px;       /* ทำเป็นทรงแคปซูลขอบมน */
+    padding: 6px 18px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;       /* เว้นระยะห่างจากบรรทัด 🎁 ด้านล่าง */
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 6px rgba(200, 90, 50, 0.12);
+  }
+  
+  /* (ทางเลือก) เพิ่มแอนิเมชันขยับเบาๆ ให้ดูมีชีวิตชีวาและดึงดูดสายตา */
+  @keyframes gentlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+  
+  .single-print-badge.pulse {
+    animation: gentlePulse 2.5s infinite ease-in-out;
+  }
+
 /*
     คุมขนาดรูปภาพผู้หญิงด้านบนสุด 
     .header-section .theme-img-light,
@@ -581,6 +606,31 @@ body.dark-theme .author-credits .label {
     text-align: center;
     box-sizing: border-box;
 }
+
+.single-print-badge {
+    display: inline-block;
+    max-width: 92%;             /* ป้องกันป้ายล้นออกนอกกรอบเส้นประบนมือถือ */
+    background-color: #FFF0E5;
+    color: #C85A32;
+    border: 1.5px solid #E29578;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(200, 90, 50, 0.12);
+  }
+  
+  /* ปรับแต่งเฉพาะหน้าจอมือถือ (กว้างไม่เกิน 480px) */
+  @media (max-width: 480px) {
+    .single-print-badge {
+      font-size: 0.85rem;       /* ย่อขนาดฟอนต์ให้พอดี 1 บรรทัดบนมือถือ */
+      padding: 5px 12px;        /* ลดขอบซ้าย-ขวาไม่ให้บีบตัวหนังสือ */
+      border-radius: 20px;      /* เผื่อข้อความภาษาอังกฤษยาวจนขึ้น 2 บรรทัด จะได้ยังดูโค้งสวย */
+    }
+  }
 
 .btn {
     padding: 12px 24px;
