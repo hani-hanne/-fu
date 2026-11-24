@@ -109,6 +109,10 @@
                 
                 <div class="promo-banner">
                 <div class="promo-box">
+                    <span class="lang-th"><span style="font-size: small;">จัดพิมพ์เพียงครั้งเดียว <br>ไม่มีการพิมพ์ซ้ำ</span></span>
+                    <span class="lang-en"><span>A Once in a Lifetime Edition</span></span>
+                    <span class="lang-ko"><span>단 한 번의 특별한 에디션</span></span>
+                    
                     
                     <!-- 1. รูปภาพ (อยู่ฝั่งซ้าย) -->
                     <div class="promo-img">
@@ -120,12 +124,9 @@
                         
                         <!-- ข้อความส่วนบน (ของแถม / ที่คั่นหนังสือ) -->
                         <div class="promo-top">
-                            <div class="single-print-badge pulse lang-th">✨ ตีพิมพ์ครั้งเดียว หมดแล้วหมดเลย! ✨</div>
-                            <div class="single-print-badge pulse lang-ko">✨ 단 1회 한정 인쇄 • 재판 없음! ✨</div>
-                            <div class="single-print-badge pulse lang-en">✨ SINGLE PRINT RUN • NO REPRINTS!  ✨</div>
-                            <span class="lang-ko"><span>사은품 증정! <br> 리미티드 에디션 <br>랜덤 책갈피 2종 중 1종 랜덤!</span></span>
-                            <span class="lang-th"><span>แถมฟรี! ที่คั่นหนังสือ <br>Limited Edition แบบสุ่ม 2 ลาย</span></span>
-                            <span class="lang-en"><span>Free gift! <br> Limited Edition random bookmark (2 designs)!</span></span>
+                            <span class="lang-ko"><i class="fa-solid fa-gift"></i> <span>사은품 증정! <br> 리미티드 에디션 <br>랜덤 책갈피 2종 중 1종 랜덤!</span></span>
+                            <span class="lang-th"><i class="fa-solid fa-gift"></i> <span>แถมฟรี! ที่คั่นหนังสือ <br>Limited Edition แบบสุ่ม 2 ลาย</span></span>
+                            <span class="lang-en"><i class="fa-solid fa-gift"></i> <span>Free gift! <br> Limited Edition random bookmark (2 designs)!</span></span>
                         </div>
                         
                         <!-- ข้อความส่วนล่าง (เลขประจำเล่ม) -->
@@ -174,7 +175,7 @@
                         <div class="stamp-con">
                             <div class="minimal-stamp">
                                 <span class="stamp-bottom">ยอดขายมากกว่า</span>
-                                <span class="stamp-top">700 เล่ม</span>
+                                <span class="stamp-top">800 เล่ม</span>
                             </div>
                         </div>
                     </div>
@@ -350,10 +351,11 @@
             <!-- ใน index.html วางไว้ท้ายสุดก่อนปิด </body> -->
     <div class="footer-wrapper">
         <footer class="footer">
-            <!-- ห่อรูปหมูด้วยลิงก์ #home เพื่อให้กดแล้วเด้งขึ้นบน -->
-            <a href="#home" id="backToTopBtn" style="text-decoration: none;">
-                <img src="img/Gemini_Generated_Image_5rd57s5rd57s5rd5.png" class="pig" style="cursor: pointer;" alt="Back to Top">
-            </a>
+            <audio id="bgmusic" src="musie/bgmusie.mp3" autoplay loop></audio>
+                <button onclick="toggleAudio()" style="background: none; border: none; cursor: pointer;">
+                    <!-- เริ่มต้นแสดงรูปตอนเปิดเสียงเลย -->
+                    <img id="soundIcon" src="music-img/openmuisc.gif" class="pig" style="cursor: pointer;" alt="bg-music">
+                </button>
             <div class="footer-content">
                 <p>
                     <span>© 2026 Little mlue</span>
@@ -369,6 +371,7 @@
     </div>
         </div>
     <script>
+        
         document.addEventListener("DOMContentLoaded", function() {
             const themeToggleBtn = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
@@ -522,6 +525,56 @@
                 closeModal();
             }
         });
+        //music
+        const music = document.getElementById("bgmusic");
+        const soundIcon = document.getElementById("soundIcon");
+        let isUserMuted = false; // ตัวจำสถานะว่าผู้ใช้ตั้งใจกดปิดเสียงเอง
+
+        if (music) {
+            music.volume = 0.30;
+
+            // พยายามเล่นอัตโนมัติทันทีที่เปิดเว็บ
+            music.play().then(() => {
+                if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+            }).catch(() => {
+                // หากเบราว์เซอร์บล็อก ให้เริ่มเล่นเมื่อแตะหน้าจอครั้งแรก (เฉพาะตอนที่ยังไม่ถูกกดปิด)
+                const unlockAudio = () => {
+                    if (!isUserMuted) {
+                        music.muted = false;
+                        music.play();
+                        if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+                    }
+                    document.removeEventListener("click", unlockAudio);
+                    document.removeEventListener("touchstart", unlockAudio);
+                };
+                document.addEventListener("click", unlockAudio);
+                document.addEventListener("touchstart", unlockAudio);
+            });
+        }
+
+        // ฟังก์ชันกดปุ่มรูปภาพเพื่อเปิด-ปิดเสียง
+        function toggleAudio(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (!music) return;
+
+            if (!music.paused && !music.muted) {
+                // สั่งปิดเสียง + หยุดเล่นชั่วคราว
+                isUserMuted = true;
+                music.muted = true;
+                music.pause();
+                if (soundIcon) soundIcon.src = "music-img/cloesmusic.png"; // แก้ชื่อไฟล์รูปปิดให้ตรงกับในเครื่อง
+            } else {
+                // สั่งเปิดเสียง + เล่นต่อ
+                isUserMuted = false;
+                music.muted = false;
+                music.play();
+                if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+            }
+        }
+
     </script>
     
 </body>

@@ -170,8 +170,15 @@
             try {
                 // แปลงไฟล์รูปภาพเป็น Base64
                 const base64Data = await toBase64(file);
+                let requestId = sessionStorage.getItem('orderRequestId');
+
+                if (!requestId) {
+                    requestId = crypto.randomUUID();
+                    sessionStorage.setItem('orderRequestId', requestId);
+                }
 
                 const payload = {
+                    requestId: requestId,
                     name: sessionStorage.getItem('orderName') || '-',
                     email: sessionStorage.getItem('orderEmail') || '-',
                     phone: sessionStorage.getItem('orderPhone') || '-',

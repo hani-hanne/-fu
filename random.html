@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Message Gacha - สุ่มแจกรางวัล</title>
+    <!-- โหลด Matter.js สำหรับคำนวณฟิสิกส์ลูกบอลเด้งดึ๋ง -->
+    <script src="https://cloudflare.com"></script>
+    <style>
+        :root {
+            --primary-pink: #ff6b81;
+            --bg-color: #f7f9fc;
+            --text-dark: #2f3542;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* -------------------------------------------------------------
+           [หน้าจอที่ 1] หน้ากรอกข้อมูล (มินิมอลตามลายเส้นที่คุณวาด)
+        ------------------------------------------------------------- */
+        .build-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.03);
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .build-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group label span {
+            font-size: 12px;
+            color: #ff4757;
+            font-weight: normal;
+        }
+
+        .form-group input[type="text"], 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #ced6e0;
+            border-radius: 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input[type="text"]:focus, 
+        .form-group textarea:focus {
+            border-color: var(--primary-pink);
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1.5px solid #ced6e0;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #747d8c;
+        }
+
+        .btn-preview {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* -------------------------------------------------------------
+           [หน้าจอที่ 2] หน้าตู้กาชาปองสุ่มรางวัล
+        ------------------------------------------------------------- */
+        .gacha-card {
+            display: none; /* ซ่อนไว้ก่อน เริ่มแรกจะโชว์หน้าฟอร์ม */
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .gacha-wrapper {
+            position: relative;
+            width: 320px;
+            height: 426px;
+            margin: 0 auto;
+        }
+
+        .machine-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 110px;    /* พิกัดช่องกระจกในภาพ */
+            left: 40px;     /* พิกัดช่องกระจกในภาพ */
+            width: 240px;
+            height: 156px;
+            z-index: 2;
+        }
+
+        .crank-trigger {
+            position: absolute;
+            bottom: 85px; left: 125px;
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 4;
+        }
+
+        /* ป๊อปอัปผลลัพธ์ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            width: 80%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: scaleUp 0.3s ease-out;
+        }
+
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .shaking { animation: machineShake 0.15s infinite; }
+        @keyframes machineShake { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-3px, 2px); } 40% { transform: translate(3px, -2px); } 60% { transform: translate(-3px, -2px); } 80% { transform: translate(3px, 2px); } }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== [หน้าจอที่ 1] หน้ากรอกข้อมูล Build Message Gacha ==================== -->
+    <div class="build-card" id="view-form">
+        <div class="build-title">Build Message gacha</div>
+        
+        <div class="form-group">
+            <label for="input-name">Name</label>
+            <input type="text" id="input-name" placeholder="ระบุชื่อของคุณ...">
+        </div>
+
+        <div class="form-group">
+            <label for="input-contact">ช่องทางติดต่อกลับ <span>(ไม่แสดงตอนหน้าเปิด)</span></label>
+            <input type="text" id="input-contact" placeholder="เช่น Line ID, เบอร์โทร, IG...">
+        </div>
+
+        <div class="form-group">
+            <label for="input-message">ข้อความที่อยากบอก</label>
+            <textarea id="input-message" rows="4" placeholder="พิมพ์ความในใจหรือข้อความร่วมสนุกที่นี่..."></textarea>
+        </div>
+
+        <div class="button-row">
+            <button class="btn-back" onclick="alert('ย้อนกลับ')">戻る (กลับ)</button>
+            <button class="btn-preview" onclick="submitToGacha()">Preview ➡️</button>
+        </div>
+    </div>
+
+
+    <!-- ==================== [หน้าจอที่ 2] หน้าตู้กาชาปองสุ่มรางวัล ==================== -->
+    <div class="gacha-card" id="view-gacha">
+        <h2 style="margin: 0 0 5px 0; color: var(--text-dark);">ตู้กาชาปองสุ่มรางวัล 🎉</h2>
+        <p style="margin: 0 0 20px 0; font-size: 14px; color: #a4b0be;">บิดคันโยกสีน้ำเงินเพื่อสุ่มผู้โชคดีได้เลย!</p>
+
+        <div class="gacha-wrapper" id="gachaMachine">
+            <!-- ใส่รูปภาพตู้ของคุณตรง src นี้ได้เลยครับ -->
+            <img src="https://squarespace-cdn.com" class="machine-img">
+            
+            <!-- ตู้ใสฟิสิกส์ลูกบอลเด้งดึ๋ง -->
+            <div id="canvas-container"></div>
+            
+            <!-- ปุ่มกดหมุนบิดตู้ล่องหน -->
+            <button class="crank-trigger" onclick="rollGacha()"></button>
+        </div>
+        
+        <button onclick="goBackToForm()" style="margin-top: 25px; background: none; border: none; color: var(--primary-pink); cursor: pointer; font-weight: bold; font-size: 14px;">➕ กลับไปเพิ่มข้อความใบใหม่</button>
+    </div>
+
+
+    <!-- ==================== [ป๊อปอัป] เฉลยผลรางวัล ==================== -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <div style="font-size: 45px; margin-bottom: 10px;">💌</div>
+            <h3 style="color: var(--primary-pink); margin: 0 0 5px 0;">🎉 ผู้โชคดีได้รับรางวัล! 🎉</h3>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            
+            <p style="text-align: left; font-size: 13px; color: #747d8c; margin-bottom: 2px;">คุณ:</p>
+            <p id="display-name" style="text-align: left; font-size: 18px; font-weight: bold; color: var(--text-dark); margin-top: 0;"></p>
+            
+            <p style="text-align: left; font-size: 13px; color: #747d8c; margin-bottom: 2px;">ข้อความที่บอก:</p>
+            <p id="display-message" style="text-align: left; font-size: 15px; background: #f1f2f6; padding: 12px; border-radius: 12px; color: #57606f; line-height: 1.4; margin-top: 0;"></p>
+            
+            <button onclick="closeModal()" style="width:100%; padding:12px; background:var(--text-dark); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer; margin-top:15px;">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+
+<script>
+    let gachaDataDatabase = [];
+    let physicsBalls = [];
+    const ballColors = ['#ff7675', '#74b9ff', '#a29bfe', '#ffeaa7', '#55efc4', '#fd79a8'];
+
+    const { Engine, Render, Runner, Bodies, Composite, Body } = Matter;
+    let engine, render, runner;
+    let isPhysicsInitialized = false;
+
+    // ฟังก์ชัน: เมื่อกดปุ่ม Preview จะสลับหน้ามาตู้กาชาและเสกลูกบอลตกลงมาทันที
+    function submitToGacha() {
+        const name = document.getElementById('input-name').value.trim();
+        const contact = document.getElementById('input-contact').value.trim();
+const message = document.getElementById('input-message').value.trim();
+if (!name || !message) {
+return alert("กรุณากรอกชื่อและข้อความที่อยากบอกให้ครบถ้วนนะจ๊ะ!");
+}
+// 1. บันทึกข้อมูลลงฐานข้อมูลชั่วคราว
+gachaDataDatabase.push({ name: name, contact: contact, message: message });
+// 2. เด้งสลับหน้าจอไปหน้าตู้กาชาปองทันทีตามที่คุณต้องการ
+document.getElementById('view-form').style.display = 'none';
+document.getElementById('view-gacha').style.display = 'block';
+// 3. เซ็ตอัประบบฟิสิกส์ตู้ (เฉพาะครั้งแรกที่เปิด)
+if (!isPhysicsInitialized) {
+initPhysicsEngine();
+isPhysicsInitialized = true;
+}
+// 4. เสกลูกบอลใหม่ให้ร่วงตกลงมาเด้งดึ๋งในตู้ทันทีให้เห็นแบบคาตา!
+setTimeout(() => {
+spawnNewBallFromInput();
+}, 100);
+// ล้างช่องฟอร์มเดิมเพื่อรองรับการกลับมาพิมพ์ใหม่
+document.getElementById('input-name').value = '';
+document.getElementById('input-contact').value = '';
+document.getElementById('input-message').value = '';
+}
+function initPhysicsEngine() {
+const container = document.getElementById('canvas-container');
+const w = container.clientWidth;
+const h = container.clientHeight;
+engine = Engine.create({ gravity: { y: 1.4 } });
+render = Render.create({
+element: container, engine: engine,
+options: { width: w, height: h, background: 'transparent', wireframes: false }
+});
+Render.run(render);
+runner = Runner.create();
+Runner.run(runner, engine);
+const wallOptions = { isStatic: true, render: { visible: false } };
+Composite.add(engine.world, [
+Bodies.rectangle(w/2, h + 10, w, 20, wallOptions),
+Bodies.rectangle(-10, h/2, 20, h, wallOptions),
+Bodies.rectangle(w + 10, h/2, 20, h, wallOptions)
+]);
+}
+function spawnNewBallFromInput() {
+const container = document.getElementById('canvas-container');
+const w = container.clientWidth;
+const radius = 14;
+const ball = Bodies.circle(Math.random() * (w - radius * 2) + radius, -15, radius, {
+restitution: 0.8, friction: 0.05,
+render: { fillStyle: ballColors[Math.floor(Math.random() * ballColors.length)], strokeStyle: '#2f3542', lineWidth: 1.5 }
+});
+Composite.add(engine.world, ball);
+physicsBalls.push({ body: ball, dbIndex: gachaDataDatabase.length - 1 });
+}
+// ฟังก์ชันหมุนตู้สุ่ม
+let isRolling = false;
+function rollGacha() {
+if (isRolling || gachaDataDatabase.length === 0) return;
+isRolling = true;
+const machine = document.getElementById('gachaMachine');
+machine.classList.add('shaking');
+// สั่งลูกบอลฟิสิกส์กระจายตัวรอบตู้
+physicsBalls.forEach(item => {
+Body.setVelocity(item.body, { x: (Math.random() - 0.5) * 16, y: (Math.random() - 0.5) * 16 });
+});
+setTimeout(() => {
+machine.classList.remove('shaking');
+// สุ่มจับฉลากผู้โชคดี
+const luckyIndex = Math.floor(Math.random() * gachaDataDatabase.length);
+const luckyUser = gachaDataDatabase[luckyIndex];
+// ซ่อนข้อมูลติดต่อกลับไว้หลังบ้าน (ดูได้ผ่าน Console F12 ของเบราว์เซอร์)
+console.log("=== ผู้โชคดี (หลังบ้าน) ===", "ชื่อ:", luckyUser.name, " | ติดต่อ:", luckyUser.contact);
+// โชว์แค่ชื่อกับข้อความบนหน้าเว็บ
+document.getElementById('display-name').innerText = luckyUser.name;
+document.getElementById('display-message').innerText = "${luckyUser.message}";
+document.getElementById('resultModal').style.display = 'flex';
+}, 1500);
+}
+function closeModal() {
+document.getElementById('resultModal').style.display = 'none';
+isRolling = false;
+}
+function goBackToForm() {
+document.getElementById('view-gacha').style.display = 'none';
+document.getElementById('view-form').style.display = 'block';
+}
+

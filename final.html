@@ -93,6 +93,8 @@
         </div>
     </main>
 </div>
+<audio id="thankYouAudio" src="musie/thakyou.mp3" autoplay preload="auto"></audio>
+    
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -103,6 +105,20 @@
             orderIdElement.innerText = savedOrderId;
         } else {
             orderIdElement.innerText = "LITTLE-001"; // ค่าเริ่มต้นถ้าไม่มีข้อมูลส่งมา
+        }
+        const thankAudio = document.getElementById("thankYouAudio");
+        if (thankAudio) {
+            thankAudio.volume = 0.85; // ปรับความดังเสียงพูด (0.0 - 1.0)
+            thankAudio.play().catch(() => {
+                // เผื่อกรณีเบราว์เซอร์บล็อก ให้เสียงดังทันทีที่ลูกค้าแตะหน้าจอ 1 ครั้ง
+                const playOnTouch = () => {
+                    thankAudio.play();
+                    document.removeEventListener("click", playOnTouch);
+                    document.removeEventListener("touchstart", playOnTouch);
+                };
+                document.addEventListener("click", playOnTouch);
+                document.addEventListener("touchstart", playOnTouch);
+            });
         }
 
         // --- ระบบ Dark/Light Mode ---
@@ -193,6 +209,24 @@
         setTimeout(() => {
             star.remove();
         }, 600);
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const thankAudio = document.getElementById("thankYouAudio");
+        if (!thankAudio) return;
+
+        thankAudio.volume = 0.50; // ปรับความดังเสียงพูด (0.0 - 1.0)
+
+        // สั่งเล่นเสียงทันทีที่หน้า Final โหลดเสร็จ
+        thankAudio.play().catch(() => {
+            // กรณีเบราว์เซอร์บล็อก ให้เสียงดังทันทีที่แตะหน้าจอ 1 ครั้ง
+            const unlock = () => {
+                thankAudio.play();
+                document.removeEventListener("click", unlock);
+                document.removeEventListener("touchstart", unlock);
+            };
+            document.addEventListener("click", unlock);
+            document.addEventListener("touchstart", unlock);
+        });
     });
 </script>
 </body>

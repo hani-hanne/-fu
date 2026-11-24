@@ -13,7 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 </head>
 <body>
-    <!-- ปุ่มเปลี่ยนธีมและภาษา (ลอยอยู่มุมบนขวาอย่างอิสระ) -->
+    <!-- ปุ่มเปลี่ยนธีมและภาษา (ลอยอยู่มุมบนขวาอย่างอิสระ) 
+      <img src="img/mobai-halloween.png" class="halloween-garland" alt="" aria-hidden="true"/>
+-->
     <div class="web-container">
         <header class="navbar">
             <nav class="nav-links">
@@ -109,6 +111,13 @@
             </main>
         </header> <!-- ปิด header ถ้ามีเปิดค้างไว้ -->
     </div>
+    <audio id="bgmusic" src="musie/bgmusie.mp3" loop preload="auto"></audio>
+
+    <button onclick="toggleAudio(event)" style="background: none; border: none; padding: 0; cursor: pointer;">
+        <!-- เริ่มต้นแสดงรูปตอนเปิดเสียง (ถ้าหน้าก่อนปิดไว้ JS จะสลับเป็นรูปปิดให้เองทันที) -->
+        <img id="soundIcon" src="music-img/openmuisc.gif" class="pig" style="display: block !important; cursor: pointer;" alt="bg-music">
+    </button>
+
 
     <script>
         // --- 1. ตัวแปรและค่าเริ่มต้นระบบฟิสิกส์ ---
@@ -384,6 +393,65 @@
                 star.remove();
             }, 600);
         });
+        // music (ระบบจำสถานะเปิด-ปิดเพลงข้ามหน้า)
+        const music = document.getElementById("bgmusic");
+        const soundIcon = document.getElementById("soundIcon");
+
+        // ดึงค่าที่ผู้ใช้เคยกดไว้ล่าสุด ('muted' = ปิดอยู่, นอกนั้น = เปิด)
+        let isUserMuted = localStorage.getItem("musicState") === "muted";
+
+        if (music) {
+            music.volume = 0.25;
+
+            if (isUserMuted) {
+                // 1. ถ้าหน้าก่อนหน้าผู้ใช้ "กดปิดเสียงไว้" -> หน้านี้ต้องปิดเสียงและขึ้นรูปตอนปิดทันที
+                music.muted = true;
+                music.pause();
+                if (soundIcon) soundIcon.src = "music-img/cloesmusic.png"; // แก้ชื่อไฟล์รูปปิดให้ตรงกับในเครื่อง
+            } else {
+                // 2. ถ้าหน้าก่อนหน้า "เปิดเสียงอยู่" -> พยายามเล่นต่อในหน้านี้ทันที
+                if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+                music.play().catch(() => {
+                    // เผื่อเบราว์เซอร์บล็อกตอนเปลี่ยนหน้า ให้เริ่มเล่นทันทีที่แตะหน้าจอ
+                    const unlockAudio = () => {
+                        if (!isUserMuted) {
+                            music.muted = false;
+                            music.play();
+                            if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+                        }
+                        document.removeEventListener("click", unlockAudio);
+                        document.removeEventListener("touchstart", unlockAudio);
+                    };
+                    document.addEventListener("click", unlockAudio);
+                    document.addEventListener("touchstart", unlockAudio);
+                });
+            }
+        }
+
+        // ฟังก์ชันกดปุ่มรูปภาพเพื่อเปิด-ปิดเสียง พร้อมบันทึกค่าลงเบราว์เซอร์
+        function toggleAudio(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (!music) return;
+
+            if (!music.paused && !music.muted) {
+                // กดปิดเสียง -> บันทึกว่า 'muted'
+                isUserMuted = true;
+                localStorage.setItem("musicState", "muted");
+                music.muted = true;
+                music.pause();
+                if (soundIcon) soundIcon.src = "music-img/cloesmusic.png"; // แก้ชื่อไฟล์รูปปิดให้ตรงกับในเครื่อง
+            } else {
+                // กดเปิดเสียง -> บันทึกว่า 'playing'
+                isUserMuted = false;
+                localStorage.setItem("musicState", "playing");
+                music.muted = false;
+                music.play();
+                if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
+            }
+        }
     </script>    
 </body>
 </html>
