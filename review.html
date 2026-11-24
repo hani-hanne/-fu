@@ -452,6 +452,37 @@
                 if (soundIcon) soundIcon.src = "music-img/openmuisc.gif";
             }
         }
+         // 1. หยุดเพลงทันทีเมื่อผู้ใช้พับหน้าจอ สลับแอป หรือกดปิดแท็บ
+        document.addEventListener("visibilitychange", () => {
+            const bgMusic = document.getElementById("bgmusic");
+            const thankAudio = document.getElementById("thankYouAudio");
+
+            if (document.hidden) {
+                // เมื่อหน้าเว็บถูกซ่อน/พับจอ -> สั่งหยุดเสียงทั้งหมดทันที
+                if (bgMusic) bgMusic.pause();
+                if (thankAudio) thankAudio.pause();
+            } else {
+                // เมื่อผู้ใช้กลับมาเปิดหน้าเว็บอีกครั้ง -> เล่นต่อเฉพาะกรณีที่ไม่ได้กดปิดเสียงไว้
+                if (bgMusic && localStorage.getItem("musicState") !== "muted") {
+                    bgMusic.play().catch(() => {});
+                }
+            }
+        });
+
+        // 2. บังคับตัดเสียงและเคลียร์ตัวเล่นทันทีเมื่อปิดหน้าเว็บหรือเปลี่ยนหน้า (แก้บั๊ก Safari/iPhone ค้าง)
+        window.addEventListener("pagehide", () => {
+            const bgMusic = document.getElementById("bgmusic");
+            const thankAudio = document.getElementById("thankYouAudio");
+
+            if (bgMusic) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+            }
+            if (thankAudio) {
+                thankAudio.pause();
+                thankAudio.currentTime = 0;
+            }
+        });
     </script>    
 </body>
 </html>
